@@ -102,7 +102,7 @@ export const SignupForm = () => {
                 width = "full"
                 isDisabled = { !isValid || !!user }
                 isLoading = { isSubmitting }
-                id = 'signup-button'
+                id = 'submit-signup-button'
               >Sign Up</Button> 
               <Text mt = { 1 } fontSize = "sm" textAlign = "center">
                 { user && !isSubmitting
