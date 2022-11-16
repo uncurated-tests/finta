@@ -80,7 +80,7 @@ export const SignupForm = () => {
                 value = { values.email }
                 placeholder = "Email"
               />
-              <FormErrorMessage>{ errors.email }</FormErrorMessage>
+              <FormErrorMessage id = "email-error">{ errors.email }</FormErrorMessage>
             </FormControl>
 
             <PasswordField 

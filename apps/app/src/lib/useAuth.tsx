@@ -1,13 +1,17 @@
 import { createContext, ReactNode, useCallback, useContext, useMemo } from "react";
 import { useAuthenticationStatus } from "@nhost/react";
 import moment from "moment-timezone";
+
 import { nhost } from "./nhost";
 import { parseAuthError } from "./parseAuthError";
+
+import { UserModel } from "src/types";
+import { useGetUserQuery } from "src/graphql";
 
 interface AuthErrorType { field: 'email' | 'password', message: string, code: string }
 
 interface AuthContextType {
-  user?: null;
+  user?: UserModel;
   isLoading: boolean;
   isAuthenticated: boolean;
   signUp: ({ email, password, name }: { email: string; password: string; name: string }) => Promise<{ error?: AuthErrorType }>;
@@ -16,7 +20,12 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 export const AuthProvider = ({ children }: { children: ReactNode }): JSX.Element => {
-  const user = null;
+  const userId = nhost.auth.getUser()?.id;
+  const { data: userData, loading: isUserDataLoading } = useGetUserQuery({
+    variables: { user_id: userId },
+    skip: !userId
+  });
+  const user = useMemo(() => userData?.user || undefined as UserModel | undefined, [ userData ]);
   const { isLoading: isAuthLoading, isAuthenticated } = useAuthenticationStatus();
 
   const signUp = useCallback(async ({ email, password, name }: { email: string; password: string; name: string; }) => {
