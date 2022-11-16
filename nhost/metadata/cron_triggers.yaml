@@ -1,0 +1,5 @@
+- name: insights
+  webhook: '{{CRON_WEBHOOK_URL}}'
+  schedule: 0 0 * * *
+  include_in_metadata: true
+  payload: {}

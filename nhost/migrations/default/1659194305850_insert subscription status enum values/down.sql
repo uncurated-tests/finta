@@ -1,0 +1,10 @@
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- INSERT INTO stripe.subscription_statuses_enum (name) VALUES
+--   ('active'),
+--   ('past_due'),
+--   ('unpaid'),
+--   ('canceled'),
+--   ('incomplete'),
+--   ('incomplete_expired'),
+--   ('trialing');

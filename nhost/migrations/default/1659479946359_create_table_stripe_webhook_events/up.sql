@@ -1,0 +1,1 @@
+CREATE TABLE "stripe"."webhook_events" ("id" text NOT NULL, "event" text NOT NULL, "state" text NOT NULL, "created_at" timestamptz NOT NULL DEFAULT now(), PRIMARY KEY ("id") , FOREIGN KEY ("state") REFERENCES "stripe"."webhook_events_states"("name") ON UPDATE restrict ON DELETE restrict);

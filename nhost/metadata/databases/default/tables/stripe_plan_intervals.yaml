@@ -1,0 +1,4 @@
+table:
+  name: plan_intervals
+  schema: stripe
+is_enum: true

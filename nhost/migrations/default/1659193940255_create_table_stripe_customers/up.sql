@@ -1,0 +1,1 @@
+CREATE TABLE "stripe"."customers" ("id" text NOT NULL, "user_id" uuid NOT NULL, "balance" numeric NOT NULL DEFAULT 0, PRIMARY KEY ("id") , FOREIGN KEY ("user_id") REFERENCES "auth"."users"("id") ON UPDATE restrict ON DELETE cascade);
