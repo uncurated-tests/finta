@@ -1,0 +1,59 @@
+- name: stripe_grapqhl
+  definition:
+    url: '{{NHOST_BACKEND_URL}}/v1/functions/stripe/graphql'
+    timeout_seconds: 60
+    forward_client_headers: true
+  comment: ""
+  permissions:
+    - role: user
+      definition:
+        schema: |
+          scalar Date
+          scalar uuid
+          type Query {
+            stripe_data(user_id: uuid!): StripeData!
+            stripe_prices: [StripePrice!]!
+          }
+          type StripeCustomer {
+            created_at: Date!
+            id: String!
+          }
+          type StripeData {
+            customer: StripeCustomer!
+            has_app_access: Boolean!
+            subscription: StripeSubscription
+            trial_ends_at: Date!
+          }
+          type StripePrice {
+            id: String!
+            interval: Interval!
+            product_id: String!
+            unit_amount: Float!
+          }
+          type StripeSubscription {
+            cancel_at_period_end: Boolean!
+            current_period_end: Date!
+            current_period_start: Date!
+            ended_at: Date
+            id: String!
+            interval: Interval!
+            started_at: Date!
+            status: SubscriptionStatus!
+            trial_ended_at: Date
+            trial_started_at: Date
+          }
+          enum Interval {
+            day
+            month
+            week
+            year
+          }
+          enum SubscriptionStatus {
+            active
+            canceled
+            incomplete
+            incomplete_expired
+            past_due
+            trialing
+            unpaid
+          }

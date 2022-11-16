@@ -1,23 +1,25 @@
-import React from "react";
-import { Link } from "ui";
-import "./App.css";
-import logo from "./logo.svg";
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Routes,
+  Route
+} from 'react-router-dom';
 
-function App() {
+import { AuthProvider } from "src/lib/useAuth"
+import { Destinations } from "src/pages/Destinations"
+import { Login } from "src/pages/Login";
+import { AuthGate } from 'src/components/AuthGate';
+
+export const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Web</h1>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <Link className="App-link" href="https://reactjs.org">
-          Learn React
-        </Link>
-      </header>
-    </div>
-  );
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path = "/" element = { <AuthGate><Navigate to = "/destinations" /></AuthGate> } />
+          <Route path = "/destinations" element = { <AuthGate shouldBeSignedIn = { true }><Destinations /></AuthGate> } />
+          <Route path = "/login" element = { <AuthGate><Login /></AuthGate> } />
+        </Routes>
+      </Router>
+    </AuthProvider>
+  )  
 }
-
-export default App;
