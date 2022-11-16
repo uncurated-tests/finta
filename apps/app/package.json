@@ -22,6 +22,8 @@
     "@nhost/nhost-js": "^1.6.0",
     "@nhost/react": "^0.14.2",
     "@nhost/react-apollo": "^4.8.2",
+    "@radix-ui/react-icons": "^1.1.1",
+    "formik": "^2.2.9",
     "framer-motion": "^6.3.16",
     "playwright": "^1.27.1",
     "react": "^18.2.0",

@@ -24,7 +24,6 @@ export const identify = (params: IdentifyParams) => {
 export const page = (params: PageParams) => {
   const { name, properties } = params;
   if ( typeof window === 'undefined' ) { return; };
-  console.log(process.env.REACT_APP_SEGMENT_KEY)
   window.analytics?.page(name, properties);
 }
 
