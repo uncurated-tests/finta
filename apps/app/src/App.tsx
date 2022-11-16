@@ -8,6 +8,7 @@ import {
 import { AuthProvider } from "src/lib/useAuth"
 import { Destinations } from "src/pages/Destinations"
 import { Login } from "src/pages/Login";
+import { Signup } from 'src/pages/Signup';
 import { AuthGate } from 'src/components/AuthGate';
 
 export const App = () => {
@@ -18,6 +19,7 @@ export const App = () => {
           <Route path = "/" element = { <AuthGate><Navigate to = "/destinations" /></AuthGate> } />
           <Route path = "/destinations" element = { <AuthGate shouldBeSignedIn = { true }><Destinations /></AuthGate> } />
           <Route path = "/login" element = { <AuthGate><Login /></AuthGate> } />
+          <Route path = "/signup" element = { <AuthGate><Signup /></AuthGate> } />
         </Routes>
       </Router>
     </AuthProvider>
