@@ -32,3 +32,8 @@ export const track = (params: TrackParams) => {
   if ( typeof window === 'undefined' ) { return; };
   window.analytics?.track(event, properties);
 }
+
+export const reset = () =>{
+  if ( typeof window === 'undefined' ) { return;}
+  window.analytics.reset();
+}

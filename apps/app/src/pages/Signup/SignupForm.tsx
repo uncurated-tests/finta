@@ -2,6 +2,8 @@ import { Box, Button, FormControl, Link, FormLabel, Stack, Text, FormErrorMessag
 import { Form, Formik, FormikHelpers } from "formik";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 
+import * as analytics from "src/lib/analytics";
+import { nhost } from "src/lib/nhost";
 import { Input } from "src/components/Input";
 import { PasswordField } from "src/components/PasswordField";
 
@@ -20,6 +22,19 @@ export const SignupForm = () => {
     if ( !values.email || !values.name || !isPasswordValid(values.password) ) { errors.form = true };
     return errors
   };
+
+  nhost.auth.onAuthStateChanged((event, session) => {
+    if ( event === 'SIGNED_IN' ) {
+      if ( !session ) { throw new Error("Signed-in user does not have a session") };
+      if ( !session.user ) { throw new Error("Session does not have a user") };
+      const { id } = session.user;
+
+      analytics.alias({ userId: id });
+      analytics.identify({ userId: id });
+    }
+
+    if ( event === 'SIGNED_OUT' ) { analytics.reset();}
+  })
 
   const onSubmit = (values: typeof initialValues, { setFieldError, setSubmitting }: FormikHelpers<typeof initialValues>) => {
     signUp({ email: values.email, password: values.password, name: values.name })
