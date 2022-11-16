@@ -47,12 +47,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }): JSX.Element
 
   const memoedValue = useMemo(
     () => ({
-      isLoading: isAuthLoading,
+      isLoading: isAuthLoading || isUserDataLoading,
       isAuthenticated: isAuthenticated,
       user,
       signUp
     }) as AuthContextType,
-    [ user, isAuthLoading, isAuthenticated, signUp ]
+    [ user, isAuthLoading, isAuthenticated, signUp, isUserDataLoading ]
   );
 
   return <AuthContext.Provider value = { memoedValue }>{ children }</AuthContext.Provider>

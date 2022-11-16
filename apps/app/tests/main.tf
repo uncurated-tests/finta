@@ -58,7 +58,7 @@ resource "checkly_check" "destinations-page-unauth-redirect" {
 resource "checkly_check" "new-user-sign-up" {
   name          = "New User Sign Up"
   type          = "BROWSER"
-  activated     = true
+  activated     = false
   frequency     = 1440
   double_check  = true
   locations = [
