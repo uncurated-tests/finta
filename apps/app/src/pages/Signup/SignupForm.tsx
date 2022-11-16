@@ -4,7 +4,10 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 import { Input } from "src/components/Input";
 import { PasswordField } from "src/components/PasswordField";
+
 import { useAuth } from "src/lib/useAuth";
+import { password as isPasswordValid } from "src/lib/validate";
+
 import { AppRoutes } from "src/routes";
 
 export const SignupForm = () => {
@@ -12,9 +15,22 @@ export const SignupForm = () => {
   const navigate = useNavigate();
   const initialValues = { name: "", email: "", password: "" };
 
-  const validate = () => {};
+  const validate = (values: typeof initialValues) => {
+    const errors = {} as { form: undefined | boolean };
+    if ( !values.email || !values.name || !isPasswordValid(values.password) ) { errors.form = true };
+    return errors
+  };
 
-  const onSubmit = () => {};
+  const onSubmit = (values: typeof initialValues, { setFieldError, setSubmitting }: FormikHelpers<typeof initialValues>) => {
+    signUp({ email: values.email, password: values.password, name: values.name })
+    .then(({ error }) => {
+      setSubmitting(false);
+      if ( error ) { setFieldError(error.field, error.message); return; }
+
+      navigate(AppRoutes.ACCOUNTS);
+    })
+    .catch(err => console.log(err))
+  };
 
   return (
     <Formik
