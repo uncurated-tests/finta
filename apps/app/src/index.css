@@ -19,3 +19,7 @@ img:not([src]) {
 .chakra-accordion__item .chakra-collapse {
   overflow: visible !important
 }
+
+form {
+  width: 100%
+}

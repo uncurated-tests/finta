@@ -21,8 +21,8 @@ export const Signup = () =>{
 
   return (
     <Page hasNavigation = { false }>
-      <Center w = "full" maxW = "xl" mx = "auto" flexDir = "column" mt = {{ base: 10, sm: 20, md: 32 }} px = {{ base: 2, sm: 4, md: 'unset'}}>
-        <VStack>
+      <Center w = "full" maxW = "lg" mx = "auto" flexDir = "column" mt = {{ base: 10, sm: 20, md: 32 }} px = {{ base: 2, sm: 4, md: 'unset'}}>
+        <VStack width = 'full'>
           <Logo 
             variant = 'full'
             height = '16'

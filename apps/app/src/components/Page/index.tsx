@@ -17,7 +17,7 @@ export const Page = ({ children, hasNavigation = true, ...props }: PageProps) =>
   <Flex
     height = "100vh"
     overflow = "hidden"
-    bg = { mode('gray.light.2', 'gray.dark.2') }
+    bg = { mode('gray.light.1', 'gray.dark.2') }
     className = 'page'
     { ...props }
   >
