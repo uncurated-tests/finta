@@ -5,7 +5,9 @@ async function run() {
   const browser = await chromium.launch();
   const page = await browser.newPage();
 
-  const targetUrl = process.env.ENVIRONMENT_URL || 'https://app.finta.io';
+  const url = process.env.ENVIRONMENT_URL || 'https://app.finta.io';
+  const targetUrl = url.includes('http') ? url : `https://${url}`
+  console.log(targetUrl)
   await page.goto(targetUrl, { waitUntil: 'networkidle' });
   await page.waitForSelector('.page'); 
   
