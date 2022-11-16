@@ -1,5 +1,5 @@
 export const Destinations = () => {
   return (
-    <div>Destinations</div>
+    <div className = 'page'>Destinations</div>
   )
 }
