@@ -3,18 +3,20 @@ import { useAuthenticationStatus } from "@nhost/react";
 
 interface AuthContextType {
   isLoading: boolean;
+  isAuthenticated: boolean;
 }
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 export const AuthProvider = ({ children }: { children: ReactNode }): JSX.Element => {
-  const { isLoading: isAuthLoading } = useAuthenticationStatus();
+  const { isLoading: isAuthLoading, isAuthenticated } = useAuthenticationStatus();
 
   const memoedValue = useMemo(
     () => ({
-      isLoading: isAuthLoading
+      isLoading: isAuthLoading,
+      isAuthenticated: isAuthenticated
     }) as AuthContextType,
-    [ isAuthLoading ]
+    [ isAuthLoading, isAuthenticated ]
   );
 
   return <AuthContext.Provider value = { memoedValue }>{ children }</AuthContext.Provider>
