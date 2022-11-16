@@ -1,0 +1,14 @@
+fragment AllUserFields on users {
+  __typename
+  id
+  email
+  emailVerified
+  displayName
+  createdAt
+}
+
+query GetUser($user_id: uuid!) {
+  user(id: $user_id) {
+    ...AllUserFields
+  } 
+}

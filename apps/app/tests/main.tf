@@ -44,3 +44,18 @@ resource "checkly_check" "destinations-page-unauth-redirect" {
 
   script = file("${path.module}/browser/destinations-page-unauth-redirect.js")
 }
+
+resource "checkly_check" "new-user-sign-up" {
+  name          = "New User Sign Up"
+  type          = "BROWSER"
+  activated     = true
+  frequency     = 1440
+  double_check  = true
+  locations = [
+    "us-west-1"
+  ]
+
+  group_id = checkly_check_group.frontend.id
+
+  script = file("${path.module}/browser/new-user-sign-up.js")
+}
