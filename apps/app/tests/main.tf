@@ -30,6 +30,16 @@ resource "checkly_check_group" "frontend" {
   use_global_alert_settings = false // Whether to use global alert settings or group-specific ones
 }
 
+resource "checkly_snippet" "get-base-url" {
+  name   = "Login"
+  script = file("${path.module}/browser/snippets/get-base-url.js")
+}
+
+resource "checkly_snippet" "graphql" {
+  name   = "Login"
+  script = file("${path.module}/browser/snippets/graphql.js")
+}
+
 resource "checkly_check" "destinations-page-unauth-redirect" {
   name          = "Destinations Page Unauth redirect"
   type          = "BROWSER"

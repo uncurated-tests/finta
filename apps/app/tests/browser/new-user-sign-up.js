@@ -1,8 +1,8 @@
 const { chromium } = require('playwright');
 const expect = require('expect')
 
-const { getBaseUrl } = require('./lib/getBaseUrl');
-const graphql = require('./lib/graphql');
+const { getBaseUrl } = require('./snippets/get-base-url');
+const graphql = require('./snippets/graphql');
 
 async function run() {
   const browser = await chromium.launch({ headless: false });
