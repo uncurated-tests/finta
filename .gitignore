@@ -37,3 +37,6 @@ yarn-error.log*
 .env
 
 .nhost
+apps/app/tests/.terraform.lock.hcl
+apps/app/tests/terraform.tfstate
+apps/app/tests/terraform.tfstate.backup
