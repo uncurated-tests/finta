@@ -1,0 +1,12 @@
+type Mutation {
+  setupUser(
+    userId: uuid!
+  ): SetupUserResponse
+}
+
+type SetupUserResponse {
+  ok: Boolean!
+}
+
+scalar uuid
+

@@ -1,0 +1,9 @@
+table:
+  name: subscription_statuses
+  schema: stripe
+is_enum: true
+select_permissions:
+  - role: user
+    permission:
+      columns: []
+      filter: {}
