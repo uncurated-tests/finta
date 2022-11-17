@@ -4,7 +4,7 @@ import {
   Heading,
   Link,
   Text,
-  VStack
+  VStack 
 } from '@chakra-ui/react';
 import { Link as RouterLink } from "react-router-dom";
 
@@ -18,7 +18,6 @@ import { AppRoutes } from 'src/routes';
 
 export const Signup = () =>{
   useEffect(() => { analytics.page({ name: analytics.PageNames.SIGN_UP })}, []);
-
   return (
     <Page hasNavigation = { false }>
       <Center w = "full" maxW = "lg" mx = "auto" flexDir = "column" mt = {{ base: 10, sm: 20, md: 32 }} px = {{ base: 2, sm: 4, md: 'unset'}}>

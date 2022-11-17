@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "ui";
 
 import "./App.css";
 import logo from "./logo.svg";
@@ -13,9 +12,6 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <Link className="App-link" href="https://reactjs.org">
-          Learn React
-        </Link>
       </header>
     </div>
   );

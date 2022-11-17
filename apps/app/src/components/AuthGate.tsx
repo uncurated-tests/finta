@@ -8,16 +8,24 @@ export interface AuthGateParams {
   shouldBeSignedIn?: boolean;
 }
 
+export type LocationStateType = {
+  from: {
+    path: string,
+    pathname: string,
+    search: string
+  }
+}
+
 export const AuthGate = (params: AuthGateParams) => {
   const location = useLocation();
   const { children, shouldBeSignedIn } = params;
-  const { isLoading, isAuthenticated } = useAuth();
+  const { user, isLoading } = useAuth();
 
   if ( shouldBeSignedIn && isLoading ) {
     return <></>
   }
 
-  if ( shouldBeSignedIn && !isAuthenticated ) {
+  if ( shouldBeSignedIn && !user ) {
     const onAuthRedirect = location.pathname + location.search || "/";
     return <Navigate to = "/login" state = {{ redirect: onAuthRedirect }} />
   }

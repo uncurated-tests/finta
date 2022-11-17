@@ -13,6 +13,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  Date: any;
   bigint: any;
   bytea: any;
   citext: any;
@@ -46,6 +47,13 @@ export type Int_Comparison_Exp = {
   _neq?: InputMaybe<Scalars['Int']>;
   _nin?: InputMaybe<Array<Scalars['Int']>>;
 };
+
+export enum Interval {
+  Day = 'day',
+  Month = 'month',
+  Week = 'week',
+  Year = 'year'
+}
 
 export type SetupUserResponse = {
   __typename?: 'SetupUserResponse';
@@ -84,6 +92,52 @@ export type String_Comparison_Exp = {
   /** does the column match the given SQL regular expression */
   _similar?: InputMaybe<Scalars['String']>;
 };
+
+export type StripeCustomer = {
+  __typename?: 'StripeCustomer';
+  createdAt: Scalars['Date'];
+  id: Scalars['String'];
+};
+
+export type StripeData = {
+  __typename?: 'StripeData';
+  customer: StripeCustomer;
+  hasAppAccess: Scalars['Boolean'];
+  subscription?: Maybe<StripeSubscription>;
+  trialEndsAt: Scalars['Date'];
+};
+
+export type StripePrice = {
+  __typename?: 'StripePrice';
+  id: Scalars['String'];
+  interval: Interval;
+  productId: Scalars['String'];
+  unitAmount: Scalars['Float'];
+};
+
+export type StripeSubscription = {
+  __typename?: 'StripeSubscription';
+  cancelAtPeriodEnd: Scalars['Boolean'];
+  currentPeriodEnd: Scalars['Date'];
+  currentPeriodStart: Scalars['Date'];
+  endedAt?: Maybe<Scalars['Date']>;
+  id: Scalars['String'];
+  interval: Interval;
+  startedAt: Scalars['Date'];
+  status: SubscriptionStatus;
+  trialEndedAt?: Maybe<Scalars['Date']>;
+  trialStartedAt?: Maybe<Scalars['Date']>;
+};
+
+export enum SubscriptionStatus {
+  Active = 'active',
+  Canceled = 'canceled',
+  Incomplete = 'incomplete',
+  IncompleteExpired = 'incomplete_expired',
+  PastDue = 'past_due',
+  Trialing = 'trialing',
+  Unpaid = 'unpaid'
+}
 
 /** columns and relationships of "airtable_configs" */
 export type Airtable_Configs = {
@@ -7222,7 +7276,7 @@ export type Plaid_Item_Sync_Logs_Updates = {
 /** columns and relationships of "plaid_items" */
 export type Plaid_Items = {
   __typename?: 'plaid_items';
-  access_token: Scalars['String'];
+  accessToken: Scalars['String'];
   /** An array relationship */
   accounts: Array<Plaid_Accounts>;
   /** An aggregate relationship */
@@ -7374,7 +7428,7 @@ export type Plaid_Items_Bool_Exp = {
   _and?: InputMaybe<Array<Plaid_Items_Bool_Exp>>;
   _not?: InputMaybe<Plaid_Items_Bool_Exp>;
   _or?: InputMaybe<Array<Plaid_Items_Bool_Exp>>;
-  access_token?: InputMaybe<String_Comparison_Exp>;
+  accessToken?: InputMaybe<String_Comparison_Exp>;
   accounts?: InputMaybe<Plaid_Accounts_Bool_Exp>;
   available_products?: InputMaybe<Jsonb_Comparison_Exp>;
   billed_products?: InputMaybe<Jsonb_Comparison_Exp>;
@@ -7422,7 +7476,7 @@ export type Plaid_Items_Delete_Key_Input = {
 
 /** input type for inserting data into table "plaid_items" */
 export type Plaid_Items_Insert_Input = {
-  access_token?: InputMaybe<Scalars['String']>;
+  accessToken?: InputMaybe<Scalars['String']>;
   accounts?: InputMaybe<Plaid_Accounts_Arr_Rel_Insert_Input>;
   available_products?: InputMaybe<Scalars['jsonb']>;
   billed_products?: InputMaybe<Scalars['jsonb']>;
@@ -7447,7 +7501,7 @@ export type Plaid_Items_Insert_Input = {
 /** aggregate max on columns */
 export type Plaid_Items_Max_Fields = {
   __typename?: 'plaid_items_max_fields';
-  access_token?: Maybe<Scalars['String']>;
+  accessToken?: Maybe<Scalars['String']>;
   consent_expires_at?: Maybe<Scalars['timestamptz']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   disabled_at?: Maybe<Scalars['timestamptz']>;
@@ -7462,7 +7516,7 @@ export type Plaid_Items_Max_Fields = {
 
 /** order by max() on columns of table "plaid_items" */
 export type Plaid_Items_Max_Order_By = {
-  access_token?: InputMaybe<Order_By>;
+  accessToken?: InputMaybe<Order_By>;
   consent_expires_at?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   disabled_at?: InputMaybe<Order_By>;
@@ -7478,7 +7532,7 @@ export type Plaid_Items_Max_Order_By = {
 /** aggregate min on columns */
 export type Plaid_Items_Min_Fields = {
   __typename?: 'plaid_items_min_fields';
-  access_token?: Maybe<Scalars['String']>;
+  accessToken?: Maybe<Scalars['String']>;
   consent_expires_at?: Maybe<Scalars['timestamptz']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   disabled_at?: Maybe<Scalars['timestamptz']>;
@@ -7493,7 +7547,7 @@ export type Plaid_Items_Min_Fields = {
 
 /** order by min() on columns of table "plaid_items" */
 export type Plaid_Items_Min_Order_By = {
-  access_token?: InputMaybe<Order_By>;
+  accessToken?: InputMaybe<Order_By>;
   consent_expires_at?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   disabled_at?: InputMaybe<Order_By>;
@@ -7531,7 +7585,7 @@ export type Plaid_Items_On_Conflict = {
 
 /** Ordering options when selecting data from "plaid_items". */
 export type Plaid_Items_Order_By = {
-  access_token?: InputMaybe<Order_By>;
+  accessToken?: InputMaybe<Order_By>;
   accounts_aggregate?: InputMaybe<Plaid_Accounts_Aggregate_Order_By>;
   available_products?: InputMaybe<Order_By>;
   billed_products?: InputMaybe<Order_By>;
@@ -7567,7 +7621,7 @@ export type Plaid_Items_Prepend_Input = {
 /** select columns of table "plaid_items" */
 export enum Plaid_Items_Select_Column {
   /** column name */
-  AccessToken = 'access_token',
+  AccessToken = 'accessToken',
   /** column name */
   AvailableProducts = 'available_products',
   /** column name */
@@ -7600,7 +7654,7 @@ export enum Plaid_Items_Select_Column {
 
 /** input type for updating data in table "plaid_items" */
 export type Plaid_Items_Set_Input = {
-  access_token?: InputMaybe<Scalars['String']>;
+  accessToken?: InputMaybe<Scalars['String']>;
   available_products?: InputMaybe<Scalars['jsonb']>;
   billed_products?: InputMaybe<Scalars['jsonb']>;
   consent_expires_at?: InputMaybe<Scalars['timestamptz']>;
@@ -7627,7 +7681,7 @@ export type Plaid_Items_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Plaid_Items_Stream_Cursor_Value_Input = {
-  access_token?: InputMaybe<Scalars['String']>;
+  accessToken?: InputMaybe<Scalars['String']>;
   available_products?: InputMaybe<Scalars['jsonb']>;
   billed_products?: InputMaybe<Scalars['jsonb']>;
   consent_expires_at?: InputMaybe<Scalars['timestamptz']>;
@@ -7647,7 +7701,7 @@ export type Plaid_Items_Stream_Cursor_Value_Input = {
 /** update columns of table "plaid_items" */
 export enum Plaid_Items_Update_Column {
   /** column name */
-  AccessToken = 'access_token',
+  AccessToken = 'accessToken',
   /** column name */
   AvailableProducts = 'available_products',
   /** column name */
@@ -7810,6 +7864,8 @@ export type Query_Root = {
   oauth_codes_aggregate: Oauth_Codes_Aggregate;
   /** fetch data from the table: "oauth_codes" using primary key columns */
   oauth_codes_by_pk?: Maybe<Oauth_Codes>;
+  /** fetch data from the table: "plaid_items" using primary key columns */
+  plaidItem?: Maybe<Plaid_Items>;
   /** fetch data from the table: "plaid_accounts" */
   plaid_accounts: Array<Plaid_Accounts>;
   /** fetch aggregated fields from the table: "plaid_accounts" */
@@ -7832,14 +7888,14 @@ export type Query_Root = {
   plaid_items: Array<Plaid_Items>;
   /** An aggregate relationship */
   plaid_items_aggregate: Plaid_Items_Aggregate;
-  /** fetch data from the table: "plaid_items" using primary key columns */
-  plaid_items_by_pk?: Maybe<Plaid_Items>;
   /** fetch data from the table: "removed_plaid_transactions" */
   removed_plaid_transactions: Array<Removed_Plaid_Transactions>;
   /** fetch aggregated fields from the table: "removed_plaid_transactions" */
   removed_plaid_transactions_aggregate: Removed_Plaid_Transactions_Aggregate;
   /** fetch data from the table: "removed_plaid_transactions" using primary key columns */
   removed_plaid_transactions_by_pk?: Maybe<Removed_Plaid_Transactions>;
+  stripeData: StripeData;
+  stripePrices: Array<StripePrice>;
   /** fetch data from the table: "stripe.webhook_events" */
   stripe_webhook_events: Array<Stripe_Webhook_Events>;
   /** fetch aggregated fields from the table: "stripe.webhook_events" */
@@ -8313,6 +8369,11 @@ export type Query_RootOauth_Codes_By_PkArgs = {
 };
 
 
+export type Query_RootPlaidItemArgs = {
+  id: Scalars['String'];
+};
+
+
 export type Query_RootPlaid_AccountsArgs = {
   distinct_on?: InputMaybe<Array<Plaid_Accounts_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -8401,11 +8462,6 @@ export type Query_RootPlaid_Items_AggregateArgs = {
 };
 
 
-export type Query_RootPlaid_Items_By_PkArgs = {
-  id: Scalars['String'];
-};
-
-
 export type Query_RootRemoved_Plaid_TransactionsArgs = {
   distinct_on?: InputMaybe<Array<Removed_Plaid_Transactions_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -8426,6 +8482,11 @@ export type Query_RootRemoved_Plaid_Transactions_AggregateArgs = {
 
 export type Query_RootRemoved_Plaid_Transactions_By_PkArgs = {
   transaction_id: Scalars['String'];
+};
+
+
+export type Query_RootStripeDataArgs = {
+  user_id: Scalars['uuid'];
 };
 
 
@@ -9165,6 +9226,8 @@ export type Subscription_Root = {
   oauth_codes_by_pk?: Maybe<Oauth_Codes>;
   /** fetch data from the table in a streaming manner : "oauth_codes" */
   oauth_codes_stream: Array<Oauth_Codes>;
+  /** fetch data from the table: "plaid_items" using primary key columns */
+  plaidItem?: Maybe<Plaid_Items>;
   /** fetch data from the table: "plaid_accounts" */
   plaid_accounts: Array<Plaid_Accounts>;
   /** fetch aggregated fields from the table: "plaid_accounts" */
@@ -9193,8 +9256,6 @@ export type Subscription_Root = {
   plaid_items: Array<Plaid_Items>;
   /** An aggregate relationship */
   plaid_items_aggregate: Plaid_Items_Aggregate;
-  /** fetch data from the table: "plaid_items" using primary key columns */
-  plaid_items_by_pk?: Maybe<Plaid_Items>;
   /** fetch data from the table in a streaming manner : "plaid_items" */
   plaid_items_stream: Array<Plaid_Items>;
   /** fetch data from the table: "removed_plaid_transactions" */
@@ -9821,6 +9882,11 @@ export type Subscription_RootOauth_Codes_StreamArgs = {
 };
 
 
+export type Subscription_RootPlaidItemArgs = {
+  id: Scalars['String'];
+};
+
+
 export type Subscription_RootPlaid_AccountsArgs = {
   distinct_on?: InputMaybe<Array<Plaid_Accounts_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -9927,11 +9993,6 @@ export type Subscription_RootPlaid_Items_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<Plaid_Items_Order_By>>;
   where?: InputMaybe<Plaid_Items_Bool_Exp>;
-};
-
-
-export type Subscription_RootPlaid_Items_By_PkArgs = {
-  id: Scalars['String'];
 };
 
 
@@ -10701,6 +10762,7 @@ export type Users = {
   securityKeys: Array<AuthUserSecurityKeys>;
   /** An aggregate relationship */
   securityKeys_aggregate: AuthUserSecurityKeys_Aggregate;
+  stripeData: StripeData;
   ticket?: Maybe<Scalars['String']>;
   ticketExpiresAt: Scalars['timestamptz'];
   totpSecret?: Maybe<Scalars['String']>;
@@ -11374,25 +11436,960 @@ export type Uuid_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['uuid']>>;
 };
 
-export type AllUserFieldsFragment = { __typename: 'users', id: any, email?: any | null, emailVerified: boolean, displayName: string, createdAt: any };
+export type AllDestinationAccountFieldsFragment = { __typename: 'destination_accounts', account_id: string, destination_id: any };
+
+export type InsertDestinationAccountsMutationVariables = Exact<{
+  destination_accounts: Array<Destination_Accounts_Insert_Input> | Destination_Accounts_Insert_Input;
+}>;
+
+
+export type InsertDestinationAccountsMutation = { __typename?: 'mutation_root', destination_accounts?: { __typename?: 'destination_accounts_mutation_response', returning: Array<{ __typename: 'destination_accounts', account_id: string, destination_id: any }> } | null };
+
+export type DeleteDestinationAccountsMutationVariables = Exact<{
+  where: Destination_Accounts_Bool_Exp;
+}>;
+
+
+export type DeleteDestinationAccountsMutation = { __typename?: 'mutation_root', destination_accounts?: { __typename?: 'destination_accounts_mutation_response', returning: Array<{ __typename: 'destination_accounts', account_id: string, destination_id: any }> } | null };
+
+export type GetDestinationAccountsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetDestinationAccountsQuery = { __typename?: 'query_root', destination_accounts: Array<{ __typename: 'destination_accounts', account_id: string, destination_id: any }> };
+
+export type AllDestinationFieldsFragment = { __typename: 'destinations', id: any, created_at: any, integration_id: Integrations_Enum, name: string, sync_start_date: string, should_sync_transactions: boolean, should_sync_investments: boolean, authentication?: any | null, disabled_at?: any | null, table_configs: any, integration: { __typename?: 'integrations', id: string, name: string }, account_connections: Array<{ __typename?: 'destination_accounts', account: { __typename?: 'plaid_accounts', id: string } }>, notion_connection?: { __typename?: 'notion_connections', access_token: string, bot_id: string } | null };
+
+export type InsertDestinationMutationVariables = Exact<{
+  destination: Destinations_Insert_Input;
+}>;
+
+
+export type InsertDestinationMutation = { __typename?: 'mutation_root', destination?: { __typename: 'destinations', id: any, created_at: any, integration_id: Integrations_Enum, name: string, sync_start_date: string, should_sync_transactions: boolean, should_sync_investments: boolean, authentication?: any | null, disabled_at?: any | null, table_configs: any, integration: { __typename?: 'integrations', id: string, name: string }, account_connections: Array<{ __typename?: 'destination_accounts', account: { __typename?: 'plaid_accounts', id: string } }>, notion_connection?: { __typename?: 'notion_connections', access_token: string, bot_id: string } | null } | null };
+
+export type GetDestinationsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetDestinationsQuery = { __typename?: 'query_root', destinations: Array<{ __typename: 'destinations', id: any, created_at: any, integration_id: Integrations_Enum, name: string, sync_start_date: string, should_sync_transactions: boolean, should_sync_investments: boolean, authentication?: any | null, disabled_at?: any | null, table_configs: any, integration: { __typename?: 'integrations', id: string, name: string }, account_connections: Array<{ __typename?: 'destination_accounts', account: { __typename?: 'plaid_accounts', id: string } }>, notion_connection?: { __typename?: 'notion_connections', access_token: string, bot_id: string } | null }> };
+
+export type UpdateDestinationMutationVariables = Exact<{
+  destination_id: Scalars['uuid'];
+  _set?: InputMaybe<Destinations_Set_Input>;
+  _append?: InputMaybe<Destinations_Append_Input>;
+}>;
+
+
+export type UpdateDestinationMutation = { __typename?: 'mutation_root', destination?: { __typename: 'destinations', id: any, created_at: any, integration_id: Integrations_Enum, name: string, sync_start_date: string, should_sync_transactions: boolean, should_sync_investments: boolean, authentication?: any | null, disabled_at?: any | null, table_configs: any, integration: { __typename?: 'integrations', id: string, name: string }, account_connections: Array<{ __typename?: 'destination_accounts', account: { __typename?: 'plaid_accounts', id: string } }>, notion_connection?: { __typename?: 'notion_connections', access_token: string, bot_id: string } | null } | null };
+
+export type AllIntegrationFieldsFragment = { __typename: 'integrations', id: string, name: string };
+
+export type GetIntegrationsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetIntegrationsQuery = { __typename?: 'query_root', integrations: Array<{ __typename: 'integrations', id: string, name: string }> };
+
+export type AllNotionConnectionFieldsFragment = { __typename: 'notion_connections', bot_id: string, workspace_name?: string | null, workspace_icon?: string | null, access_token: string };
+
+export type GetNotionConnectionsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetNotionConnectionsQuery = { __typename?: 'query_root', notion_connections: Array<{ __typename: 'notion_connections', bot_id: string, workspace_name?: string | null, workspace_icon?: string | null, access_token: string }> };
+
+export type AllOauthClientFieldsFragment = { __typename: 'oauth_clients', id: any, name: string, integration: { __typename?: 'integrations', id: string, name: string } };
+
+export type GetOAuthClientQueryVariables = Exact<{
+  client_id: Scalars['uuid'];
+}>;
+
+
+export type GetOAuthClientQuery = { __typename?: 'query_root', oauth_client?: { __typename: 'oauth_clients', id: any, name: string, integration: { __typename?: 'integrations', id: string, name: string } } | null };
+
+export type InsertPlaidAccountsMutationVariables = Exact<{
+  plaid_accounts: Array<Plaid_Accounts_Insert_Input> | Plaid_Accounts_Insert_Input;
+}>;
+
+
+export type InsertPlaidAccountsMutation = { __typename?: 'mutation_root', plaid_accounts?: { __typename?: 'plaid_accounts_mutation_response', returning: Array<{ __typename: 'plaid_accounts', id: string, plaid_item_id: string, created_at: any, mask?: string | null, name: string, destination_connections: Array<{ __typename?: 'destination_accounts', destination: { __typename?: 'destinations', id: any, integration: { __typename?: 'integrations', id: string, name: string } } }> }> } | null };
+
+export type UpdatePlaidAccountMutationVariables = Exact<{
+  plaid_account_id: Scalars['String'];
+  _set: Plaid_Accounts_Set_Input;
+}>;
+
+
+export type UpdatePlaidAccountMutation = { __typename?: 'mutation_root', plaid_account?: { __typename: 'plaid_accounts', id: string, plaid_item_id: string, created_at: any, mask?: string | null, name: string, destination_connections: Array<{ __typename?: 'destination_accounts', destination: { __typename?: 'destinations', id: any, integration: { __typename?: 'integrations', id: string, name: string } } }> } | null };
+
+export type AllPlaidAccountFieldsFragment = { __typename: 'plaid_accounts', id: string, plaid_item_id: string, created_at: any, mask?: string | null, name: string, destination_connections: Array<{ __typename?: 'destination_accounts', destination: { __typename?: 'destinations', id: any, integration: { __typename?: 'integrations', id: string, name: string } } }> };
+
+export type AllPlaidItemFieldsFragment = { __typename: 'plaid_items', id: string, created_at: any, synced_at?: any | null, is_initial_update_complete: boolean, is_historical_update_complete: boolean, error?: string | null, accessToken: string, consent_expires_at?: any | null, disabled_at?: any | null, institution: { __typename?: 'plaid_institutions', id: string, name: string, logo_file?: { __typename?: 'files', id: any } | null }, accounts: Array<{ __typename: 'plaid_accounts', id: string, plaid_item_id: string, created_at: any, mask?: string | null, name: string, destination_connections: Array<{ __typename?: 'destination_accounts', destination: { __typename?: 'destinations', id: any, integration: { __typename?: 'integrations', id: string, name: string } } }> }> };
+
+export type InsertPlaidItemMutationVariables = Exact<{
+  plaid_item: Plaid_Items_Insert_Input;
+}>;
+
+
+export type InsertPlaidItemMutation = { __typename?: 'mutation_root', plaid_item?: { __typename: 'plaid_items', id: string, created_at: any, synced_at?: any | null, is_initial_update_complete: boolean, is_historical_update_complete: boolean, error?: string | null, accessToken: string, consent_expires_at?: any | null, disabled_at?: any | null, institution: { __typename?: 'plaid_institutions', id: string, name: string, logo_file?: { __typename?: 'files', id: any } | null }, accounts: Array<{ __typename: 'plaid_accounts', id: string, plaid_item_id: string, created_at: any, mask?: string | null, name: string, destination_connections: Array<{ __typename?: 'destination_accounts', destination: { __typename?: 'destinations', id: any, integration: { __typename?: 'integrations', id: string, name: string } } }> }> } | null };
+
+export type UpdatePlaidItemMutationVariables = Exact<{
+  plaid_item_id: Scalars['String'];
+  _set?: InputMaybe<Plaid_Items_Set_Input>;
+}>;
+
+
+export type UpdatePlaidItemMutation = { __typename?: 'mutation_root', plaid_item?: { __typename: 'plaid_items', id: string, created_at: any, synced_at?: any | null, is_initial_update_complete: boolean, is_historical_update_complete: boolean, error?: string | null, accessToken: string, consent_expires_at?: any | null, disabled_at?: any | null, institution: { __typename?: 'plaid_institutions', id: string, name: string, logo_file?: { __typename?: 'files', id: any } | null }, accounts: Array<{ __typename: 'plaid_accounts', id: string, plaid_item_id: string, created_at: any, mask?: string | null, name: string, destination_connections: Array<{ __typename?: 'destination_accounts', destination: { __typename?: 'destinations', id: any, integration: { __typename?: 'integrations', id: string, name: string } } }> }> } | null };
+
+export type GetPlaidItemsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetPlaidItemsQuery = { __typename?: 'query_root', plaid_items: Array<{ __typename: 'plaid_items', id: string, created_at: any, synced_at?: any | null, is_initial_update_complete: boolean, is_historical_update_complete: boolean, error?: string | null, accessToken: string, consent_expires_at?: any | null, disabled_at?: any | null, institution: { __typename?: 'plaid_institutions', id: string, name: string, logo_file?: { __typename?: 'files', id: any } | null }, accounts: Array<{ __typename: 'plaid_accounts', id: string, plaid_item_id: string, created_at: any, mask?: string | null, name: string, destination_connections: Array<{ __typename?: 'destination_accounts', destination: { __typename?: 'destinations', id: any, integration: { __typename?: 'integrations', id: string, name: string } } }> }> }> };
+
+export type AllSubscriptionPricesFieldsFragment = { __typename?: 'StripePrice', id: string, interval: Interval, unitAmount: number, productId: string };
+
+export type GetSubscriptionPricesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetSubscriptionPricesQuery = { __typename?: 'query_root', stripePrices: Array<{ __typename?: 'StripePrice', id: string, interval: Interval, unitAmount: number, productId: string }> };
+
+export type AllSyncLogFieldsFragment = { __typename?: 'sync_logs', id: any, created_at: any, ended_at?: any | null, trigger: string, is_success: boolean, error?: any | null, metadata?: any | null, destination_sync_logs: Array<{ __typename?: 'destination_sync_logs', error?: any | null, accounts: any, holdings: any, transactions: any, investment_transactions: any, destination: { __typename?: 'destinations', id: any, name: string, integration: { __typename?: 'integrations', id: string, name: string } } }>, plaid_item_sync_logs: Array<{ __typename?: 'plaid_item_sync_logs', error?: any | null, accounts: any, holdings: any, transactions: any, investment_transactions: any, plaid_item: { __typename: 'plaid_items', id: string, institution: { __typename?: 'plaid_institutions', name: string, logo_file?: { __typename?: 'files', id: any } | null }, accounts: Array<{ __typename: 'plaid_accounts', id: string, name: string }> } }> };
+
+export type GetSyncLogsQueryVariables = Exact<{
+  offset: Scalars['Int'];
+}>;
+
+
+export type GetSyncLogsQuery = { __typename?: 'query_root', sync_logs: Array<{ __typename?: 'sync_logs', id: any, created_at: any, ended_at?: any | null, trigger: string, is_success: boolean, error?: any | null, metadata?: any | null, destination_sync_logs: Array<{ __typename?: 'destination_sync_logs', error?: any | null, accounts: any, holdings: any, transactions: any, investment_transactions: any, destination: { __typename?: 'destinations', id: any, name: string, integration: { __typename?: 'integrations', id: string, name: string } } }>, plaid_item_sync_logs: Array<{ __typename?: 'plaid_item_sync_logs', error?: any | null, accounts: any, holdings: any, transactions: any, investment_transactions: any, plaid_item: { __typename: 'plaid_items', id: string, institution: { __typename?: 'plaid_institutions', name: string, logo_file?: { __typename?: 'files', id: any } | null }, accounts: Array<{ __typename: 'plaid_accounts', id: string, name: string }> } }> }>, count: { __typename?: 'sync_logs_aggregate', aggregate?: { __typename?: 'sync_logs_aggregate_fields', count: number } | null } };
+
+export type AllStripeDataFieldsFragment = { __typename?: 'StripeData', trialEndsAt: any, hasAppAccess: boolean, customer: { __typename?: 'StripeCustomer', id: string, createdAt: any }, subscription?: { __typename?: 'StripeSubscription', id: string, status: SubscriptionStatus, interval: Interval, cancelAtPeriodEnd: boolean, endedAt?: any | null, currentPeriodEnd: any, trialStartedAt?: any | null, trialEndedAt?: any | null } | null };
+
+export type AllUserProfileFieldsFragment = { __typename: 'userProfiles', user_id: any, timezone?: string | null, is_subscribed_general: boolean, is_subscribed_sync_updates: boolean, sync_updates_frequency?: Frequencies_Enum | null };
+
+export type AllUserFieldsFragment = { __typename: 'users', id: any, email?: any | null, metadata?: any | null, email_verified: boolean, display_name: string, created_at: any, stripeData: { __typename?: 'StripeData', trialEndsAt: any, hasAppAccess: boolean, customer: { __typename?: 'StripeCustomer', id: string, createdAt: any }, subscription?: { __typename?: 'StripeSubscription', id: string, status: SubscriptionStatus, interval: Interval, cancelAtPeriodEnd: boolean, endedAt?: any | null, currentPeriodEnd: any, trialStartedAt?: any | null, trialEndedAt?: any | null } | null }, profile?: { __typename?: 'userProfiles', user_id: any } | null };
 
 export type GetUserQueryVariables = Exact<{
   user_id: Scalars['uuid'];
 }>;
 
 
-export type GetUserQuery = { __typename?: 'query_root', user?: { __typename: 'users', id: any, email?: any | null, emailVerified: boolean, displayName: string, createdAt: any } | null };
+export type GetUserQuery = { __typename?: 'query_root', user?: { __typename: 'users', id: any, email?: any | null, metadata?: any | null, email_verified: boolean, display_name: string, created_at: any, stripeData: { __typename?: 'StripeData', trialEndsAt: any, hasAppAccess: boolean, customer: { __typename?: 'StripeCustomer', id: string, createdAt: any }, subscription?: { __typename?: 'StripeSubscription', id: string, status: SubscriptionStatus, interval: Interval, cancelAtPeriodEnd: boolean, endedAt?: any | null, currentPeriodEnd: any, trialStartedAt?: any | null, trialEndedAt?: any | null } | null }, profile?: { __typename?: 'userProfiles', user_id: any } | null } | null };
 
+export type UpdateUserMutationVariables = Exact<{
+  id: Scalars['uuid'];
+  _set: Users_Set_Input;
+}>;
+
+
+export type UpdateUserMutation = { __typename?: 'mutation_root', updateUser?: { __typename: 'users', id: any, email?: any | null, metadata?: any | null, email_verified: boolean, display_name: string, created_at: any, stripeData: { __typename?: 'StripeData', trialEndsAt: any, hasAppAccess: boolean, customer: { __typename?: 'StripeCustomer', id: string, createdAt: any }, subscription?: { __typename?: 'StripeSubscription', id: string, status: SubscriptionStatus, interval: Interval, cancelAtPeriodEnd: boolean, endedAt?: any | null, currentPeriodEnd: any, trialStartedAt?: any | null, trialEndedAt?: any | null } | null }, profile?: { __typename?: 'userProfiles', user_id: any } | null } | null };
+
+export type DeleteUserMutationVariables = Exact<{
+  id: Scalars['uuid'];
+}>;
+
+
+export type DeleteUserMutation = { __typename?: 'mutation_root', deleteUser?: { __typename?: 'users', id: any } | null };
+
+export type GetUserProfileQueryVariables = Exact<{
+  userId: Scalars['uuid'];
+}>;
+
+
+export type GetUserProfileQuery = { __typename?: 'query_root', userProfile?: { __typename: 'userProfiles', user_id: any, timezone?: string | null, is_subscribed_general: boolean, is_subscribed_sync_updates: boolean, sync_updates_frequency?: Frequencies_Enum | null } | null };
+
+export type UpdateUserProfileMutationVariables = Exact<{
+  userId: Scalars['uuid'];
+  _set: UserProfiles_Set_Input;
+}>;
+
+
+export type UpdateUserProfileMutation = { __typename?: 'mutation_root', updateUserProfile?: { __typename: 'userProfiles', user_id: any, timezone?: string | null, is_subscribed_general: boolean, is_subscribed_sync_updates: boolean, sync_updates_frequency?: Frequencies_Enum | null } | null };
+
+export type SetupUserMutationVariables = Exact<{
+  userId: Scalars['uuid'];
+}>;
+
+
+export type SetupUserMutation = { __typename?: 'mutation_root', setupUser?: { __typename?: 'SetupUserResponse', ok: boolean } | null };
+
+export const AllDestinationAccountFieldsFragmentDoc = gql`
+    fragment AllDestinationAccountFields on destination_accounts {
+  __typename
+  account_id
+  destination_id
+}
+    `;
+export const AllDestinationFieldsFragmentDoc = gql`
+    fragment AllDestinationFields on destinations {
+  __typename
+  id
+  created_at
+  integration_id
+  integration {
+    id
+    name
+  }
+  name
+  sync_start_date
+  should_sync_transactions
+  should_sync_investments
+  authentication
+  disabled_at
+  table_configs
+  account_connections {
+    account {
+      id
+    }
+  }
+  notion_connection {
+    access_token
+    bot_id
+  }
+}
+    `;
+export const AllIntegrationFieldsFragmentDoc = gql`
+    fragment AllIntegrationFields on integrations {
+  __typename
+  id
+  name
+}
+    `;
+export const AllNotionConnectionFieldsFragmentDoc = gql`
+    fragment AllNotionConnectionFields on notion_connections {
+  __typename
+  bot_id
+  workspace_name
+  workspace_icon
+  access_token
+}
+    `;
+export const AllOauthClientFieldsFragmentDoc = gql`
+    fragment AllOauthClientFields on oauth_clients {
+  __typename
+  id
+  name
+  integration {
+    id
+    name
+  }
+}
+    `;
+export const AllPlaidAccountFieldsFragmentDoc = gql`
+    fragment AllPlaidAccountFields on plaid_accounts {
+  __typename
+  id
+  plaid_item_id
+  created_at
+  mask
+  name
+  destination_connections {
+    destination {
+      id
+      integration {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+export const AllPlaidItemFieldsFragmentDoc = gql`
+    fragment AllPlaidItemFields on plaid_items {
+  __typename
+  id
+  created_at
+  synced_at
+  is_initial_update_complete
+  is_historical_update_complete
+  error
+  accessToken
+  consent_expires_at
+  institution {
+    id
+    name
+    logo_file {
+      id
+    }
+  }
+  accounts {
+    ...AllPlaidAccountFields
+  }
+  disabled_at
+}
+    ${AllPlaidAccountFieldsFragmentDoc}`;
+export const AllSubscriptionPricesFieldsFragmentDoc = gql`
+    fragment AllSubscriptionPricesFields on StripePrice {
+  id
+  interval
+  unitAmount
+  productId
+}
+    `;
+export const AllSyncLogFieldsFragmentDoc = gql`
+    fragment AllSyncLogFields on sync_logs {
+  id
+  created_at
+  ended_at
+  trigger
+  is_success
+  error
+  metadata
+  destination_sync_logs {
+    destination {
+      id
+      name
+      integration {
+        id
+        name
+      }
+    }
+    error
+    accounts
+    holdings
+    transactions
+    investment_transactions
+  }
+  plaid_item_sync_logs {
+    plaid_item {
+      __typename
+      id
+      institution {
+        logo_file {
+          id
+        }
+        name
+      }
+      accounts {
+        __typename
+        id
+        name
+      }
+    }
+    error
+    accounts
+    holdings
+    transactions
+    investment_transactions
+  }
+}
+    `;
+export const AllUserProfileFieldsFragmentDoc = gql`
+    fragment AllUserProfileFields on userProfiles {
+  __typename
+  user_id
+  timezone
+  is_subscribed_general
+  is_subscribed_sync_updates
+  sync_updates_frequency
+}
+    `;
+export const AllStripeDataFieldsFragmentDoc = gql`
+    fragment AllStripeDataFields on StripeData {
+  trialEndsAt
+  hasAppAccess
+  customer {
+    id
+    createdAt
+  }
+  subscription {
+    id
+    status
+    interval
+    cancelAtPeriodEnd
+    endedAt
+    currentPeriodEnd
+    trialStartedAt
+    trialEndedAt
+  }
+}
+    `;
 export const AllUserFieldsFragmentDoc = gql`
     fragment AllUserFields on users {
   __typename
   id
   email
-  emailVerified
-  displayName
-  createdAt
+  email_verified: emailVerified
+  display_name: displayName
+  created_at: createdAt
+  metadata
+  stripeData {
+    ...AllStripeDataFields
+  }
+  profile {
+    user_id
+  }
 }
-    `;
+    ${AllStripeDataFieldsFragmentDoc}`;
+export const InsertDestinationAccountsDocument = gql`
+    mutation InsertDestinationAccounts($destination_accounts: [destination_accounts_insert_input!]!) {
+  destination_accounts: insert_destination_accounts(
+    objects: $destination_accounts
+    on_conflict: {constraint: destination_accounts_pkey, update_columns: [destination_id]}
+  ) {
+    returning {
+      ...AllDestinationAccountFields
+    }
+  }
+}
+    ${AllDestinationAccountFieldsFragmentDoc}`;
+export type InsertDestinationAccountsMutationFn = Apollo.MutationFunction<InsertDestinationAccountsMutation, InsertDestinationAccountsMutationVariables>;
+
+/**
+ * __useInsertDestinationAccountsMutation__
+ *
+ * To run a mutation, you first call `useInsertDestinationAccountsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertDestinationAccountsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertDestinationAccountsMutation, { data, loading, error }] = useInsertDestinationAccountsMutation({
+ *   variables: {
+ *      destination_accounts: // value for 'destination_accounts'
+ *   },
+ * });
+ */
+export function useInsertDestinationAccountsMutation(baseOptions?: Apollo.MutationHookOptions<InsertDestinationAccountsMutation, InsertDestinationAccountsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<InsertDestinationAccountsMutation, InsertDestinationAccountsMutationVariables>(InsertDestinationAccountsDocument, options);
+      }
+export type InsertDestinationAccountsMutationHookResult = ReturnType<typeof useInsertDestinationAccountsMutation>;
+export type InsertDestinationAccountsMutationResult = Apollo.MutationResult<InsertDestinationAccountsMutation>;
+export type InsertDestinationAccountsMutationOptions = Apollo.BaseMutationOptions<InsertDestinationAccountsMutation, InsertDestinationAccountsMutationVariables>;
+export const DeleteDestinationAccountsDocument = gql`
+    mutation DeleteDestinationAccounts($where: destination_accounts_bool_exp!) {
+  destination_accounts: delete_destination_accounts(where: $where) {
+    returning {
+      ...AllDestinationAccountFields
+    }
+  }
+}
+    ${AllDestinationAccountFieldsFragmentDoc}`;
+export type DeleteDestinationAccountsMutationFn = Apollo.MutationFunction<DeleteDestinationAccountsMutation, DeleteDestinationAccountsMutationVariables>;
+
+/**
+ * __useDeleteDestinationAccountsMutation__
+ *
+ * To run a mutation, you first call `useDeleteDestinationAccountsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteDestinationAccountsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteDestinationAccountsMutation, { data, loading, error }] = useDeleteDestinationAccountsMutation({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useDeleteDestinationAccountsMutation(baseOptions?: Apollo.MutationHookOptions<DeleteDestinationAccountsMutation, DeleteDestinationAccountsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteDestinationAccountsMutation, DeleteDestinationAccountsMutationVariables>(DeleteDestinationAccountsDocument, options);
+      }
+export type DeleteDestinationAccountsMutationHookResult = ReturnType<typeof useDeleteDestinationAccountsMutation>;
+export type DeleteDestinationAccountsMutationResult = Apollo.MutationResult<DeleteDestinationAccountsMutation>;
+export type DeleteDestinationAccountsMutationOptions = Apollo.BaseMutationOptions<DeleteDestinationAccountsMutation, DeleteDestinationAccountsMutationVariables>;
+export const GetDestinationAccountsDocument = gql`
+    query GetDestinationAccounts {
+  destination_accounts {
+    ...AllDestinationAccountFields
+  }
+}
+    ${AllDestinationAccountFieldsFragmentDoc}`;
+
+/**
+ * __useGetDestinationAccountsQuery__
+ *
+ * To run a query within a React component, call `useGetDestinationAccountsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetDestinationAccountsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetDestinationAccountsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetDestinationAccountsQuery(baseOptions?: Apollo.QueryHookOptions<GetDestinationAccountsQuery, GetDestinationAccountsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetDestinationAccountsQuery, GetDestinationAccountsQueryVariables>(GetDestinationAccountsDocument, options);
+      }
+export function useGetDestinationAccountsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetDestinationAccountsQuery, GetDestinationAccountsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetDestinationAccountsQuery, GetDestinationAccountsQueryVariables>(GetDestinationAccountsDocument, options);
+        }
+export type GetDestinationAccountsQueryHookResult = ReturnType<typeof useGetDestinationAccountsQuery>;
+export type GetDestinationAccountsLazyQueryHookResult = ReturnType<typeof useGetDestinationAccountsLazyQuery>;
+export type GetDestinationAccountsQueryResult = Apollo.QueryResult<GetDestinationAccountsQuery, GetDestinationAccountsQueryVariables>;
+export const InsertDestinationDocument = gql`
+    mutation InsertDestination($destination: destinations_insert_input!) {
+  destination: insert_destinations_one(object: $destination) {
+    ...AllDestinationFields
+  }
+}
+    ${AllDestinationFieldsFragmentDoc}`;
+export type InsertDestinationMutationFn = Apollo.MutationFunction<InsertDestinationMutation, InsertDestinationMutationVariables>;
+
+/**
+ * __useInsertDestinationMutation__
+ *
+ * To run a mutation, you first call `useInsertDestinationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertDestinationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertDestinationMutation, { data, loading, error }] = useInsertDestinationMutation({
+ *   variables: {
+ *      destination: // value for 'destination'
+ *   },
+ * });
+ */
+export function useInsertDestinationMutation(baseOptions?: Apollo.MutationHookOptions<InsertDestinationMutation, InsertDestinationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<InsertDestinationMutation, InsertDestinationMutationVariables>(InsertDestinationDocument, options);
+      }
+export type InsertDestinationMutationHookResult = ReturnType<typeof useInsertDestinationMutation>;
+export type InsertDestinationMutationResult = Apollo.MutationResult<InsertDestinationMutation>;
+export type InsertDestinationMutationOptions = Apollo.BaseMutationOptions<InsertDestinationMutation, InsertDestinationMutationVariables>;
+export const GetDestinationsDocument = gql`
+    query GetDestinations {
+  destinations(
+    where: {disabled_at: {_is_null: true}}
+    order_by: {created_at: asc}
+  ) {
+    ...AllDestinationFields
+  }
+}
+    ${AllDestinationFieldsFragmentDoc}`;
+
+/**
+ * __useGetDestinationsQuery__
+ *
+ * To run a query within a React component, call `useGetDestinationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetDestinationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetDestinationsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetDestinationsQuery(baseOptions?: Apollo.QueryHookOptions<GetDestinationsQuery, GetDestinationsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetDestinationsQuery, GetDestinationsQueryVariables>(GetDestinationsDocument, options);
+      }
+export function useGetDestinationsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetDestinationsQuery, GetDestinationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetDestinationsQuery, GetDestinationsQueryVariables>(GetDestinationsDocument, options);
+        }
+export type GetDestinationsQueryHookResult = ReturnType<typeof useGetDestinationsQuery>;
+export type GetDestinationsLazyQueryHookResult = ReturnType<typeof useGetDestinationsLazyQuery>;
+export type GetDestinationsQueryResult = Apollo.QueryResult<GetDestinationsQuery, GetDestinationsQueryVariables>;
+export const UpdateDestinationDocument = gql`
+    mutation UpdateDestination($destination_id: uuid!, $_set: destinations_set_input = {}, $_append: destinations_append_input = {}) {
+  destination: update_destinations_by_pk(
+    pk_columns: {id: $destination_id}
+    _set: $_set
+    _append: $_append
+  ) {
+    ...AllDestinationFields
+  }
+}
+    ${AllDestinationFieldsFragmentDoc}`;
+export type UpdateDestinationMutationFn = Apollo.MutationFunction<UpdateDestinationMutation, UpdateDestinationMutationVariables>;
+
+/**
+ * __useUpdateDestinationMutation__
+ *
+ * To run a mutation, you first call `useUpdateDestinationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateDestinationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateDestinationMutation, { data, loading, error }] = useUpdateDestinationMutation({
+ *   variables: {
+ *      destination_id: // value for 'destination_id'
+ *      _set: // value for '_set'
+ *      _append: // value for '_append'
+ *   },
+ * });
+ */
+export function useUpdateDestinationMutation(baseOptions?: Apollo.MutationHookOptions<UpdateDestinationMutation, UpdateDestinationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateDestinationMutation, UpdateDestinationMutationVariables>(UpdateDestinationDocument, options);
+      }
+export type UpdateDestinationMutationHookResult = ReturnType<typeof useUpdateDestinationMutation>;
+export type UpdateDestinationMutationResult = Apollo.MutationResult<UpdateDestinationMutation>;
+export type UpdateDestinationMutationOptions = Apollo.BaseMutationOptions<UpdateDestinationMutation, UpdateDestinationMutationVariables>;
+export const GetIntegrationsDocument = gql`
+    query GetIntegrations {
+  integrations(order_by: {name: asc}) {
+    ...AllIntegrationFields
+  }
+}
+    ${AllIntegrationFieldsFragmentDoc}`;
+
+/**
+ * __useGetIntegrationsQuery__
+ *
+ * To run a query within a React component, call `useGetIntegrationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetIntegrationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetIntegrationsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetIntegrationsQuery(baseOptions?: Apollo.QueryHookOptions<GetIntegrationsQuery, GetIntegrationsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetIntegrationsQuery, GetIntegrationsQueryVariables>(GetIntegrationsDocument, options);
+      }
+export function useGetIntegrationsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetIntegrationsQuery, GetIntegrationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetIntegrationsQuery, GetIntegrationsQueryVariables>(GetIntegrationsDocument, options);
+        }
+export type GetIntegrationsQueryHookResult = ReturnType<typeof useGetIntegrationsQuery>;
+export type GetIntegrationsLazyQueryHookResult = ReturnType<typeof useGetIntegrationsLazyQuery>;
+export type GetIntegrationsQueryResult = Apollo.QueryResult<GetIntegrationsQuery, GetIntegrationsQueryVariables>;
+export const GetNotionConnectionsDocument = gql`
+    query GetNotionConnections {
+  notion_connections {
+    ...AllNotionConnectionFields
+  }
+}
+    ${AllNotionConnectionFieldsFragmentDoc}`;
+
+/**
+ * __useGetNotionConnectionsQuery__
+ *
+ * To run a query within a React component, call `useGetNotionConnectionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetNotionConnectionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetNotionConnectionsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetNotionConnectionsQuery(baseOptions?: Apollo.QueryHookOptions<GetNotionConnectionsQuery, GetNotionConnectionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetNotionConnectionsQuery, GetNotionConnectionsQueryVariables>(GetNotionConnectionsDocument, options);
+      }
+export function useGetNotionConnectionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetNotionConnectionsQuery, GetNotionConnectionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetNotionConnectionsQuery, GetNotionConnectionsQueryVariables>(GetNotionConnectionsDocument, options);
+        }
+export type GetNotionConnectionsQueryHookResult = ReturnType<typeof useGetNotionConnectionsQuery>;
+export type GetNotionConnectionsLazyQueryHookResult = ReturnType<typeof useGetNotionConnectionsLazyQuery>;
+export type GetNotionConnectionsQueryResult = Apollo.QueryResult<GetNotionConnectionsQuery, GetNotionConnectionsQueryVariables>;
+export const GetOAuthClientDocument = gql`
+    query GetOAuthClient($client_id: uuid!) {
+  oauth_client: oauth_clients_by_pk(id: $client_id) {
+    ...AllOauthClientFields
+  }
+}
+    ${AllOauthClientFieldsFragmentDoc}`;
+
+/**
+ * __useGetOAuthClientQuery__
+ *
+ * To run a query within a React component, call `useGetOAuthClientQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOAuthClientQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetOAuthClientQuery({
+ *   variables: {
+ *      client_id: // value for 'client_id'
+ *   },
+ * });
+ */
+export function useGetOAuthClientQuery(baseOptions: Apollo.QueryHookOptions<GetOAuthClientQuery, GetOAuthClientQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetOAuthClientQuery, GetOAuthClientQueryVariables>(GetOAuthClientDocument, options);
+      }
+export function useGetOAuthClientLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOAuthClientQuery, GetOAuthClientQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetOAuthClientQuery, GetOAuthClientQueryVariables>(GetOAuthClientDocument, options);
+        }
+export type GetOAuthClientQueryHookResult = ReturnType<typeof useGetOAuthClientQuery>;
+export type GetOAuthClientLazyQueryHookResult = ReturnType<typeof useGetOAuthClientLazyQuery>;
+export type GetOAuthClientQueryResult = Apollo.QueryResult<GetOAuthClientQuery, GetOAuthClientQueryVariables>;
+export const InsertPlaidAccountsDocument = gql`
+    mutation InsertPlaidAccounts($plaid_accounts: [plaid_accounts_insert_input!]!) {
+  plaid_accounts: insert_plaid_accounts(objects: $plaid_accounts) {
+    returning {
+      ...AllPlaidAccountFields
+    }
+  }
+}
+    ${AllPlaidAccountFieldsFragmentDoc}`;
+export type InsertPlaidAccountsMutationFn = Apollo.MutationFunction<InsertPlaidAccountsMutation, InsertPlaidAccountsMutationVariables>;
+
+/**
+ * __useInsertPlaidAccountsMutation__
+ *
+ * To run a mutation, you first call `useInsertPlaidAccountsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertPlaidAccountsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertPlaidAccountsMutation, { data, loading, error }] = useInsertPlaidAccountsMutation({
+ *   variables: {
+ *      plaid_accounts: // value for 'plaid_accounts'
+ *   },
+ * });
+ */
+export function useInsertPlaidAccountsMutation(baseOptions?: Apollo.MutationHookOptions<InsertPlaidAccountsMutation, InsertPlaidAccountsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<InsertPlaidAccountsMutation, InsertPlaidAccountsMutationVariables>(InsertPlaidAccountsDocument, options);
+      }
+export type InsertPlaidAccountsMutationHookResult = ReturnType<typeof useInsertPlaidAccountsMutation>;
+export type InsertPlaidAccountsMutationResult = Apollo.MutationResult<InsertPlaidAccountsMutation>;
+export type InsertPlaidAccountsMutationOptions = Apollo.BaseMutationOptions<InsertPlaidAccountsMutation, InsertPlaidAccountsMutationVariables>;
+export const UpdatePlaidAccountDocument = gql`
+    mutation UpdatePlaidAccount($plaid_account_id: String!, $_set: plaid_accounts_set_input!) {
+  plaid_account: update_plaid_accounts_by_pk(
+    pk_columns: {id: $plaid_account_id}
+    _set: $_set
+  ) {
+    ...AllPlaidAccountFields
+  }
+}
+    ${AllPlaidAccountFieldsFragmentDoc}`;
+export type UpdatePlaidAccountMutationFn = Apollo.MutationFunction<UpdatePlaidAccountMutation, UpdatePlaidAccountMutationVariables>;
+
+/**
+ * __useUpdatePlaidAccountMutation__
+ *
+ * To run a mutation, you first call `useUpdatePlaidAccountMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePlaidAccountMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePlaidAccountMutation, { data, loading, error }] = useUpdatePlaidAccountMutation({
+ *   variables: {
+ *      plaid_account_id: // value for 'plaid_account_id'
+ *      _set: // value for '_set'
+ *   },
+ * });
+ */
+export function useUpdatePlaidAccountMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePlaidAccountMutation, UpdatePlaidAccountMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdatePlaidAccountMutation, UpdatePlaidAccountMutationVariables>(UpdatePlaidAccountDocument, options);
+      }
+export type UpdatePlaidAccountMutationHookResult = ReturnType<typeof useUpdatePlaidAccountMutation>;
+export type UpdatePlaidAccountMutationResult = Apollo.MutationResult<UpdatePlaidAccountMutation>;
+export type UpdatePlaidAccountMutationOptions = Apollo.BaseMutationOptions<UpdatePlaidAccountMutation, UpdatePlaidAccountMutationVariables>;
+export const InsertPlaidItemDocument = gql`
+    mutation InsertPlaidItem($plaid_item: plaid_items_insert_input!) {
+  plaid_item: insert_plaid_items_one(object: $plaid_item) {
+    ...AllPlaidItemFields
+  }
+}
+    ${AllPlaidItemFieldsFragmentDoc}`;
+export type InsertPlaidItemMutationFn = Apollo.MutationFunction<InsertPlaidItemMutation, InsertPlaidItemMutationVariables>;
+
+/**
+ * __useInsertPlaidItemMutation__
+ *
+ * To run a mutation, you first call `useInsertPlaidItemMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertPlaidItemMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertPlaidItemMutation, { data, loading, error }] = useInsertPlaidItemMutation({
+ *   variables: {
+ *      plaid_item: // value for 'plaid_item'
+ *   },
+ * });
+ */
+export function useInsertPlaidItemMutation(baseOptions?: Apollo.MutationHookOptions<InsertPlaidItemMutation, InsertPlaidItemMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<InsertPlaidItemMutation, InsertPlaidItemMutationVariables>(InsertPlaidItemDocument, options);
+      }
+export type InsertPlaidItemMutationHookResult = ReturnType<typeof useInsertPlaidItemMutation>;
+export type InsertPlaidItemMutationResult = Apollo.MutationResult<InsertPlaidItemMutation>;
+export type InsertPlaidItemMutationOptions = Apollo.BaseMutationOptions<InsertPlaidItemMutation, InsertPlaidItemMutationVariables>;
+export const UpdatePlaidItemDocument = gql`
+    mutation UpdatePlaidItem($plaid_item_id: String!, $_set: plaid_items_set_input) {
+  plaid_item: update_plaid_items_by_pk(
+    pk_columns: {id: $plaid_item_id}
+    _set: $_set
+  ) {
+    ...AllPlaidItemFields
+  }
+}
+    ${AllPlaidItemFieldsFragmentDoc}`;
+export type UpdatePlaidItemMutationFn = Apollo.MutationFunction<UpdatePlaidItemMutation, UpdatePlaidItemMutationVariables>;
+
+/**
+ * __useUpdatePlaidItemMutation__
+ *
+ * To run a mutation, you first call `useUpdatePlaidItemMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePlaidItemMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePlaidItemMutation, { data, loading, error }] = useUpdatePlaidItemMutation({
+ *   variables: {
+ *      plaid_item_id: // value for 'plaid_item_id'
+ *      _set: // value for '_set'
+ *   },
+ * });
+ */
+export function useUpdatePlaidItemMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePlaidItemMutation, UpdatePlaidItemMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdatePlaidItemMutation, UpdatePlaidItemMutationVariables>(UpdatePlaidItemDocument, options);
+      }
+export type UpdatePlaidItemMutationHookResult = ReturnType<typeof useUpdatePlaidItemMutation>;
+export type UpdatePlaidItemMutationResult = Apollo.MutationResult<UpdatePlaidItemMutation>;
+export type UpdatePlaidItemMutationOptions = Apollo.BaseMutationOptions<UpdatePlaidItemMutation, UpdatePlaidItemMutationVariables>;
+export const GetPlaidItemsDocument = gql`
+    query GetPlaidItems {
+  plaid_items(order_by: {created_at: asc}) {
+    ...AllPlaidItemFields
+  }
+}
+    ${AllPlaidItemFieldsFragmentDoc}`;
+
+/**
+ * __useGetPlaidItemsQuery__
+ *
+ * To run a query within a React component, call `useGetPlaidItemsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPlaidItemsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPlaidItemsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetPlaidItemsQuery(baseOptions?: Apollo.QueryHookOptions<GetPlaidItemsQuery, GetPlaidItemsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPlaidItemsQuery, GetPlaidItemsQueryVariables>(GetPlaidItemsDocument, options);
+      }
+export function useGetPlaidItemsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPlaidItemsQuery, GetPlaidItemsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPlaidItemsQuery, GetPlaidItemsQueryVariables>(GetPlaidItemsDocument, options);
+        }
+export type GetPlaidItemsQueryHookResult = ReturnType<typeof useGetPlaidItemsQuery>;
+export type GetPlaidItemsLazyQueryHookResult = ReturnType<typeof useGetPlaidItemsLazyQuery>;
+export type GetPlaidItemsQueryResult = Apollo.QueryResult<GetPlaidItemsQuery, GetPlaidItemsQueryVariables>;
+export const GetSubscriptionPricesDocument = gql`
+    query GetSubscriptionPrices {
+  stripePrices {
+    ...AllSubscriptionPricesFields
+  }
+}
+    ${AllSubscriptionPricesFieldsFragmentDoc}`;
+
+/**
+ * __useGetSubscriptionPricesQuery__
+ *
+ * To run a query within a React component, call `useGetSubscriptionPricesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSubscriptionPricesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSubscriptionPricesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetSubscriptionPricesQuery(baseOptions?: Apollo.QueryHookOptions<GetSubscriptionPricesQuery, GetSubscriptionPricesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSubscriptionPricesQuery, GetSubscriptionPricesQueryVariables>(GetSubscriptionPricesDocument, options);
+      }
+export function useGetSubscriptionPricesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSubscriptionPricesQuery, GetSubscriptionPricesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSubscriptionPricesQuery, GetSubscriptionPricesQueryVariables>(GetSubscriptionPricesDocument, options);
+        }
+export type GetSubscriptionPricesQueryHookResult = ReturnType<typeof useGetSubscriptionPricesQuery>;
+export type GetSubscriptionPricesLazyQueryHookResult = ReturnType<typeof useGetSubscriptionPricesLazyQuery>;
+export type GetSubscriptionPricesQueryResult = Apollo.QueryResult<GetSubscriptionPricesQuery, GetSubscriptionPricesQueryVariables>;
+export const GetSyncLogsDocument = gql`
+    query GetSyncLogs($offset: Int!) {
+  sync_logs(
+    limit: 10
+    offset: $offset
+    order_by: {created_at: desc_nulls_last}
+    where: {_not: {metadata: {_contains: {asAdmin: true}}}}
+  ) {
+    ...AllSyncLogFields
+  }
+  count: sync_logs_aggregate {
+    aggregate {
+      count
+    }
+  }
+}
+    ${AllSyncLogFieldsFragmentDoc}`;
+
+/**
+ * __useGetSyncLogsQuery__
+ *
+ * To run a query within a React component, call `useGetSyncLogsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSyncLogsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSyncLogsQuery({
+ *   variables: {
+ *      offset: // value for 'offset'
+ *   },
+ * });
+ */
+export function useGetSyncLogsQuery(baseOptions: Apollo.QueryHookOptions<GetSyncLogsQuery, GetSyncLogsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSyncLogsQuery, GetSyncLogsQueryVariables>(GetSyncLogsDocument, options);
+      }
+export function useGetSyncLogsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSyncLogsQuery, GetSyncLogsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSyncLogsQuery, GetSyncLogsQueryVariables>(GetSyncLogsDocument, options);
+        }
+export type GetSyncLogsQueryHookResult = ReturnType<typeof useGetSyncLogsQuery>;
+export type GetSyncLogsLazyQueryHookResult = ReturnType<typeof useGetSyncLogsLazyQuery>;
+export type GetSyncLogsQueryResult = Apollo.QueryResult<GetSyncLogsQuery, GetSyncLogsQueryVariables>;
 export const GetUserDocument = gql`
     query GetUser($user_id: uuid!) {
   user(id: $user_id) {
@@ -11428,3 +12425,172 @@ export function useGetUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Ge
 export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
 export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
 export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVariables>;
+export const UpdateUserDocument = gql`
+    mutation UpdateUser($id: uuid!, $_set: users_set_input!) {
+  updateUser(pk_columns: {id: $id}, _set: $_set) {
+    ...AllUserFields
+  }
+}
+    ${AllUserFieldsFragmentDoc}`;
+export type UpdateUserMutationFn = Apollo.MutationFunction<UpdateUserMutation, UpdateUserMutationVariables>;
+
+/**
+ * __useUpdateUserMutation__
+ *
+ * To run a mutation, you first call `useUpdateUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUserMutation, { data, loading, error }] = useUpdateUserMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      _set: // value for '_set'
+ *   },
+ * });
+ */
+export function useUpdateUserMutation(baseOptions?: Apollo.MutationHookOptions<UpdateUserMutation, UpdateUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateUserMutation, UpdateUserMutationVariables>(UpdateUserDocument, options);
+      }
+export type UpdateUserMutationHookResult = ReturnType<typeof useUpdateUserMutation>;
+export type UpdateUserMutationResult = Apollo.MutationResult<UpdateUserMutation>;
+export type UpdateUserMutationOptions = Apollo.BaseMutationOptions<UpdateUserMutation, UpdateUserMutationVariables>;
+export const DeleteUserDocument = gql`
+    mutation DeleteUser($id: uuid!) {
+  deleteUser(id: $id) {
+    id
+  }
+}
+    `;
+export type DeleteUserMutationFn = Apollo.MutationFunction<DeleteUserMutation, DeleteUserMutationVariables>;
+
+/**
+ * __useDeleteUserMutation__
+ *
+ * To run a mutation, you first call `useDeleteUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteUserMutation, { data, loading, error }] = useDeleteUserMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteUserMutation(baseOptions?: Apollo.MutationHookOptions<DeleteUserMutation, DeleteUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteUserMutation, DeleteUserMutationVariables>(DeleteUserDocument, options);
+      }
+export type DeleteUserMutationHookResult = ReturnType<typeof useDeleteUserMutation>;
+export type DeleteUserMutationResult = Apollo.MutationResult<DeleteUserMutation>;
+export type DeleteUserMutationOptions = Apollo.BaseMutationOptions<DeleteUserMutation, DeleteUserMutationVariables>;
+export const GetUserProfileDocument = gql`
+    query GetUserProfile($userId: uuid!) {
+  userProfile(user_id: $userId) {
+    ...AllUserProfileFields
+  }
+}
+    ${AllUserProfileFieldsFragmentDoc}`;
+
+/**
+ * __useGetUserProfileQuery__
+ *
+ * To run a query within a React component, call `useGetUserProfileQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserProfileQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetUserProfileQuery(baseOptions: Apollo.QueryHookOptions<GetUserProfileQuery, GetUserProfileQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserProfileQuery, GetUserProfileQueryVariables>(GetUserProfileDocument, options);
+      }
+export function useGetUserProfileLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserProfileQuery, GetUserProfileQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserProfileQuery, GetUserProfileQueryVariables>(GetUserProfileDocument, options);
+        }
+export type GetUserProfileQueryHookResult = ReturnType<typeof useGetUserProfileQuery>;
+export type GetUserProfileLazyQueryHookResult = ReturnType<typeof useGetUserProfileLazyQuery>;
+export type GetUserProfileQueryResult = Apollo.QueryResult<GetUserProfileQuery, GetUserProfileQueryVariables>;
+export const UpdateUserProfileDocument = gql`
+    mutation UpdateUserProfile($userId: uuid!, $_set: userProfiles_set_input!) {
+  updateUserProfile(pk_columns: {user_id: $userId}, _set: $_set) {
+    ...AllUserProfileFields
+  }
+}
+    ${AllUserProfileFieldsFragmentDoc}`;
+export type UpdateUserProfileMutationFn = Apollo.MutationFunction<UpdateUserProfileMutation, UpdateUserProfileMutationVariables>;
+
+/**
+ * __useUpdateUserProfileMutation__
+ *
+ * To run a mutation, you first call `useUpdateUserProfileMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserProfileMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUserProfileMutation, { data, loading, error }] = useUpdateUserProfileMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      _set: // value for '_set'
+ *   },
+ * });
+ */
+export function useUpdateUserProfileMutation(baseOptions?: Apollo.MutationHookOptions<UpdateUserProfileMutation, UpdateUserProfileMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateUserProfileMutation, UpdateUserProfileMutationVariables>(UpdateUserProfileDocument, options);
+      }
+export type UpdateUserProfileMutationHookResult = ReturnType<typeof useUpdateUserProfileMutation>;
+export type UpdateUserProfileMutationResult = Apollo.MutationResult<UpdateUserProfileMutation>;
+export type UpdateUserProfileMutationOptions = Apollo.BaseMutationOptions<UpdateUserProfileMutation, UpdateUserProfileMutationVariables>;
+export const SetupUserDocument = gql`
+    mutation SetupUser($userId: uuid!) {
+  setupUser(userId: $userId) {
+    ok
+  }
+}
+    `;
+export type SetupUserMutationFn = Apollo.MutationFunction<SetupUserMutation, SetupUserMutationVariables>;
+
+/**
+ * __useSetupUserMutation__
+ *
+ * To run a mutation, you first call `useSetupUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetupUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [setupUserMutation, { data, loading, error }] = useSetupUserMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useSetupUserMutation(baseOptions?: Apollo.MutationHookOptions<SetupUserMutation, SetupUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SetupUserMutation, SetupUserMutationVariables>(SetupUserDocument, options);
+      }
+export type SetupUserMutationHookResult = ReturnType<typeof useSetupUserMutation>;
+export type SetupUserMutationResult = Apollo.MutationResult<SetupUserMutation>;
+export type SetupUserMutationOptions = Apollo.BaseMutationOptions<SetupUserMutation, SetupUserMutationVariables>;
