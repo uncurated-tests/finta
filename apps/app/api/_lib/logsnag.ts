@@ -90,7 +90,7 @@ export const logError = async ({ operation, error, scope, tags = {} }: { operati
 
   return logsnag.publish({
     channel: LogSnagChannel.ERRORS,
-    description: `https://sentry.io/organizations/finta-app/issues/?query=${eventId}`,
+    description: `[Sentry Link](https://sentry.io/organizations/finta-app/issues/?query=${eventId})`,
     icon: '❌',
     event: `Error: ${error.message}`,
     notify: true,
