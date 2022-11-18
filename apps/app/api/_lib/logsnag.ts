@@ -84,7 +84,7 @@ export const insight = async (options: InsightOptions): Promise<boolean> => {
   return logsnag.insight(options);
 }
 
-export const logError = async ({ operation, error, scope, tags = {} }: { operation: string; error: Error, scope: Sentry.Scope ;tags?: Partial<Record<LogSnagTags, any>> }) => {
+export const logError = async ({ operation, error, scope, tags = {} }: { operation: string; error: Error | any | unknown, scope: Sentry.Scope ;tags?: Partial<Record<LogSnagTags, any>> }) => {
   if ( shouldMock ) { console.error(error); return true }
   const eventId = Sentry.captureException(error, scope);
 

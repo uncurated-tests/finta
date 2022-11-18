@@ -28,7 +28,7 @@ export const clientFunctionWrapper = (fn: WrappedClientFunction) => async (req: 
   if ( !user ) { return res.status(500).send("Invalid authorization header"); }
 
   const { status, message } = await fn(req, user)
-  .catch(async (error: Error) => {
+  .catch(async error => {
     await logsnag.logError({ operation: 'client function', error, scope, tags: {
       [logsnag.LogSnagTags.USER_ID]: user!.id
     }});

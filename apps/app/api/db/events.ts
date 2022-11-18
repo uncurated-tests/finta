@@ -18,7 +18,7 @@ export default functionWrapper.public(async (req) => {
   .then(() => {
     return { status: types.StatusCodes.OK, message: "OK" }
   })
-  .catch(async (error: Error) => {
+  .catch(async error => {
     await logsnag.logError({ operation: "database event", error, scope})
     return { status: types.StatusCodes.INTERNAL_SERVER_ERROR, message: types.ErrorResponseMessages.INERNAL_ERROR }
   })
