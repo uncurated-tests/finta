@@ -1,0 +1,15 @@
+fragment AllAccountFields on plaid_accounts {
+  __typename
+  id
+  name
+  mask
+  is_closed
+}
+
+mutation UpdatePlaidAccounts($_set: plaid_accounts_set_input!, $where: plaid_accounts_bool_exp!) {
+  update_plaid_accounts(where: $where, _set: $_set) {
+    returning {
+      ...AllAccountFields
+    }
+  }
+}

@@ -1,0 +1,58 @@
+fragment AllPlaidAccountFields on plaid_accounts {
+  __typename
+  id
+  plaid_item_id
+  created_at
+  mask
+  name
+  destination_connections {
+    destination {
+      id
+      integration {
+        id
+        name
+      }
+    }
+  }
+}
+
+fragment AllPlaidItemFields on plaid_items {
+  __typename
+  id
+  created_at
+  synced_at
+  is_initial_update_complete
+  is_historical_update_complete
+  error
+  accessToken
+  consent_expires_at
+  institution {
+    id
+    name
+    logo_file {
+      id
+    }
+  }
+  accounts {
+    ...AllPlaidAccountFields
+  }
+  disabled_at
+}
+
+mutation InsertPlaidItem($plaid_item: plaid_items_insert_input!) {
+  plaid_item: insert_plaid_items_one(object: $plaid_item) {
+    ...AllPlaidItemFields
+  }
+}
+
+mutation UpdatePlaidItem($plaid_item_id: String!, $_set: plaid_items_set_input) {
+  plaid_item: update_plaid_items_by_pk(pk_columns: { id: $plaid_item_id }, _set: $_set ) {
+    ...AllPlaidItemFields
+  }
+}
+
+query GetPlaidItems {
+  plaid_items(order_by: {created_at: asc}) {
+    ...AllPlaidItemFields
+  }
+}

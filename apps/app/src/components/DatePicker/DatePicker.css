@@ -1,0 +1,80 @@
+.react-datepicker {
+    border: none;
+    color: unset;
+  }
+  
+  .react-datepicker-wrapper {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .react-datepicker__input-container {
+    height: 100%;
+  }
+  
+  .react-datepicker__day:focus-visible {
+    outline: none !important;
+  }
+  
+  .react-datepicker__day--disabled {
+    opacity: .5;
+  }
+  
+  .react-datepicker__day--disabled:hover {
+    background-color: transparent !important;
+    cursor: default;
+  }
+  
+  .react-datepicker__month-container {
+    width: 100%;
+  }
+  
+  /* Light */
+  .light .react-datepicker {
+    box-shadow: var(--chakra-shadows-md);
+  }
+  
+  .light .react-datepicker__header {
+    background-color: var(--chakra-colors-gray-light-2);
+    border-bottom: 1px solid var(--chakra-colors-gray-light-6);
+  }
+  
+  .light .react-datepicker__day:hover, .light .react-datepicker__day--keyboard-selected {
+    background-color: var(--chakra-colors-gray-light-3);
+    color: var(--chakra-colors-gray-light-12);
+  }
+  
+  .light .react-datepicker__day--selected, .light .react-datepicker__day--selected:hover {
+    background-color: var(--chakra-colors-primary-light-5);
+    color: var(--chakra-colors-gray-light-12);
+  }
+  
+  /* Dark */
+  
+  .dark .react-datepicker {
+    background-color: var(--chakra-colors-gray-dark-4);
+    box-shadow: var(--chakra-shadows-dark-lg);
+  }
+  
+  .dark .react-datepicker__header {
+    background-color: var(--chakra-colors-gray-dark-5);
+    border-bottom: 1px solid var(--chakra-colors-gray-dark-6);
+  }
+  
+  .dark .react-datepicker__day-name {
+    color: var(--chakra-colors-gray-dark-12) !important
+  }
+  
+  .dark .react-datepicker__day {
+    color: var(--chakra-colors-gray-dark-12) !important;
+  }
+  
+  .dark .react-datepicker__day:hover, .dark .react-datepicker__day--keyboard-selected {
+    background-color: var(--chakra-colors-gray-dark-6);
+    color: var(--chakra-colors-gray-dark-12);
+  }
+  
+  .dark .react-datepicker__day--selected, .dark .react-datepicker__day--selected:hover {
+    background-color: var(--chakra-colors-primary-dark-5);
+    color: var(--chakra-colors-gray-dark-12);
+  }
