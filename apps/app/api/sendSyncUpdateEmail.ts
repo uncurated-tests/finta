@@ -114,7 +114,7 @@ export default functionWrapper.public(async (req) => {
         
         return {
           id: destination.id,
-          logo: integrationLogos[destination.integration.id],
+          logo: integrationLogos[destination.integration.id as keyof typeof integrationLogos],
           destination_name: destination.name,
           integration: destination.integration.name,
           sync_start_date: destination.sync_start_date,

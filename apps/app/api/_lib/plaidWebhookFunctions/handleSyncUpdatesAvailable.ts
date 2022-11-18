@@ -4,7 +4,7 @@ import * as _ from "lodash";
 import { getAccounts, transactionsSync } from "../plaid";
 import { graphql } from "../graphql";
 import { PlaidItemModel, DestinationModel } from "../types";
-import { DestinationTableTypes, DestinationError, DestinationErrorCode } from "@finta/types";
+import { DestinationTableTypes, DestinationError } from "@finta/types";
 import { getDestinationObject } from "../getDestinationObject";
 import * as segment from "../segment";
 import { Integrations_Enum, Destination_Sync_Logs_Update_Column } from "../graphql/sdk";
@@ -62,7 +62,7 @@ export const handleSyncUpdatesAvailable = async ({ item, data, destinations, sco
       hasMore = data.has_more;
       cursor = data.next_cursor;
     } catch ( error ) {
-      scope.setContext("Plaid Error", error);
+      scope.setContext("Plaid Error", error as any);
       const errorCode = error.response?.data?.error_code;
       const tags = {
         [logsnag.LogSnagTags.ITEM_ID]: item.id,
