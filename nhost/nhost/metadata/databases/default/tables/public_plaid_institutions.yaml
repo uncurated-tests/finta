@@ -36,7 +36,7 @@ event_triggers:
       interval_sec: 10
       num_retries: 0
       timeout_sec: 60
-    webhook: '{{API_BASE_URL}}/api/db/events'
+    webhook: '{{API_BASE_URL}}/db/events'
     cleanup_config:
       batch_size: 10000
       clean_invocation_logs: false
