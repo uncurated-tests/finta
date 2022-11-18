@@ -27,12 +27,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }): JSX.Element
   const [ setupUser ] = useSetupUserMutation({ refetchQueries: 'all' });
   const userId = nhost.auth.getUser()?.id;
 
-  const { data: userData, loading: isUserDataLoading } = useGetUserQuery({
+  const { data: userData, loading: isUserDataLoading, error } = useGetUserQuery({
     variables: { user_id: userId },
     skip: !userId
   });
 
   const user = useMemo(() => userData?.user || undefined as UserModel | undefined, [ userData ]);
+  console.log(user, error)
 
   useEffect(() => {
     if ( user && !user.profile ) { setupUser({ variables: { userId: user.id }});}
