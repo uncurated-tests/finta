@@ -2,7 +2,7 @@ actions:
   - name: setupUser
     definition:
       kind: synchronous
-      handler: '{{NHOST_BACKEND_URL}}/v1/functions/actions/setupUser'
+      handler: '{{API_BASE_URL}}/actions/setupUser'
     permissions:
       - role: user
     comment: Helper action to make sure user has all necessary properties

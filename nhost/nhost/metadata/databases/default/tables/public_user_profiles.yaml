@@ -54,7 +54,14 @@ event_triggers:
       interval_sec: 10
       num_retries: 0
       timeout_sec: 60
-    webhook: '{{NHOST_BACKEND_URL}}/v1/functions/db/events'
+    webhook: '{{API_BASE_URL}}/db/events'
+    cleanup_config:
+      batch_size: 10000
+      clean_invocation_logs: false
+      clear_older_than: 168
+      paused: true
+      schedule: 0 0 * * *
+      timeout: 60
   - name: handleUpsertUserProfle
     definition:
       enable_manual: true
@@ -69,4 +76,11 @@ event_triggers:
       interval_sec: 10
       num_retries: 0
       timeout_sec: 60
-    webhook: '{{NHOST_BACKEND_URL}}/v1/functions/db/events'
+    webhook: '{{API_BASE_URL}}/api/db/events'
+    cleanup_config:
+      batch_size: 10000
+      clean_invocation_logs: false
+      clear_older_than: 168
+      paused: true
+      schedule: 0 0 * * *
+      timeout: 60
