@@ -1,9 +1,8 @@
 import Stripe from "stripe";
 
 import * as segment from "../segment";
-import * as stripe from "../../../../../functions/_lib/stripe";
+import * as stripe from "../stripe";
 import * as logsnag from "../logsnag";
-import { SegmentEventNames } from "../../../../../functions/_lib/types";
 
 export const handleCustomerSubscriptionDeleted = async ({ subscription, timestamp }: { subscription: Stripe.Subscription, timestamp: Date }) => {
   const { items } = subscription;
@@ -14,7 +13,7 @@ export const handleCustomerSubscriptionDeleted = async ({ subscription, timestam
 
   const trackPromise = segment.track({
     userId,
-    event: SegmentEventNames.SUBSCRIPTION_ENDED,
+    event: segment.Events.SUBSCRIPTION_ENDED,
     properties: { plan: billing_interval },
     timestamp
   })

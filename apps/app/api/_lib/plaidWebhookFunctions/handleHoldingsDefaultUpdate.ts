@@ -1,13 +1,13 @@
 import { getDestinationObject } from "../getDestinationObject";
-import { Destination_Sync_Logs_Update_Column, graphql } from "../graphql";
-import { Integrations_Enum } from "../graphql/sdk";
+import { graphql } from "../graphql";
+import { Integrations_Enum, Destination_Sync_Logs_Update_Column } from "../graphql/sdk";
 import { getHoldings } from "../plaid";
 import * as segment from "../segment";
 import { Sentry } from "../sentry";
 import * as logsnag from "../logsnag";
 
-import { PlaidItemModel, DestinationModel, SegmentEventNames } from "../types";
-import { DestinationError, DestinationTableTypes } from "../types/shared";
+import { PlaidItemModel, DestinationModel } from "../types";
+import { DestinationError, DestinationTableTypes } from "@finta/types";
 
 export const handleHoldingsDefaultUpdate = async ({ item, destinations, scope, asAdmin }: { item: PlaidItemModel; destinations: DestinationModel[], scope: Sentry.Scope, asAdmin: boolean }) => {
   const destinationFilter = (destination: DestinationModel) => {
@@ -15,12 +15,12 @@ export const handleHoldingsDefaultUpdate = async ({ item, destinations, scope, a
     const holdingsTableConfig = destination.table_configs.holdings; 
     return ((holdingsTableConfig && holdingsTableConfig.is_enabled) || (!holdingsTableConfig && destination.should_sync_investments)) && destinationItems.includes(item.id) && destination.integration.id !== Integrations_Enum.Coda;
   };
-  const { access_token } = item;
+  const { accessToken } = item;
 
   const filteredDestinations = destinations.filter(destinationFilter);
   if ( filteredDestinations.length === 0 ) { return true; }
 
-  const { holdings, accounts, securities } = await getHoldings({ accessToken: access_token }).then(response => response.data);
+  const { holdings, accounts, securities } = await getHoldings({ accessToken }).then(response => response.data);
 
   const trigger = 'holdings_update'
   const syncLog = await graphql.InsertSyncLog({ sync_log: { trigger, metadata: { asAdmin }, plaid_item_sync_logs: { data: [{ plaid_item_id: item.id }]}
@@ -72,11 +72,11 @@ export const handleHoldingsDefaultUpdate = async ({ item, destinations, scope, a
         update_columns: [ Destination_Sync_Logs_Update_Column.Accounts, Destination_Sync_Logs_Update_Column.Transactions, Destination_Sync_Logs_Update_Column.Holdings, Destination_Sync_Logs_Update_Column.InvestmentTransactions ]
       }).then(() => ({ success: true }));
     } else {
-      destinationLogError = destinationCheck.error;
+      destinationLogError = destinationCheck.error || undefined;
       return Promise.all([
         segment.track({
           userId: item.user.id,
-          event: SegmentEventNames.DESTINATION_ERROR_TRIGGERED,
+          event: segment.Events.DESTINATION_ERROR_TRIGGERED,
           properties: { 
             ...destinationCheck.error, 
             integration: destination.integration.id,
@@ -93,7 +93,7 @@ export const handleHoldingsDefaultUpdate = async ({ item, destinations, scope, a
           tags: {
             [logsnag.LogSnagTags.SYNC_LOG_ID]: syncLog.id,
             [logsnag.LogSnagTags.DESTINATION_ID]: destination.id,
-            [logsnag.LogSnagTags.ERROR]: destinationCheck.error.errorCode
+            [logsnag.LogSnagTags.ERROR]: destinationCheck.error?.errorCode
           }
         }),
         graphql.InsertDestinationSyncLog({

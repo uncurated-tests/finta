@@ -8,7 +8,7 @@ import { Integrations_Enum } from "src/graphql";
 
 interface TableSelectionProps {
   integrationId: Integrations_Enum;
-  tableId: string;
+  tableId?: string;
   onChange: (newTableId: string) => void;
   isDisabled: boolean;
   errorMessage?: string;

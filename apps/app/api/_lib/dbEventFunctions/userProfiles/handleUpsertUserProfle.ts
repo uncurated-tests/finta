@@ -1,4 +1,4 @@
-import { DBEventPayload, DBUserProfile } from "../../../../../../functions/_lib/types";
+import { DBEventPayload, DBUserProfile } from "../../types";
 import * as easyCron from "../../easyCron";
 import { graphql } from "../../graphql";
 
@@ -8,17 +8,17 @@ export const handleUpsertUserProfle = async ({ body }: { body: DBEventPayload<'I
 
   let jobId = newUserProfile.sync_updates_job_id;
   if ( 
-    (!jobId || 
+    (!jobId || (!!oldUserProfile && (
     oldUserProfile.sync_updates_frequency !== newUserProfile.sync_updates_frequency || 
     oldUserProfile.is_subscribed_sync_updates !== newUserProfile.is_subscribed_sync_updates ||
-    oldUserProfile.timezone !== newUserProfile.timezone)
+    oldUserProfile.timezone !== newUserProfile.timezone)))
     && !user?.disabled
   ) {
     const response = await easyCron.upsertJob({ 
       jobId, 
       job: { 
-        frequency: newUserProfile.sync_updates_frequency, 
-        timezone: newUserProfile.timezone,
+        frequency: newUserProfile.sync_updates_frequency!, 
+        timezone: newUserProfile.timezone!,
         userId: newUserProfile.user_id,
         isEnabled: newUserProfile.is_subscribed_sync_updates
       }})

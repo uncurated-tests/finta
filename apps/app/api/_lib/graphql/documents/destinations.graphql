@@ -1,3 +1,12 @@
+fragment DBDestinationFields on destinations {
+  id
+  user_id
+  integration_id
+  created_at
+  disabled_at
+  disabled_at
+}
+
 fragment AllDestinationFields on destinations {
   __typename
   id

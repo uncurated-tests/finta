@@ -1,4 +1,4 @@
-import { DBEventPayload, DBUser, SegmentEventNames } from "../../../../../../functions/_lib/types";
+import { DBEventPayload, DBUser } from "../../types";
 import * as logsnag from "../../logsnag";
 import * as segment from "../../segment";
 import { graphql } from "../../graphql";
@@ -17,7 +17,7 @@ export const on_insert_user = async ({ body }: { body: DBEventPayload<'INSERT', 
 
   const trackPromise = segment.track({
     userId: user.id,
-    event: SegmentEventNames.USER_SIGNED_UP,
+    event: segment.Events.USER_SIGNED_UP,
     timestamp: new Date(user.created_at)
   });
 

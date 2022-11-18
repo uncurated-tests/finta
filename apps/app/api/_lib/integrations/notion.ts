@@ -67,11 +67,11 @@ export class Notion extends IntegrationBase {
 
   async checkAuthentication(): Promise<types.CheckAuthenticationFuncResponse> {
     return this.client.users.me({})
-    .then(() => ({ isValid: true, errorCode: null, errorCredential: null }))
+    .then(() => ({ isValid: true }))
     .catch(({ code }) => {
       if ( code === 'unauthorized' ) { return { isValid: false, errorCode: DestinationErrorCode.NOT_ALLOWED, errorCredential: 'access_token' } }
       console.log(code);
-      return { isValid: false, errorCode: null, errorCredential: null }
+      return { isValid: false }
     })
   }
 
@@ -132,7 +132,7 @@ export class Notion extends IntegrationBase {
   async upsertInstitution({ item }: { item: types.PlaidItemModel }) {
     const { tableId, fields, records } = this.config.institutions;
 
-    const institutionPage = records.find(record => record.properties.id === item.id);
+    const institutionPage = records?.find(record => record.properties.id === item.id);
     if ( institutionPage ) { return institutionPage };
 
     
@@ -146,7 +146,7 @@ export class Notion extends IntegrationBase {
     const { tableId, fields, records } = this.config.accounts;
 
     const mappedAccounts = accounts.map(account => {
-      const page = records.find(rec => rec.properties.id === account.account_id);
+      const page = records?.find(rec => rec.properties.id === account.account_id);
       return { account, page }
     });
 
@@ -167,11 +167,11 @@ export class Notion extends IntegrationBase {
     }))
   };
 
-  async upsertCategories({ categories }: { categories: { id: string; name: string; category_group: string }[] }) {
+  async upsertCategories({ categories }: { categories?: { id: string; name: string; category_group: string }[] }) {
     const { tableId, fields, records, isEnabled } = (this.config.categories || { tableId: undefined, fields: [], records: [] })
     if ( !tableId || !categories || !isEnabled ) { return [] };
 
-    const newCategories = categories.filter(category => !records.map(record => record.properties.id).includes(category.id)) 
+    const newCategories = categories.filter(category => !records?.map(record => record.properties.id).includes(category.id)) 
     return Promise.all(newCategories.map(async category => {
       const newPage = await retryWrapper( () => this.client.pages.create({ parent: { type: 'database_id', database_id: tableId }, properties: formatter.notion.category.new({ category, tableConfigFields: fields })}))
       return { categoryId: category.id, pageId: newPage.id }
@@ -188,8 +188,8 @@ export class Notion extends IntegrationBase {
     const mappedTransactions = transactions.map(transaction => {
       const accountPage = accountsPages.find(accountPage => accountPage.accountId === transaction.account_id);
       const categoryPage = categoriesPages.find(categoryPage => categoryPage.categoryId === transaction.category_id && !!transaction.category_id)
-      const pendingPage = records.find(record => record.properties.id === transaction.pending_transaction_id);
-      const postedPage = records.find(record => record.properties.id === transaction.transaction_id);
+      const pendingPage = records?.find(record => record.properties.id === transaction.pending_transaction_id);
+      const postedPage = records?.find(record => record.properties.id === transaction.transaction_id);
       return { transaction, page: pendingPage, isNew: !pendingPage && !postedPage, accountPage, categoryPage }
     });
 
@@ -199,7 +199,7 @@ export class Notion extends IntegrationBase {
         return { isUpdated: true, isNew: false }
       }
       if ( isNew ) {
-        await retryWrapper(() => this.client.pages.create({ parent: { type: 'database_id', database_id: tableId }, properties: formatter.notion.transaction.new({ transaction, accountPageId: accountPage.pageId, categoryPageId: categoryPage?.pageId, tableConfigFields: fields })}));
+        await retryWrapper(() => this.client.pages.create({ parent: { type: 'database_id', database_id: tableId }, properties: formatter.notion.transaction.new({ transaction, accountPageId: accountPage!.pageId, categoryPageId: categoryPage?.pageId, tableConfigFields: fields })}));
         return { isNew: true, isUpdated: false }
       } 
       return { isNew: false, isUpdated: false }
@@ -209,7 +209,7 @@ export class Notion extends IntegrationBase {
       updated: responses.filter(response => response.isUpdated).length
     }));
 
-    const pagesToRemove = records.filter(page => nonPendingRemovedTransactions.includes(page.properties.id));
+    const pagesToRemove = records?.filter(page => nonPendingRemovedTransactions.includes(page.properties.id)) || [];
     const removeTransactionsPromise = Promise.all(pagesToRemove.map(page => {
       return retryWrapper(() => this.client.pages.update({ page_id: page.id, archived: true }).then(() => ({ removed: 1 })))
     }))
@@ -226,7 +226,7 @@ export class Notion extends IntegrationBase {
     if ( !securities || securities.length === 0 || !isEnabled ) { return [] };
 
     const mappedSecurities = securities.map(security => {
-      const page = records.find(rec => rec.properties.id === security.security_id);
+      const page = records?.find(rec => rec.properties.id === security.security_id);
       return { security, page }
     });
 
@@ -248,7 +248,7 @@ export class Notion extends IntegrationBase {
     const mappedHoldings = holdings.map(holding => {
       const accountPage = accountsPages.find(accountPage => accountPage.accountId === holding.account_id);
       const securityPage = securitiesPages.find(securityPage => securityPage.securityId === holding.security_id)
-      const page = records.find(rec => rec.properties.account === accountPage.pageId && rec.properties.security_id === securityPage.pageId);
+      const page = records?.find(rec => rec.properties.account === accountPage!.pageId && rec.properties.security_id === securityPage!.pageId);
       return { holding, page, accountPage, securityPage }
     });
 
@@ -258,7 +258,7 @@ export class Notion extends IntegrationBase {
         return { isNew: false }
       }
 
-      await retryWrapper(() => this.client.pages.create({ parent: { type: 'database_id', database_id: tableId }, properties: formatter.notion.holding.new({ holding, securityPageId: securityPage.pageId, symbol: securityPage.symbol, accountPageId: accountPage.pageId, tableConfigFields: fields })}))
+      await retryWrapper(() => this.client.pages.create({ parent: { type: 'database_id', database_id: tableId }, properties: formatter.notion.holding.new({ holding, securityPageId: securityPage!.pageId, symbol: securityPage?.symbol || "", accountPageId: accountPage!.pageId, tableConfigFields: fields })}))
       return { isNew: true }
     }))
     .then(responses => ({
@@ -270,11 +270,11 @@ export class Notion extends IntegrationBase {
     if ( !investmentTransactions || investmentTransactions.length === 0 ) { return { added: 0, updated: 0 }}
     const { tableId, fields, records } = this.config.investment_transactions;
 
-    const newInvestmentTransactions = investmentTransactions.filter(investmentTransaction => !records.map(record => record.properties.id).includes(investmentTransaction.investment_transaction_id)) 
+    const newInvestmentTransactions = investmentTransactions.filter(investmentTransaction => !records?.map(record => record.properties.id).includes(investmentTransaction.investment_transaction_id)) 
     return Promise.all(newInvestmentTransactions.map(investmentTransaction => {
       const accountPage = accountsPages.find(page => page.accountId === investmentTransaction.account_id);
       const securityPage = securitiesPages.find(page => page.securityId === investmentTransaction.security_id);
-      return retryWrapper( () => this.client.pages.create({ parent: { type: 'database_id', database_id: tableId }, properties: formatter.notion.investmentTransaction.new({ investmentTransaction, accountPageId: accountPage.pageId, securityPageId: securityPage?.pageId, tableConfigFields: fields })}))
+      return retryWrapper( () => this.client.pages.create({ parent: { type: 'database_id', database_id: tableId }, properties: formatter.notion.investmentTransaction.new({ investmentTransaction, accountPageId: accountPage!.pageId, securityPageId: securityPage?.pageId, tableConfigFields: fields })}))
     }))
     .then(() => ({
       added: newInvestmentTransactions.length
@@ -289,7 +289,7 @@ export class Notion extends IntegrationBase {
     while ( hasMore ) {
       const response = await retryWrapper(() => this.client.databases.query({ database_id: databaseId, start_cursor: nextCursor }));
       hasMore = response.has_more;
-      nextCursor = response.next_cursor;
+      nextCursor = response.next_cursor || undefined;
       results = results.concat(response.results as PageObjectResponse[])
     };
 
@@ -311,7 +311,8 @@ async function retryWrapper<T extends Array<any>, U>(func: () => Promise<U>): Pr
           channel: logsnag.LogSnagChannel.ERRORS,
           event: logsnag.LogSnagEvent.UNHANDLED,
           description: `Unhandled Notion API error: ${JSON.stringify(err)}`
-        })
+        });
+        return { didProcess: true, response: null }
       }
       console.log(err.code)
     }));

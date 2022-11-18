@@ -1,7 +1,7 @@
 import { Airtable, Google, Notion } from "./integrations";
 import { Integrations_Enum } from "./graphql/sdk";
-import { DestinationModel } from "../../../../functions/_lib/types";
-import { AirtableCredentials, CheckDestinationCredentialsPayload, GoogleSheetsCredentials, NotionCredentials } from "../../../../functions/_lib/types/shared";
+import { DestinationModel } from "./types";
+import { AirtableCredentials, CheckDestinationCredentialsPayload, GoogleSheetsCredentials, NotionCredentials } from "@finta/types";
 
 type Credentials = CheckDestinationCredentialsPayload<Integrations_Enum>['credentials'];
 

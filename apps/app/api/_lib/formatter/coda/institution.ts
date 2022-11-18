@@ -1,5 +1,5 @@
 import { PlaidItemModel } from "../../types";
-import { OauthInstitution } from "../../types/shared";
+import { OauthInstitution } from "@finta/types";
 
 export const institution = ({ item }: { item: PlaidItemModel }): OauthInstitution => ({
   id: item.id,

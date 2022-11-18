@@ -52,7 +52,7 @@ export class Airtable extends IntegrationBase {
 
   async checkAuthentication(): Promise<CheckAuthenticationFuncResponse> {
     return this.base('Institutions').select({ maxRecords: 1}).all()
-    .then(() => ({ isValid: true, errorCredential: null, errorCode: null }))
+    .then(() => ({ isValid: true }))
     .catch((err: AirtableError) => {
       const { error, message } = err;
       if ( error === 'AUTHENTICATION_REQUIRED' ) {
@@ -60,7 +60,7 @@ export class Airtable extends IntegrationBase {
       } else if ( error === 'NOT_AUTHORIZED' || message === 'Could not find what you are looking for' ) {
         return { isValid: false, errorCredential: 'base_id', errorCode: DestinationErrorCode.INVALID_CREDENTIALS }
       }
-      return { isValid: true, errorCredential: null, errorCode: null }
+      return { isValid: true }
     })
   }
 
@@ -80,7 +80,7 @@ export class Airtable extends IntegrationBase {
   // Internal Helper Methods
   async upsertInstitution({ item }: { item: PlaidItemModel }) {
     const { tableId, fields } = this.config.institutions;
-    const institutionIdHeader = fields[InstitutionsTableFields.ID];
+    const institutionIdHeader = fields[InstitutionsTableFields.ID as keyof typeof fields];
 
     const institutionRecord = await this.getRecords({ table: tableId, filterByFormula: `{${institutionIdHeader}} = '${item.id}'`})
     .then(response => response[0]);
@@ -92,7 +92,7 @@ export class Airtable extends IntegrationBase {
 
   async upsertAccounts({ accounts, institutionRecordId }: { accounts: AccountBase[]; institutionRecordId: string; }) {
     const { tableId, fields } = this.config.accounts;
-    const accountIdHeader = fields[AccountsTableFields.ID];
+    const accountIdHeader = fields[AccountsTableFields.ID as keyof typeof fields];
 
     return Promise.all(_.chunk(accounts, 10).map(async accountsChunk => {
       const accountsRecords = await this.getRecords({ table: tableId, filterByFormula: `OR(${accountsChunk.map(account => `{${accountIdHeader}} = '${account.account_id}'`).join(', ')})`});
@@ -106,7 +106,7 @@ export class Airtable extends IntegrationBase {
         }))}),
         
         this.updateRecords({ table: tableId, records: accountsToUpdate.map(account => ({
-          id: accountsRecords.find(record => record.fields[accountIdHeader] === account.account_id).id,
+          id: accountsRecords.find(record => record.fields[accountIdHeader] === account.account_id)!.id,
           fields: formatter.airtable.account.updated({ account, tableConfigFields: fields })
         }))})
       ]).then(responses => {
@@ -131,7 +131,7 @@ export class Airtable extends IntegrationBase {
 
     const { tableId, fields, isEnabled } = this.config.categories || { tableId: null, fields: [], isEnabled: false };
     if ( !tableId || !isEnabled ) { return [] }
-    const categoryIdHeader = fields[CategoryTableFields.ID];
+    const categoryIdHeader = fields[CategoryTableFields.ID as keyof typeof fields];
 
     return Promise.all(_.chunk(categories, 10).map(async categoriesChunk => {
       const allCategoryIds = categoriesChunk.map(category => category.id);
@@ -163,7 +163,7 @@ export class Airtable extends IntegrationBase {
   }) {
     const { tableId, fields, isEnabled } = this.config.transactions;
     if ( !transactions || !isEnabled ) { return { added: 0, updated: 0, removed: 0 }};
-    const transactionIdHeader = fields[TransactionsTableFields.ID];
+    const transactionIdHeader = fields[TransactionsTableFields.ID as keyof typeof fields];
 
     const pendingTransactionIds = transactions.filter(transaction => !!transaction.pending_transaction_id).map(transaction => transaction.pending_transaction_id);
     const nonPendingRemovedTransactions = _.difference((removedTransactions || []), pendingTransactionIds)
@@ -176,7 +176,7 @@ export class Airtable extends IntegrationBase {
         table: tableId, 
         filterByFormula: `OR(${allTransactionIds.map(transactionId => `{${transactionIdHeader}} = '${transactionId}'`).join(', ')})`
       });
-      const transactionRecordsPlaidIds = transactionRecords.map(record => record.fields[transactionIdHeader]);
+      const transactionRecordsPlaidIds = transactionRecords.map(record => record.fields[transactionIdHeader] as string | null);
       const transactionsToCreate = transactionsChunk.filter(transaction => !transactionRecordsPlaidIds.includes(transaction.transaction_id) && !transactionRecordsPlaidIds.includes(transaction.pending_transaction_id));
       const transactionsToUpdate = transactionsChunk.filter(transaction => transactionRecordsPlaidIds.includes(transaction.pending_transaction_id));
 
@@ -184,14 +184,14 @@ export class Airtable extends IntegrationBase {
         this.createRecords({ table: tableId, records: transactionsToCreate.map(transaction => ({
           fields: formatter.airtable.transaction.new({ 
             transaction, 
-            accountRecordId: accountsRecords.find(record => record.accountId === transaction.account_id).recordId,
+            accountRecordId: accountsRecords.find(record => record.accountId === transaction.account_id)!.recordId,
             categoryRecordId: categoriesRecords.find(record => record.categoryId === transaction.category_id)?.recordId,
             tableConfigFields: fields
           })
         }))}),
 
         this.updateRecords({ table: tableId, records: transactionsToUpdate.map(transaction => {
-          const oldTransactionRecord = transactionRecords.find(record => record.fields[transactionIdHeader] === transaction.pending_transaction_id);
+          const oldTransactionRecord = transactionRecords.find(record => record.fields[transactionIdHeader] === transaction.pending_transaction_id)!;
           return {
             id: oldTransactionRecord.id,
             fields: formatter.airtable.transaction.updated({ transaction, shouldOverrideTransactionName: this.destination!.should_override_transaction_name, oldTransactionRecord, tableConfigFields: fields })
@@ -243,8 +243,8 @@ export class Airtable extends IntegrationBase {
         console.log(securitiesRecords[0])
       }
       const record = holdingsRecords.find(holdingRecord => 
-        (holdingRecord.fields[fields[HoldingsTableFields.ACCOUNT]] || [])[0] === accountRecord.recordId &&
-        (holdingRecord.fields[fields[HoldingsTableFields.SECURITY_ID]] || [])[0] === securityRecord.recordId
+        (holdingRecord.fields[fields[HoldingsTableFields.ACCOUNT as keyof typeof fields]] || [])[0] === accountRecord!.recordId &&
+        (holdingRecord.fields[fields[HoldingsTableFields.SECURITY_ID as keyof typeof fields]] || [])[0] === securityRecord!.recordId
       );
       return { holding, accountRecord, holdingRecord: record, securityRecord }
     })
@@ -256,17 +256,17 @@ export class Airtable extends IntegrationBase {
       Promise.all(_.chunk(newHoldings, 10).map(async holdingsChunk => {
         return this.createRecords({ table: tableId, records: holdingsChunk.map(mappedHolding => ({
           fields: formatter.airtable.holding.new({ 
-            symbol: mappedHolding.securityRecord.symbol || mappedHolding.securityRecord.name || "",
+            symbol: mappedHolding.securityRecord?.symbol || mappedHolding.securityRecord?.name || "",
             holding: mappedHolding.holding, 
-            accountRecordId: mappedHolding.accountRecord.recordId, 
-            securityRecordId: mappedHolding.securityRecord?.recordId || null, 
+            accountRecordId: mappedHolding.accountRecord!.recordId, 
+            securityRecordId: mappedHolding.securityRecord?.recordId || undefined, 
             tableConfigFields: fields 
           })
         }))})
       })),
       Promise.all(_.chunk(updatedHoldings, 10).map(async holdingsChunk => {
         return this.updateRecords({ table: tableId, records: holdingsChunk.map(mappedHolding => ({
-          id: mappedHolding.holdingRecord.id,
+          id: mappedHolding.holdingRecord!.id,
           fields: formatter.airtable.holding.updated({ holding: mappedHolding.holding, tableConfigFields: fields })
         }))})
       }))
@@ -286,7 +286,7 @@ export class Airtable extends IntegrationBase {
     const { tableId, fields, isEnabled } = this.config.investment_transactions;
 
     if ( !investmentTransactions || investmentTransactions.length === 0 || !isEnabled ) { return { added: 0 }};
-    const transactionIdHeader = fields[InvestmentTransactionsTableFields.ID];
+    const transactionIdHeader = fields[InvestmentTransactionsTableFields.ID as keyof typeof fields];
 
     return Promise.all(_.chunk(investmentTransactions, 10).map(async transactionsChunk => {
       const allTransactionIds = transactionsChunk.map(transaction => transaction.investment_transaction_id);
@@ -303,8 +303,8 @@ export class Airtable extends IntegrationBase {
         this.createRecords({ table: tableId, records: transactionsToCreate.map(investmentTransaction => ({
           fields: formatter.airtable.investmentTransaction.new({ 
             investmentTransaction, 
-            securityRecordId: securitiesRecords.find(record => record.securityId === investmentTransaction.security_id)?.recordId || null,
-            accountRecordId: accountsRecords.find(record => record.accountId === investmentTransaction.account_id).recordId,
+            securityRecordId: securitiesRecords.find(record => record.securityId === investmentTransaction.security_id)!.recordId,
+            accountRecordId: accountsRecords.find(record => record.accountId === investmentTransaction.account_id)!.recordId,
             tableConfigFields: fields
           })
         }))}),
@@ -324,9 +324,9 @@ export class Airtable extends IntegrationBase {
     const { tableId, fields, isEnabled } = this.config.securities;
     if ( !securities || securities.length === 0 || !isEnabled) { return [] };
 
-    const securityIdHeader = fields[SecurityTableFields.ID];
-    const symbolHeader = fields[SecurityTableFields.SYMBOL];
-    const nameHeader = fields[SecurityTableFields.NAME]
+    const securityIdHeader = fields[SecurityTableFields.ID as keyof typeof fields];
+    const symbolHeader = fields[SecurityTableFields.SYMBOL as keyof typeof fields];
+    const nameHeader = fields[SecurityTableFields.NAME as keyof typeof fields]
 
     return Promise.all(_.chunk(securities, 10).map(async securitiesChunk => {
       const securityRecords = await this.getRecords({ table: tableId, filterByFormula: `OR(${securitiesChunk.map(security => `{${securityIdHeader}} = '${security.security_id}'`).join(', ')})`});
@@ -340,7 +340,7 @@ export class Airtable extends IntegrationBase {
         }))}),
         
         this.updateRecords({ table: tableId, records: securitiesToUpdate.map(security => ({
-          id: securityRecords.find(record => record.fields[securityIdHeader] === security.security_id).id,
+          id: securityRecords.find(record => record.fields[securityIdHeader] === security.security_id)!.id,
           fields: formatter.airtable.security.updated({ security, tableConfigFields: fields })
         }))})
       ]).then(responses => responses[0].concat(responses[1]) as any[])

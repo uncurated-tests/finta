@@ -1,5 +1,5 @@
 import { Holding } from "plaid";
-import { TableConfigFields, HoldingsTableFields } from "../../types/shared";
+import { TableConfigFields, HoldingsTableFields } from "@finta/types";
 
 export const holding = {
   new: ({ holding, headerValues, tableConfigFields }: { 
@@ -17,6 +17,7 @@ export const holding = {
 
     const userFieldMapping = Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
+      // eslint-disable-next-line
       [userDefinedField]: formattedHolding[tableConfigField]
     }), {} as Record<string, string>);
 
@@ -35,6 +36,7 @@ export const holding = {
 
     const userFieldMapping = Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
+      // eslint-disable-next-line
       [userDefinedField]: formattedHolding[tableConfigField]
     }), {} as Record<string, string>);
 

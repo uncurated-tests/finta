@@ -1,7 +1,7 @@
 import segment from "analytics-node";
 import Stripe from "stripe";
 
-const client = new segment(process.env.SEGMENT_KEY!, { flushInterval: 2000 });
+const client = new segment(process.env.REACT_APP_SEGMENT_KEY!, { flushInterval: 2000 });
 
 export const identify = ({ userId, traits = {}, timestamp }: {
   userId: string;

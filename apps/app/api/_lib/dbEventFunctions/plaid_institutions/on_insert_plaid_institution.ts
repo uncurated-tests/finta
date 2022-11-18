@@ -1,9 +1,9 @@
 import FormData from 'form-data';
 
-import { DBEventPayload, DBPlaidInstitution } from "../../../../../../functions/_lib/types";
+import { DBEventPayload, DBPlaidInstitution } from "../../types";
 import { graphql } from "../../graphql";
 import { storage } from '../../nhost';
-import * as plaid from "../../../../../../functions/_lib/plaid";
+import * as plaid from "../../plaid";
 
 export const on_insert_plaid_institution = async ({ body }: { body: DBEventPayload<'INSERT', DBPlaidInstitution> }) => {
   const { new: { id, name }} = body.event.data;
@@ -20,6 +20,6 @@ export const on_insert_plaid_institution = async ({ body }: { body: DBEventPaylo
     const { error, fileMetadata } = await storage.upload({ formData, bucketId: 'institution-logos' });
     if ( error ) { return; }
 
-    return graphql.UpdatePlaidInstitution({ plaid_institution_id: id, _set: { logo_file_id: fileMetadata.id }})
+    return graphql.UpdatePlaidInstitution({ plaid_institution_id: id, _set: { logo_file_id: fileMetadata!.id }})
   })
 }

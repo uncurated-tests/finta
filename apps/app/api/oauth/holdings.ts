@@ -2,7 +2,7 @@ import { functionWrapper, Sentry, graphql, getItemActiveAccounts, plaid, formatt
 import { handlePlaidError, getOauthPlaidItems } from "./_helpers";
 import { Holding, InvestmentHoldingsGetRequestOptions, Security } from "plaid";
 import { OauthFunctionResponse, ErrorResponseMessages } from "../_lib/types";
-import { OauthGetHoldingsResponse, OauthHolding } from "../_lib/types/shared";
+import { OauthGetHoldingsResponse, OauthHolding } from "@finta/types";
 
 export default functionWrapper.oauth(async (req, destination, plaidEnv, asAdmin) => {
   const transaction = Sentry.startTransaction({ op: "oauth function", name: "Get holdings" });
@@ -55,7 +55,7 @@ export default functionWrapper.oauth(async (req, destination, plaidEnv, asAdmin)
     const getItemActiveAccountsResponse = await getItemActiveAccounts(item, plaidEnv);
     if ( getItemActiveAccountsResponse.hasAuthError ) { return ({ holdings: [] as OauthHolding[], plaidAccountIds: [], hasAuthError: true, itemId: item.id }) }
     const { accountIds: plaidAccountIds } = getItemActiveAccountsResponse;
-    const { access_token, billed_products = [], available_products = [] } = item;
+    const { accessToken, billed_products = [], available_products = [] } = item;
     if ( plaidAccountIds.length === 0) { return ({ holdings: [] as OauthHolding[], plaidAccountIds, hasAuthError: false, itemId: item.id }) }
 
     const products = billed_products.concat(available_products) as string[];
@@ -63,13 +63,15 @@ export default functionWrapper.oauth(async (req, destination, plaidEnv, asAdmin)
 
     const options = { account_ids: plaidAccountIds } as InvestmentHoldingsGetRequestOptions;
 
-    const { holdings, securities, hasAuthError } = await plaid.getHoldings({ accessToken: access_token, options })
+    const { holdings, securities, hasAuthError } = await plaid.getHoldings({ accessToken, options })
     .then(response => ({ holdings: response.data.holdings as Holding[], securities: response.data.securities as Security[], hasAuthError: false }))
-    .catch(async err => {
-      const error = err.response.data;
-      scope.setContext("Plaid error", error);
-      const { hasAuthError } = await handlePlaidError({ error, item, syncLogId: syncLog.id });
-      if ( !hasAuthError ) { Sentry.captureException(err, scope )};
+    .catch(async error => {
+      const errorData = error.response.data;
+      scope.setContext("Plaid error", errorData);
+      const { hasAuthError } = await handlePlaidError({ error: errorData, item, syncLogId: syncLog.id });
+      if ( !hasAuthError ) { 
+        await logsnag.logError({ operation: "Get holdings", error, scope, tags: {[logsnag.LogSnagTags.USER_ID]: user.id } })
+      };
       return ({ holdings: [] as Holding[], securities: [] as Security[], hasAuthError })
     });
 

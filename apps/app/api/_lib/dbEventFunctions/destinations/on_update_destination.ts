@@ -1,7 +1,6 @@
-import { DBEventPayload, DBDestination } from "../../../../../../functions/_lib/types";
+import { DBEventPayload, DBDestination } from "../../types";
 import * as logsnag from "../../logsnag";
 import * as segment from "../../segment";
-import { SegmentEventNames } from "../../../../../../functions/_lib/types";
 
 export const on_update_destination = async ({ body }: { body: DBEventPayload<'UPDATE', DBDestination> }) => {
   const { session_variables, data: { old: { id, user_id, integration_id, disabled_at: oldDisabledAt }, new: { disabled_at: newDisabledAt }}} = body.event;
@@ -9,7 +8,7 @@ export const on_update_destination = async ({ body }: { body: DBEventPayload<'UP
   if ( !oldDisabledAt && !!newDisabledAt ) {
     const trackPromise = session_variables["x-hasura-role"] === 'user' ? segment.track({
       userId: user_id,
-      event: SegmentEventNames.DESTINATION_DELETED,
+      event: segment.Events.DESTINATION_DELETED,
       properties: { integration: integration_id }
     }) : true;
 

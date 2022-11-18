@@ -5,7 +5,7 @@ import { InvestmentsTransactionsGetRequestOptions } from "plaid";
 import { functionWrapper, formatter, plaid, Sentry, graphql, getItemActiveAccounts, logsnag } from "../_lib";
 import { handlePlaidError, getOauthPlaidItems } from "./_helpers";
 import { OauthFunctionResponse, ErrorResponseMessages, CustomRequest } from "../_lib/types";
-import { OauthInvestmentTransaction, OauthGetInvestmentTransactionsResponse, GetTransactionsNextContinuation } from "../_lib/types/shared";
+import { OauthInvestmentTransaction, OauthGetInvestmentTransactionsResponse, GetTransactionsNextContinuation } from "@finta/types";
 
 export default functionWrapper.oauth(async (req: CustomRequest<GetTransactionsNextContinuation>, destination, plaidEnv, asAdmin) => {
   const transaction = Sentry.startTransaction({ op: "oauth function", name: "Get investment transactions" });
@@ -67,7 +67,7 @@ export default functionWrapper.oauth(async (req: CustomRequest<GetTransactionsNe
     const getItemActiveAccountsResponse = await getItemActiveAccounts(item, plaidEnv);
     if ( getItemActiveAccountsResponse.hasAuthError ) { return ({ investmentTransactions: [] as OauthInvestmentTransaction[], hasMore: false, totalInvestmentTransactions: previousTotalTransactions, plaidAccountIds: [], hasAuthError: true, itemId: item.id }) };
     const { accountIds: plaidAccountIds } = getItemActiveAccountsResponse;
-    const { access_token, billed_products = [], available_products = [], accounts } = item;
+    const { accessToken, billed_products = [], available_products = [], accounts } = item;
     if ( plaidAccountIds.length === 0) { return ({ investmentTransactions: [] as OauthInvestmentTransaction[], hasMore: false, totalInvestmentTransactions: previousTotalTransactions, plaidAccountIds, hasAuthError: false, itemId: item.id }) }
 
     const products = billed_products.concat(available_products) as string[];
@@ -77,13 +77,15 @@ export default functionWrapper.oauth(async (req: CustomRequest<GetTransactionsNe
     
     const options = { account_ids: plaidAccountIds, offset: previousTotalTransactions} as InvestmentsTransactionsGetRequestOptions;
 
-    const { investment_transactions, total_investment_transactions, securities, hasAuthError } = await plaid.getInvestmentTransactions({ accessToken: access_token, startDate, endDate, options })
+    const { investment_transactions, total_investment_transactions, securities, hasAuthError } = await plaid.getInvestmentTransactions({ accessToken, startDate, endDate, options })
     .then(response => ({ ...response.data, hasAuthError: false }))
-    .catch(async err => {
-      const error = err.response.data;
-      scope.setContext("Plaid error", error);
-      const { hasAuthError } = await handlePlaidError({ error, item });
-      if ( !hasAuthError ) { Sentry.captureException(err, scope )};
+    .catch(async error => {
+      const errorData = error.response.data;
+      scope.setContext("Plaid error", errorData);
+      const { hasAuthError } = await handlePlaidError({ error: errorData, item });
+      if ( !hasAuthError ) { 
+        await logsnag.logError({ operation: "Get investment transactions", error, scope, tags: {[logsnag.LogSnagTags.USER_ID]: user.id } })
+      };
       return ({ investment_transactions: [], total_investment_transactions: 0, hasAuthError, securities: [] })
     });
 

@@ -1,7 +1,6 @@
 import moment from "moment-timezone";
 
-import { functionWrapper, graphql, plaidWebhookFunctions, logsnag, Sentry, } from "../_lib";
-import { HttpStatusCodes, ErrorResponseMessages } from "../_lib/types";
+import { functionWrapper, graphql, plaidWebhookFunctions, logsnag, Sentry, types } from "../_lib";
 
 export default functionWrapper.public(async (req) => {
   const transaction = Sentry.startTransaction({ op: "Webhook", name: "Plaid Webhook" });
@@ -10,7 +9,7 @@ export default functionWrapper.public(async (req) => {
   const { webhook_type, webhook_code, item_id, asAdmin } = req.body;
 
   try {
-    const item = await graphql.GetPlaidItem({ plaid_item_id: item_id, include_removed_transactions: true, date: moment().subtract(24, 'hours').toISOString() }).then(response => response.plaid_item);
+    const item = await graphql.GetPlaidItem({ plaid_item_id: item_id, include_removed_transactions: true, date: moment().subtract(24, 'hours').toISOString() }).then(response => response.plaidItem);
     if ( !item ) { throw new Error("Item does not exist") }
     const { user } = item;
     scope.setUser({ id: user.id, email: user.email })
@@ -47,9 +46,9 @@ export default functionWrapper.public(async (req) => {
 
     } else { throw new Error("Unknown webhook type") }
 
-    return { status: HttpStatusCodes.OK, message: 'OK' }
+    return { status: types.StatusCodes.OK, message: 'OK' }
   } catch (error) {
     await logsnag.logError({ error, scope, operation: "Plaid webhook", tags: { [logsnag.LogSnagTags.USER_ID]: scope.getUser()?.id, [logsnag.LogSnagTags.ITEM_ID]: item_id }})
-    return { status: HttpStatusCodes.INERNAL_ERROR, message: ErrorResponseMessages.INERNAL_ERROR }
+    return { status: types.StatusCodes.INTERNAL_SERVER_ERROR, message: types.ErrorResponseMessages.INERNAL_ERROR }
   } finally { transaction.finish() } 
 })

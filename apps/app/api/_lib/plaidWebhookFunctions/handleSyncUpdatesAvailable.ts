@@ -2,12 +2,12 @@ import { SyncUpdatesAvailableWebhook, Transaction, RemovedTransaction } from "pl
 import * as _ from "lodash";
 
 import { getAccounts, transactionsSync } from "../plaid";
-import { Destination_Sync_Logs_Update_Column, graphql } from "../graphql";
-import { PlaidItemModel, DestinationModel, SegmentEventNames } from "../types";
-import { DestinationTableTypes, DestinationError, DestinationErrorCode } from "../types/shared";
+import { graphql } from "../graphql";
+import { PlaidItemModel, DestinationModel } from "../types";
+import { DestinationTableTypes, DestinationError, DestinationErrorCode } from "@finta/types";
 import { getDestinationObject } from "../getDestinationObject";
 import * as segment from "../segment";
-import { Integrations_Enum } from "../graphql/sdk";
+import { Integrations_Enum, Destination_Sync_Logs_Update_Column } from "../graphql/sdk";
 import { Sentry } from "../sentry";
 import * as logsnag from "../logsnag";
 
@@ -18,7 +18,7 @@ export const handleSyncUpdatesAvailable = async ({ item, data, destinations, sco
     return ((transactionsTableConfig && transactionsTableConfig.is_enabled) || (!transactionsTableConfig && destination.should_sync_transactions)) && destinationItems.includes(item.id) && destination.integration.id !== Integrations_Enum.Coda;
   };
   const { historical_update_complete, initial_update_complete } = data;
-  const { access_token, plaid_sync_cursor } = item;
+  const { accessToken, plaid_sync_cursor } = item;
 
   const filteredDestinations = destinations.filter(destinationFilter);
   if ( filteredDestinations.length === 0 ) { return true; }
@@ -54,7 +54,7 @@ export const handleSyncUpdatesAvailable = async ({ item, data, destinations, sco
 
   while ( hasMore ) {
     try {
-      const data = await transactionsSync({ accessToken: access_token, cursor }).then(response => response.data);
+      const data = await transactionsSync({ accessToken, cursor }).then(response => response.data);
       added = added.concat(data.added);
       modified = modified.concat(data.modified);
       removed = removed.concat(data.removed);
@@ -86,9 +86,9 @@ export const handleSyncUpdatesAvailable = async ({ item, data, destinations, sco
   const transactions = added.concat(modified);
   const categories = _.uniqBy(transactions
     .filter(transaction => !!transaction.category_id && !!transaction.category)
-    .map(transaction => ({ id: transaction.category_id, name: transaction.category[transaction.category.length -1], category_group: transaction.category[0] }))
+    .map(transaction => ({ id: transaction.category_id!, name: transaction.category![transaction.category!.length -1], category_group: transaction.category![0] }))
   , 'id')
-  const accounts = await getAccounts({ accessToken: item.access_token }).then(response => response.data.accounts);
+  const accounts = await getAccounts({ accessToken }).then(response => response.data.accounts);
   
   ({ success, hasUnhandledError } = await Promise.all(filteredDestinations.map(async destination => {
     const destinationAccounts = destination.account_connections.map(ac => ac.account.id);
@@ -119,11 +119,11 @@ export const handleSyncUpdatesAvailable = async ({ item, data, destinations, sco
         update_columns: [ Destination_Sync_Logs_Update_Column.Accounts, Destination_Sync_Logs_Update_Column.Transactions, Destination_Sync_Logs_Update_Column.Holdings, Destination_Sync_Logs_Update_Column.InvestmentTransactions ]
       }).then(() => ({ success: true }));
     } else {
-      destinationLogError = destinationCheck.error;
+      destinationLogError = destinationCheck.error || undefined;
       return Promise.all([
         segment.track({
           userId: item.user.id,
-          event: SegmentEventNames.DESTINATION_ERROR_TRIGGERED,
+          event: segment.Events.DESTINATION_ERROR_TRIGGERED,
           properties: { 
             ...destinationCheck.error, 
             integration: destination.integration.id, 
@@ -140,7 +140,7 @@ export const handleSyncUpdatesAvailable = async ({ item, data, destinations, sco
           tags: {
             [logsnag.LogSnagTags.SYNC_LOG_ID]: syncLog.id,
             [logsnag.LogSnagTags.DESTINATION_ID]: destination.id,
-            [logsnag.LogSnagTags.ERROR]: destinationCheck.error.errorCode
+            [logsnag.LogSnagTags.ERROR]: destinationCheck.error?.errorCode
           }
         }),
         graphql.InsertDestinationSyncLog({

@@ -1,12 +1,12 @@
 import { Holding } from "plaid";
 
-import { HoldingsTableFields, TableConfigFields } from "../../types/shared";
+import { HoldingsTableFields, TableConfigFields } from "@finta/types";
 
 export const holding = {
   new: ({ holding, accountRecordId, securityRecordId, symbol, tableConfigFields }: {
     holding: Holding;
     accountRecordId: string;
-    securityRecordId: string;
+    securityRecordId?: string;
     symbol: string;
     tableConfigFields: Record<TableConfigFields, string> | {}
   }) => {
@@ -21,6 +21,7 @@ export const holding = {
   
     return Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
+      // eslint-disable-next-line
       [userDefinedField]: formattedHolding[tableConfigField]
     }), {} as Record<string, string>);
   },
@@ -36,6 +37,7 @@ export const holding = {
   
     return Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
+      // eslint-disable-next-line
       [userDefinedField]: formattedHolding[tableConfigField]
     }), {} as Record<string, string>);
   }

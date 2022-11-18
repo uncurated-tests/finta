@@ -7,10 +7,10 @@ export const insights = async () => {
   const { arr, mrr, net_revenue, subscriptions, trials } = await baremetrics.metrics();
   const { destinations, itemsCount } = await graphql.GetInsights().then(response => {
     const destinations = Object.fromEntries(response.integrations.map(integration => {
-      return [ integration.id, integration.destinations_aggregate.aggregate.count ]
+      return [ integration.id, integration.destinations_aggregate.aggregate?.count || 0 ]
     })) as Record<Integrations_Enum, number>;
     
-    const itemsCount = response.plaid_items_aggregate.aggregate.count;
+    const itemsCount = response.plaid_items_aggregate.aggregate?.count || 0;
     return { destinations, itemsCount }
   });
 

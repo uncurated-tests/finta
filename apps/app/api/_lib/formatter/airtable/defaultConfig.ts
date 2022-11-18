@@ -1,4 +1,4 @@
-import { TableConfigs, InstitutionsTableFields, AccountsTableFields, TransactionsTableFields, HoldingsTableFields, InvestmentTransactionsTableFields, SecurityTableFields, CategoryTableFields } from "../../types/shared";
+import { TableConfigs, InstitutionsTableFields, AccountsTableFields, TransactionsTableFields, HoldingsTableFields, InvestmentTransactionsTableFields, SecurityTableFields, CategoryTableFields } from "@finta/types";
 
 export const defaultConfig = (): TableConfigs => ({
   institutions: {

@@ -1,5 +1,5 @@
 import { PlaidItemModel } from "../../types"
-import { TableConfigFields, InstitutionsTableFields } from "../../types/shared";
+import { TableConfigFields, InstitutionsTableFields } from "@finta/types";
 
 export const institution = ({ item, lastUpdate, headerValues, tableConfigFields }: { 
   item: PlaidItemModel;
@@ -16,6 +16,7 @@ export const institution = ({ item, lastUpdate, headerValues, tableConfigFields 
 
   const userFieldMapping = Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
     ...allFields,
+    // eslint-disable-next-line
     [userDefinedField]: formattedItem[tableConfigField]
   }), {} as Record<string, string>);
 

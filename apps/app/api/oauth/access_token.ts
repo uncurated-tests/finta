@@ -1,4 +1,4 @@
-import { crypto, graphql, Sentry, functionWrapper } from "../_lib";
+import { crypto, graphql, Sentry, functionWrapper, logsnag } from "../_lib";
 
 
 export default functionWrapper.public(async(req) => {
@@ -38,8 +38,8 @@ export default functionWrapper.public(async(req) => {
   .then(response => response.destinations[0])
   
   if ( !destination ) { 
-    scope.setContext("Data", { accessTokenHash })
-    Sentry.captureException(new Error("Missing Destination"), scope);
+    scope.setContext("Data", { accessTokenHash });
+    await logsnag.logError({ operation: "Exchange access token", scope, error: new Error("Missing Destination") })
     transaction.finish();
     return { status: 500, message: "Internal Error" }
   }

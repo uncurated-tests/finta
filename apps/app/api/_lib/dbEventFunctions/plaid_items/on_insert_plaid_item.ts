@@ -1,7 +1,7 @@
-import { DBEventPayload, DBPlaidItem, SegmentEventNames } from "../../../../../../functions/_lib/types";
+import { DBEventPayload, DBPlaidItem } from "../../types";
 import { graphql } from "../../graphql";
 import * as logsnag from "../../logsnag";
-import * as plaid from "../../../../../../functions/_lib/plaid";
+import * as plaid from "../../plaid";
 import * as segment from "../../segment";
 import { Products } from "plaid";
 
@@ -11,11 +11,11 @@ export const on_insert_plaid_item = async ({ body }: { body: DBEventPayload<'INS
   await Promise.all([
     graphql.GetPlaidItem({ plaid_item_id: id })
     .then(response => {
-      const item = response.plaid_item!;
+      const item = response.plaidItem!;
 
       const trackPromise = segment.track({
         userId: user_id,
-        event: SegmentEventNames.INSTITUTION_CREATED,
+        event: segment.Events.INSTITUTION_CREATED,
         properties: { institution: item.institution.name }
       });
 

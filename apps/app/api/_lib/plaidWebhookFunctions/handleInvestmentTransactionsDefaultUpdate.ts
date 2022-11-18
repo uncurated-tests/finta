@@ -1,13 +1,13 @@
 import moment from "moment-timezone";
 
 import { getDestinationObject } from "../getDestinationObject";
-import { Destination_Sync_Logs_Update_Column, graphql } from "../graphql";
-import { Integrations_Enum } from "../graphql/sdk";
+import { graphql } from "../graphql";
+import { Integrations_Enum, Destination_Sync_Logs_Update_Column } from "../graphql/sdk";
 import { getAllInvestmentTransactions } from "../plaid";
 import * as segment from "../segment";
 import * as logsnag from "../logsnag";
-import { PlaidItemModel, DestinationModel, SegmentEventNames } from "../types";
-import { DestinationError, DestinationErrorCode, DestinationTableTypes } from "../types/shared";
+import { PlaidItemModel, DestinationModel } from "../types";
+import { DestinationError, DestinationErrorCode, DestinationTableTypes } from "@finta/types";
 import { Sentry } from "../sentry";
 
 export const handleInvestmentTransactionsDefaultUpdate = async ({ item, destinations, scope, asAdmin }: { item: PlaidItemModel; destinations: DestinationModel[]; scope: Sentry.Scope, asAdmin: boolean  }) => {
@@ -16,12 +16,12 @@ export const handleInvestmentTransactionsDefaultUpdate = async ({ item, destinat
     const investmentTransactionsTableConfig = destination.table_configs.investment_transactions; 
     return ((investmentTransactionsTableConfig && investmentTransactionsTableConfig.is_enabled) || (!investmentTransactionsTableConfig && destination.should_sync_investments)) && destinationItems.includes(item.id) && destination.integration.id !== Integrations_Enum.Coda;
   };
-  const { access_token } = item;
+  const { accessToken } = item;
 
   const filteredDestinations = destinations.filter(destinationFilter);
   if ( filteredDestinations.length === 0 ) { return true; }
 
-  const { accounts, investmentTransactions, securities } = await getAllInvestmentTransactions({ accessToken: access_token, startDate: moment().subtract(14, 'days').format("YYYY-MM-DD"), endDate: moment().format("YYYY-MM-DD"), options: {}});
+  const { accounts, investmentTransactions, securities } = await getAllInvestmentTransactions({ accessToken, startDate: moment().subtract(14, 'days').format("YYYY-MM-DD"), endDate: moment().format("YYYY-MM-DD"), options: {}});
   
   const trigger = 'investment_transactions_update'
   const syncLog = await graphql.InsertSyncLog({ sync_log: { trigger, metadata: { asAdmin }, plaid_item_sync_logs: { data: [{ plaid_item_id: item.id }]}
@@ -77,7 +77,7 @@ export const handleInvestmentTransactionsDefaultUpdate = async ({ item, destinat
       return Promise.all([
         segment.track({
           userId: item.user.id,
-          event: SegmentEventNames.DESTINATION_ERROR_TRIGGERED,
+          event: segment.Events.DESTINATION_ERROR_TRIGGERED,
           properties: { 
             ...destinationCheck.error, 
             integration: destination.integration.id, 
@@ -94,7 +94,7 @@ export const handleInvestmentTransactionsDefaultUpdate = async ({ item, destinat
           tags: {
             [logsnag.LogSnagTags.SYNC_LOG_ID]: syncLog.id,
             [logsnag.LogSnagTags.DESTINATION_ID]: destination.id,
-            [logsnag.LogSnagTags.ERROR]: destinationCheck.error.errorCode
+            [logsnag.LogSnagTags.ERROR]: destinationCheck.error?.errorCode
           }
         }),
         graphql.InsertDestinationSyncLog({

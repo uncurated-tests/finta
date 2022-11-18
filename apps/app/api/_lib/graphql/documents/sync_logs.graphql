@@ -1,3 +1,11 @@
+fragment DBSyncLogFields on sync_logs {
+  id
+  ended_at
+  error
+  trigger
+  is_success
+}
+
 fragment AllSyncLogFields on sync_logs {
   id
   created_at

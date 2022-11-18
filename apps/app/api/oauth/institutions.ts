@@ -1,7 +1,6 @@
-import { functionWrapper, Sentry, graphql, formatter, logsnag } from "../_lib";
+import { functionWrapper, Sentry, graphql, formatter, logsnag, types } from "../_lib";
 import { getOauthPlaidItems } from "./_helpers";
-import { OauthFunctionResponse, ErrorResponseMessages, HttpStatusCodes } from "../_lib/types";
-import { OauthGetInstitutionsResponse } from "../_lib/types/shared";
+import { OauthGetInstitutionsResponse } from "@finta/types";
 
 export default functionWrapper.oauth(async (req, destination, plaidEnv, asAdmin) => {
   const transaction = Sentry.startTransaction({ op: "oauth function", name: "Get institutions" });
@@ -63,7 +62,7 @@ export default functionWrapper.oauth(async (req, destination, plaidEnv, asAdmin)
     })
   ])
 
-    return { status: HttpStatusCodes.OK, message: { institutions: items }} as OauthFunctionResponse<OauthGetInstitutionsResponse>
+    return { status: types.StatusCodes.OK, message: { institutions: items }} as types.OauthFunctionResponse<OauthGetInstitutionsResponse>
   })
   .catch(async error => {
     await graphql.UpdateSyncLog({
@@ -78,6 +77,6 @@ export default functionWrapper.oauth(async (req, destination, plaidEnv, asAdmin)
     });
     await logsnag.logError({ error, scope, operation: 'oauth sync institutions', tags: { [logsnag.LogSnagTags.SYNC_LOG_ID]: syncLog.id, [logsnag.LogSnagTags.DESTINATION_ID]: destination.id }})
     transaction.finish();
-    return { status: 500, message: ErrorResponseMessages.INERNAL_ERROR }
+    return { status: types.StatusCodes.INTERNAL_SERVER_ERROR, message: types.ErrorResponseMessages.INERNAL_ERROR }
   });
 })

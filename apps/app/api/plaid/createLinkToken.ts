@@ -1,7 +1,6 @@
-import { functionWrapper, plaid, Sentry, logsnag } from "../_lib";
-import { HttpStatusCodes, ErrorResponseMessages, GetPlaidLinkTokenRequest, GetPlaidLinkTokenResponse } from "../_lib/types";
+import { functionWrapper, plaid, Sentry, logsnag, types } from "../_lib";
 
-export default functionWrapper.client(async (req: GetPlaidLinkTokenRequest, user) => {
+export default functionWrapper.client(async (req: types. GetPlaidLinkTokenRequest, user): Promise<types.GetPlaidLinkTokenResponse> => {
   const transaction = Sentry.startTransaction({ op: "app function", name: "Create Link Token" });
   const scope = new Sentry.Scope();
   scope.setContext("Request Body", req.body);
@@ -18,10 +17,10 @@ export default functionWrapper.client(async (req: GetPlaidLinkTokenRequest, user
     redirectUri,
     env: plaidEnv as plaid.PlaidEnv
   })
-  .then(response => ({ status: HttpStatusCodes.OK, message: response.data } as GetPlaidLinkTokenResponse))
+  .then(response => ({ status: types.StatusCodes.OK, message: response.data }))
   .catch(async error => {
     await logsnag.logError({ operation: 'create link token', error, scope, tags: { [logsnag.LogSnagTags.USER_ID]: user.id }})
-    return { status: HttpStatusCodes.INERNAL_ERROR, message: ErrorResponseMessages.INERNAL_ERROR }
+    return { status: types.StatusCodes.INTERNAL_SERVER_ERROR, message: types.ErrorResponseMessages.INERNAL_ERROR }
   })
   .finally(() => transaction.finish())
 })

@@ -6,15 +6,15 @@ import { AccountBase, Holding, InvestmentTransaction, Security, Transaction } fr
 
 import { IntegrationBase } from "./base";
 import { DestinationModel, PlaidItemModel, CheckAuthenticationFuncResponse, SyncDataFuncProps, CheckTableFuncProps, CheckTableFuncResponse, GetTablesFuncResponse, IntegrationConfig } from "../types";
-import { DestinationErrorCode, AccountsTableFields, InstitutionsTableFields, TableConfigs, TransactionsTableFields, HoldingsTableFields, InvestmentTransactionsTableFields, SecurityTableFields, GoogleSheetsCredentials, CategoryTableFields } from "../types/shared";
-import * as formatter from "../../../apps/app/api/_lib/formatter";
+import { DestinationErrorCode, AccountsTableFields, InstitutionsTableFields, TableConfigs, TransactionsTableFields, HoldingsTableFields, InvestmentTransactionsTableFields, SecurityTableFields, GoogleSheetsCredentials, CategoryTableFields, TableConfigFields } from "@finta/types";
+import * as formatter from "../formatter";
 
 const CLIENT_EMAIL = "finta-app@finta-integration.iam.gserviceaccount.com";
 const PRIVATE_KEY = "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCorcJKsKFFVuov\nYuDp1fECwj95zv7YFjkxGLs2W/5lN7SL7hU0NQfsrv82MFee4zUAxKLsuh1caU1H\nzyde5xKY2adNrLawlmOmSz8G36+vx/Ifb4t6eDUqaw0xWK5euoyf6BL9XvKDYNP+\nFm6Pd3vRe28lzZ/2gn8BwGhWOn3BRDot7aMuRjsDEotokXnsChfqXM2UNVMMDwNi\nlIgCKp26nE/NGmRJ4bSLGHMDbG5XKo29Cq1Q488ExbX2SQNYrJfZuGqijDyGpFgD\nE2CCNQMcC7YZMmOx7nSAH/YJOFrOQxWWVXNjuPYurJJpKTdgERGKQQBlc17D2C89\nXd7bfriDAgMBAAECggEABZlrAy6008fsUzFdlPWQoA5RrBn2dLbcJCiVglrwaWy9\ndg2rr4V5I161wxc8uV4CcumUHPaapegq9BDI1komYGONPbNXhyoe2bTSvUgsnVGu\nVGPQBfs6jJNsJzCx7RwVMfOyua1usHTE5MDa37FQL2aBDIi0YCr5y1WXQRGE/ibX\nT2e2f6X0BvAA3A+VP4OuFA/fTVoKSrFrbRpBgslVYeB8n4aSr77OYdzw+s4YJ7zC\njX4+jM2OFwzHITjI03lxSvxxEutuZpGol5ALrjWcKWSOn5y+67rllGAey7C0frZd\nFMc7yRR9nSr97yiOykmCRELRqWKn4hJwSS7y5krUaQKBgQDgUprsyLDY2UV4DgTT\n/d8bEa0c8aBYY2zYrIv2KpQFaZwoCoK8OmVhrmSW9LXV++uCwiCGvUcLBFi4o5Qu\nscGk3LlSsTrXow16Mx7KxIq1zStzB4kSbB5bwVh62RDE9XIMTmoJo1XO13bpan35\ndkL3uoU8tPl/wY7UmHwkbW1Y+QKBgQDAf5fqivNiaVds5WleUG8rPYnuvZtREBpb\nXd/IQuzjmmLEJcTCcNyf+kJwta8gpJE0QQNyDxlWFOqk8ypDh4aozZrjEIA/4WfH\nIk+i1N8nH15oHcwWFeHUOhQCEJ4t1S9vZ8Ww6E4gQvULh3dLds1jcZWHiKo0Hoyf\nHbSXKH7YWwKBgQDckVy0JkF9d2XPPjmRGLcfLqpBI3S+dES6aC7Wxdb123ooBO23\nltPI0Gkn5UZGOYbA85B36/TG6Gc0ZeN2ZmI5cK7omEt7bF/8H/fO+KJLUInAeVBW\nROk030/Yu0a5431YjGHHSEs/Lq1FpehoOdhvLX+EyY3qCLAgai7mwpIaQQKBgQCh\n4iuVuOjZGBHHqF4mTKpQyN3Ygme9kjc4Iwfw2CdzeQAaSFDh3BwOBV4efwwZ/YuH\nUC1fnEcIV2rE8SHXzH94MgBReC0Ci8LEepxSKYbI1d6E3Jom8JwL6BOvcN41WRUd\nMT3VemdJRkXhPjkao3wyZvEDG/FXB2Hm5gpbHFkgBQKBgQDdXyOVyCYkbpDH1OI+\n6ZgaQKG/cjJ0eoq02MOZeCqXQEUzZap2uq3Bt0WBRIL9fwSoSlpf3is0RaxbTQ17\neG4xsD2PTuY0fB6FhsokQ216UEavBWhxNeIU1Y0kZYEGiQ1LlbOtP9pS4Y1P8qYq\nmDXC2rrtr01aBSj3CJOYcdNEoA==\n-----END PRIVATE KEY-----\n";
 
 export class Google extends IntegrationBase {
-  credentials: GoogleSheetsCredentials;
-  doc: GoogleSpreadsheet;
+  credentials!: GoogleSheetsCredentials;
+  doc!: GoogleSpreadsheet;
   sheets: sheets_v4.Sheets
 
   constructor({destination, credentials }: {destination?: DestinationModel, credentials?: GoogleSheetsCredentials }) {
@@ -22,6 +22,7 @@ export class Google extends IntegrationBase {
 
     const JwtClient = new google.auth.JWT(CLIENT_EMAIL, undefined, PRIVATE_KEY, ['https://www.googleapis.com/auth/drive']);
     this.sheets = google.sheets({ version: 'v4', auth: JwtClient });
+    this.doc = new GoogleSpreadsheet(this.credentials.spreadsheetId);
   }
 
   async syncData({ item, accounts, transactions, removedTransactions, holdings, investmentTransactions, securities, categories }: SyncDataFuncProps) {
@@ -48,7 +49,7 @@ export class Google extends IntegrationBase {
 
   // External Helper Methods
   async init() {
-    const doc = new GoogleSpreadsheet(this.credentials.spreadsheetId);
+    const doc = this.doc;
     await doc.useServiceAccountAuth({
       client_email: CLIENT_EMAIL,
       private_key: PRIVATE_KEY,
@@ -76,16 +77,16 @@ export class Google extends IntegrationBase {
     return sheets.spreadsheets.get({ spreadsheetId: this.credentials.spreadsheetId })
     .then(async () => {
       return drive.permissions.list({ fileId: this.credentials.spreadsheetId, supportsAllDrives: true })
-      .then(() => ({ isValid: true, errorCode: null, errorCredential: null }))
-      .catch(() => ({ isValid: false, errorCode: DestinationErrorCode.INVALID_ROLE, errorCredential: null }))
+      .then(() => ({ isValid: true }))
+      .catch(() => ({ isValid: false, errorCode: DestinationErrorCode.INVALID_ROLE }))
     })
     .catch(err => {
       if ( !err.response) { console.log(err) }
       const error = err.response?.data.error.status;
-      if ( error === 'NOT_FOUND' ) { return { isValid: false, errorCode: DestinationErrorCode.DESTINATION_NOT_FOUND, errorCredential: null }};
-      if ( error === 'PERMISSION_DENIED' ) { return { isValid: false, errorCode: DestinationErrorCode.NOT_ALLOWED, errorCredential: null }};
+      if ( error === 'NOT_FOUND' ) { return { isValid: false, errorCode: DestinationErrorCode.DESTINATION_NOT_FOUND }};
+      if ( error === 'PERMISSION_DENIED' ) { return { isValid: false, errorCode: DestinationErrorCode.NOT_ALLOWED }};
       console.log(error);
-      return { isValid: false, errorCode: null, errorCredential: null }
+      return { isValid: false }
     });
   };
 
@@ -117,13 +118,13 @@ export class Google extends IntegrationBase {
   }
 
   async getDefaultConfig(): Promise<TableConfigs> {
-    const sheets = Object.entries(this.doc.sheetsById).map(([ sheetId, sheet ]) => ({ id: sheetId, name: sheet.title }));
+    const sheets = Object.entries(this.doc.sheetsById).map(([ sheetId, sheet ]: [ string, GoogleSpreadsheetWorksheet]) => ({ id: sheetId, name: sheet.title }));
     return formatter.google.defaultConfig({ sheets })
   };
 
   async getTables(): Promise<GetTablesFuncResponse> {
     const sheets = this.doc.sheetsById;
-    return Promise.all(Object.entries(sheets).map(async ([ sheetId, sheet ]) => {
+    return Promise.all(Object.entries(sheets).map(async ([ sheetId, sheet ]: [ string, GoogleSpreadsheetWorksheet]) => {
       return sheet.loadHeaderRow()
       .then(() => ({
         tableId: sheetId,
@@ -141,12 +142,13 @@ export class Google extends IntegrationBase {
   // Internal Helper Methods
   async upsertInstitution({ item }: { item: PlaidItemModel }) {
     const { fields, sheet, rows } = this.config.institutions;
+    if ( !sheet ) { return }
 
-    const row = rows.find(row => row[fields[InstitutionsTableFields.ID]] === item.id);
+    const row = rows?.find(row => row[fields[InstitutionsTableFields.ID as keyof typeof fields]] === item.id);
     const lastUpdate = moment().tz(this.doc.timeZone).format("M/D/YYYY H:mm:SS")
     if ( row ) {
-      row[fields[InstitutionsTableFields.ERROR]] = item.error;
-      row[fields[InstitutionsTableFields.LAST_UPDATE]] = lastUpdate;
+      row[fields[InstitutionsTableFields.ERROR as keyof typeof fields]] = item.error;
+      row[fields[InstitutionsTableFields.LAST_UPDATE as keyof typeof fields]] = lastUpdate;
       await row.save();
       return;
     }
@@ -156,10 +158,11 @@ export class Google extends IntegrationBase {
 
   async upsertAccounts({ accounts, itemId }: { accounts: AccountBase[], itemId: string }) {
     const { fields, sheet, rows } = this.config.accounts;
+    if ( !sheet ) { return { added: [], updated: []}}
 
-    const accountIdHeader = fields[AccountsTableFields.ID];
+    const accountIdHeader = fields[AccountsTableFields.ID as keyof typeof fields];
     const mappedAccounts = accounts.map(account => {
-      const row = rows.find(row => row[accountIdHeader] === account.account_id);
+      const row = rows?.find(row => row[accountIdHeader] === account.account_id);
       return { account, row }
     });
 
@@ -168,7 +171,7 @@ export class Google extends IntegrationBase {
 
     const addAccountsPromise = this.addRows({ sheet, data: newAccounts.map(({ account }) => formatter.google.account.new({ account, itemId, headerValues: sheet.headerValues, tableConfigFields: fields}))})
     const updateAccountsPromise = this.updateRows({ sheet, data: updatedAccounts.map(({ account, row }) => {
-      return { row: row.rowIndex, values: formatter.google.account.updated({ account, headerValues: sheet.headerValues, tableConfigFields: fields })}
+      return { row: row!.rowIndex, values: formatter.google.account.updated({ account, headerValues: sheet.headerValues, tableConfigFields: fields })}
     })});
 
     await Promise.all([ addAccountsPromise, updateAccountsPromise ]);
@@ -176,13 +179,13 @@ export class Google extends IntegrationBase {
   }
 
   async upsertTransactions({ transactions, removedTransactions = [] }: { transactions?: Transaction[], removedTransactions?: string[] }) {
-    if ( !transactions ) { return { added: 0, updated: 0, removed: 0 }};
     const { fields, sheet, rows } = this.config.transactions;
+    if ( !transactions || !sheet ) { return { added: 0, updated: 0, removed: 0 }};
 
-    const transactionIdHeader = fields[TransactionsTableFields.ID];
+    const transactionIdHeader = fields[TransactionsTableFields.ID as keyof typeof fields];
     const mappedTransactions = transactions.map(transaction => {
-      const pendingRow = rows.find(row => row[transactionIdHeader] === transaction.pending_transaction_id);
-      const postedRow = rows.find(row => row[transactionIdHeader] === transaction.transaction_id);
+      const pendingRow = rows?.find(row => row[transactionIdHeader] === transaction.pending_transaction_id);
+      const postedRow = rows?.find(row => row[transactionIdHeader] === transaction.transaction_id);
       return { transaction, row: pendingRow, isNew: !pendingRow && !postedRow }
     })
 
@@ -191,28 +194,28 @@ export class Google extends IntegrationBase {
 
     const addTransactionsPromise = this.addRows({ sheet, data: newTransactions.map(({ transaction }) => formatter.google.transaction.new({ transaction, headerValues: sheet.headerValues, tableConfigFields: fields}))})
     const updateTransactionsPromise = this.updateRows({ sheet, data: updatedTransactions.map(({ transaction, row }) => {
-      return { row: row.rowIndex, values: formatter.google.transaction.updated({ transaction, headerValues: sheet.headerValues, tableConfigFields: fields })}
+      return { row: row!.rowIndex, values: formatter.google.transaction.updated({ transaction, headerValues: sheet.headerValues, tableConfigFields: fields })}
     })})
     const pendingTransactionIds = transactions.filter(transaction => !!transaction.pending_transaction_id).map(transaction => transaction.pending_transaction_id);
     const nonPendingRemovedTransactions = _.difference((removedTransactions || []), pendingTransactionIds)
     const removeTransactionsPromise = removedTransactions ? Promise.all(nonPendingRemovedTransactions.map(removedTransactionId => {
-      const row = rows.find(row => row[transactionIdHeader] === removedTransactionId);
+      const row = rows?.find(row => row[transactionIdHeader] === removedTransactionId);
       if ( row ) { return row.delete() }
-    })) : true;
+    })) : Promise.all([]);
 
     await Promise.all([ addTransactionsPromise, updateTransactionsPromise, removeTransactionsPromise ]);
     return { added: newTransactions.length, updated: updatedTransactions.length, removed: nonPendingRemovedTransactions.length }
   };
 
   async upsertHoldings({ holdings }: { holdings?: Holding[] }) {
-    if ( !holdings || holdings.length === 0 ) { return { added: 0, updated: 0 }};
     const { fields, sheet, rows } = this.config.holdings;
+    if ( !holdings || holdings.length === 0 || !sheet ) { return { added: 0, updated: 0 }};
 
-    const securityIdHeader = fields[HoldingsTableFields.SECURITY_ID];
-    const accountIdHeader = fields[HoldingsTableFields.ACCOUNT];
+    const securityIdHeader = fields[HoldingsTableFields.SECURITY_ID as keyof typeof fields];
+    const accountIdHeader = fields[HoldingsTableFields.ACCOUNT as keyof typeof fields];
 
     const mappedHoldings = holdings.map(holding => {
-      const row = rows.find(row => row[accountIdHeader] === holding.account_id && row[securityIdHeader] === holding.security_id);
+      const row = rows?.find(row => row[accountIdHeader] === holding.account_id && row[securityIdHeader] === holding.security_id);
       return { holding, row };
     })
 
@@ -221,7 +224,7 @@ export class Google extends IntegrationBase {
 
     const addHoldingsPromise = this.addRows({ sheet, data: newMappedHoldings.map(({ holding }) => formatter.google.holding.new({ holding, headerValues: sheet.headerValues, tableConfigFields: fields}))})
     const updateHoldingsPromise = this.updateRows({ sheet, data: updatedMappedHoldings.map(({ holding, row }) => {
-      return { row: row.rowIndex, values: formatter.google.holding.updated({ holding, headerValues: sheet.headerValues, tableConfigFields: fields })}
+      return { row: row!.rowIndex, values: formatter.google.holding.updated({ holding, headerValues: sheet.headerValues, tableConfigFields: fields })}
     })})
 
     await Promise.all([ addHoldingsPromise, updateHoldingsPromise ]);
@@ -229,36 +232,36 @@ export class Google extends IntegrationBase {
   }
 
   async insertInvestmentTransactions({ investmentTransactions }: { investmentTransactions?: InvestmentTransaction[] }) {
-    if ( !investmentTransactions || investmentTransactions.length === 0 ) { return { added: 0 }};
     const { fields, sheet, rows } = this.config.investment_transactions;
+    if ( !investmentTransactions || investmentTransactions.length === 0 || !sheet ) { return { added: 0 }};
 
-    const transactionIdHeader = fields[InvestmentTransactionsTableFields.ID];
-    const transactionRowsPlaidIds = rows.map(row => row[transactionIdHeader]) as string[];
+    const transactionIdHeader = fields[InvestmentTransactionsTableFields.ID as keyof typeof fields];
+    const transactionRowsPlaidIds = rows?.map(row => row[transactionIdHeader]) as string[];
     const newTransactions = investmentTransactions.filter(transaction => !transactionRowsPlaidIds.includes(transaction.investment_transaction_id));
 
     await this.addRows({ sheet, data: newTransactions.map(investmentTransaction => formatter.google.investmentTransaction.new({ headerValues: sheet.headerValues, investmentTransaction, tableConfigFields: fields }) )})
     return { added: newTransactions.length }; 
   }
 
-  async upsertCategories({ categories }: { categories: { id: string; name: string; category_group: string }[] }) {
+  async upsertCategories({ categories }: { categories?: { id: string; name: string; category_group: string }[] }) {
     if ( !categories || categories.length === 0 ) { return; }
     const { fields, sheet, rows } = this.config.categories || { fields: [], sheet: undefined, rows: [] };
     if ( !sheet ) { return; };
 
-    const categoryIdHeader = fields[CategoryTableFields.ID];
-    const categoryRowsPlaidIds = rows.map(row => row[categoryIdHeader]) as string[];
+    const categoryIdHeader = fields[CategoryTableFields.ID as keyof typeof fields];
+    const categoryRowsPlaidIds = rows?.map(row => row[categoryIdHeader]) as string[];
     const newCategories = categories.filter(category => !categoryRowsPlaidIds.includes(category.id));
 
     await this.addRows({ sheet, data: newCategories.map(category => formatter.google.category.new({ category, headerValues: sheet.headerValues, tableConfigFields: fields }) )});
   };
 
   async upsertSecurities({ securities }: { securities?: Security[] }) {
-    if ( !securities || securities.length === 0 ) { return; };
     const { fields, sheet, rows } = this.config.securities;
+    if ( !securities || securities.length === 0 || !sheet ) { return; };
 
-    const securityIdHeader = fields[SecurityTableFields.ID];
+    const securityIdHeader = fields[SecurityTableFields.ID as keyof typeof fields];
     const mappedSecurities = securities.map(security => {
-      const securityRow = rows.find(row => row[securityIdHeader] === security.security_id);
+      const securityRow = rows?.find(row => row[securityIdHeader] === security.security_id);
       return { security, row: securityRow } 
     });
 
@@ -266,7 +269,7 @@ export class Google extends IntegrationBase {
     const updatedSecurities = mappedSecurities.filter(({ row }) => !!row );
     const addSecuritiesPromise = this.addRows({ sheet, data: newSecurities.map(({ security }) => formatter.google.security.new({ security, headerValues: sheet.headerValues, tableConfigFields: fields}))});
     const updateSecuritiesPromise = this.updateRows({ sheet, data: updatedSecurities.map(({ security, row }) => {
-      return { row: row.rowIndex, values: formatter.google.security.updated({ security, headerValues: sheet.headerValues, tableConfigFields: fields })}
+      return { row: row!.rowIndex, values: formatter.google.security.updated({ security, headerValues: sheet.headerValues, tableConfigFields: fields })}
     })})
     await Promise.all([ addSecuritiesPromise, updateSecuritiesPromise ]);
   }

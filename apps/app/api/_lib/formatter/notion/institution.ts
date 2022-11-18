@@ -1,7 +1,7 @@
 import moment from "moment-timezone";
 
 import { PlaidItemModel } from "../../types"
-import { TableConfigFields, InstitutionsTableFields } from "../../types/shared";
+import { TableConfigFields, InstitutionsTableFields } from "@finta/types";
 
 export const institution = {
   new: ({ item, tableConfigFields }: { 
@@ -16,6 +16,7 @@ export const institution = {
 
     return Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
+      // eslint-disable-next-line
       [userDefinedField]: formattedItem[tableConfigField]
     }), {} as Record<string, string>);
   },
@@ -30,6 +31,7 @@ export const institution = {
 
     return Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
+      // eslint-disable-next-line
       [userDefinedField]: formattedItem[tableConfigField]
     }), {} as Record<string, string>);
   }

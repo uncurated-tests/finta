@@ -33,36 +33,36 @@ export default functionWrapper.public(async (req) => {
   if ( !userProfile ) { return { status: 400, message: "Missing user profile" }};
   const { timezone, sync_updates_frequency: frequency, is_subscribed_sync_updates, sync_updates_job_id } = userProfile;
   if ( !is_subscribed_sync_updates ) {
-    easyCron.disableJob({ jobId: sync_updates_job_id });
+    sync_updates_job_id && await easyCron.disableJob({ jobId: sync_updates_job_id });
     return { status: 200, message: "OK" }
   }
-  const { start, end } = getTimePeriod(timezone, frequency);
+  const { start, end } = getTimePeriod(timezone || 'America/New_York', frequency || Frequencies_Enum.Weekly);
 
   // Fetch Other Data
   const [
-    { user: { email, stripe_data: { trial_ends_at, subscription, has_app_access } } },
+    { user: { email, stripeData: { trialEndsAt, subscription, hasAppAccess } } },
     { plaid_items },
     { destinations },
     { sync_logs }
   ] = await Promise.all([
-    graphql.GetUser({ user_id: userId }),
+    graphql.GetUser({ user_id: userId }).then(response => ({ user: response.user!})),
     graphql.GetPlaidItems({ where: { user_id: { _eq: userId }, disabled_at: { _is_null: true }}, accounts_where: { is_closed: { _eq: false }}}),
     graphql.GetDestinations({ where: { user_id: { _eq: userId }, disabled_at: { _is_null: true }}}),
     graphql.GetUserSyncLogs({ userId, start: start.toDate(), end: end.toDate() })
   ]);
 
-  if ( !has_app_access ) { return { status: 200, message: 'OK' }}
+  if ( !hasAppAccess ) { return { status: 200, message: 'OK' }}
 
   await cio.sendTransactionalEmail({ messageKey: cio.TRANSACTIONAL_EMAILS.SYNC_UPDATE, user: { id: userId, email }, data: {
     start: start.format("LL"),
       end: end.format("LL"),
-      time_period: getTimePeriodString(start, frequency),
+      time_period: getTimePeriodString(start, frequency!),
       frequency,
       subscription: {
         status: subscription?.status || 'trialing',
-        trial_ends_at,
-        current_period_end: subscription?.current_period_end,
-        cancel_at_period_end: subscription?.cancel_at_period_end,
+        trial_ends_at: trialEndsAt,
+        current_period_end: subscription?.currentPeriodEnd,
+        cancel_at_period_end: subscription?.cancelAtPeriodEnd,
         interval: subscription?.interval
       },
       total_plaid_items: plaid_items.length,

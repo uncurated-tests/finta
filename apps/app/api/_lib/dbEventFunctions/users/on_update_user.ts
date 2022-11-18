@@ -1,5 +1,5 @@
-import { DBEventPayload, DBUser, SegmentEventNames } from "../../../../../../functions/_lib/types";
-import * as stripe from "../../../../../../functions/_lib/stripe";
+import { DBEventPayload, DBUser } from "../../types";
+import * as stripe from "../../stripe";
 import * as segment from "../../segment";
 import { graphql } from "../../graphql";
 import * as easyCron from "../../easyCron";
@@ -13,7 +13,7 @@ export const on_update_user = async ({ body }: { body: DBEventPayload<'UPDATE', 
     await stripe.updateCustomer({ customerId, properties: { name: newDisplayName }});
     await segment.track({
       userId: id,
-      event: SegmentEventNames.USER_UPDATED,
+      event: segment.Events.USER_UPDATED,
       properties: { field: 'display_name' }
     })
   }
@@ -21,7 +21,7 @@ export const on_update_user = async ({ body }: { body: DBEventPayload<'UPDATE', 
   if ( oldMetadata?.timezone != newMetadata?.timezone ) {
     await segment.track({
       userId: id,
-      event: SegmentEventNames.USER_UPDATED,
+      event: segment.Events.USER_UPDATED,
       properties: { field: 'timezone' }
     })
   }

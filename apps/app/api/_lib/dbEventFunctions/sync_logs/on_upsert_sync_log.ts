@@ -1,4 +1,4 @@
-import { DBEventPayload, DBSyncLog, SegmentEventNames } from "../../../../../../functions/_lib/types";
+import { DBEventPayload, DBSyncLog } from "../../types";
 import * as segment from "../../segment";
 import { graphql } from "../../graphql";
 
@@ -16,7 +16,7 @@ export const on_upsert_sync_log = async ({ body }: { body: DBEventPayload<'INSER
       return Promise.all([
         segment.track({
           userId,
-          event: SegmentEventNames.SYNC_COMPLETED,
+          event: segment.Events.SYNC_COMPLETED,
           properties: {
             trigger: newSyncLog.trigger,
             is_success: newSyncLog.is_success,

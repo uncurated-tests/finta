@@ -1,4 +1,4 @@
-import { DBEventPayload, DBPlaidItem, SegmentEventNames } from "../../../../../../functions/_lib/types";
+import { DBEventPayload, DBPlaidItem } from "../../types";
 import { graphql } from "../../graphql";
 import * as logsnag from "../../logsnag";
 import * as segment from "../../segment";
@@ -12,17 +12,17 @@ export const on_update_plaid_item = async ({ body }: { body: DBEventPayload<'UPD
   if ( (oldPlaidItem.error === 'ITEM_LOGIN_REQUIRED' && !newPlaidItem.error) || (!!oldPlaidItem.consent_expires_at && !newPlaidItem.consent_expires_at) ) {
     await segment.track({
       userId,
-      event: SegmentEventNames.INSTITUTION_RECONNECTED,
+      event: segment.Events.INSTITUTION_RECONNECTED,
       properties: { plaidItemId: newPlaidItem.id } 
     });
   }
 
   if ( !oldPlaidItem.disabled_at && !!newPlaidItem.disabled_at ) {
-    const { plaid_item } = await graphql.GetPlaidItem({ plaid_item_id: itemId });
+    const { plaidItem } = await graphql.GetPlaidItem({ plaid_item_id: itemId });
     
     const trackPromise = session_variables["x-hasura-role"] === 'user' ? segment.track({
       userId: userId,
-      event: SegmentEventNames.INSTITUTION_DELETED,
+      event: segment.Events.INSTITUTION_DELETED,
       properties: { provider: 'plaid' }
     }) : true;
 
@@ -32,7 +32,7 @@ export const on_update_plaid_item = async ({ body }: { body: DBEventPayload<'UPD
       icon: "🏦",
       notify: false,
       tags: { 
-        [logsnag.LogSnagTags.INSTITUTION]: plaid_item.institution.name, 
+        [logsnag.LogSnagTags.INSTITUTION]: plaidItem!.institution.name, 
         [logsnag.LogSnagTags.USER_ID]: userId,
         [logsnag.LogSnagTags.ITEM_ID]: itemId
       }

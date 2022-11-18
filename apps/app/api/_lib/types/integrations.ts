@@ -1,4 +1,3 @@
-import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import { GoogleSpreadsheetRow, GoogleSpreadsheetWorksheet } from "google-spreadsheet";
 import { Transaction, AccountBase, Holding, InvestmentTransaction, Security } from "plaid";
 import { DestinationModel, PlaidItemModel } from "../types";

@@ -1,6 +1,6 @@
 import { AccountBase, CreditCardLiability, StudentLoan, MortgageLiability, MortgageInterestRate, APR } from "plaid";
 import { PlaidItemModel } from "../../types";
-import { OauthAccount } from "../../types/shared";
+import { OauthAccount } from "@finta/types";
 
 export const account = ({ itemId, plaidAccount, itemAccount, liability }: { 
   itemId: string; plaidAccount: AccountBase; itemAccount: PlaidItemModel['accounts'][0]; liability?: CreditCardLiability | StudentLoan | MortgageLiability

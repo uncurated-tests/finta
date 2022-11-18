@@ -1,4 +1,4 @@
-import { InitialUpdateWebhook } from "plaid";
+import { InitialUpdateWebhook, WebhookEnvironmentValues } from "plaid";
 
 import { handleSyncUpdatesAvailable } from "./handleSyncUpdatesAvailable";
 import { DestinationModel, PlaidItemModel } from "../types"
@@ -20,7 +20,8 @@ export const handleTransactionsInitialUpdate = async ({ item, destinations, scop
       initial_update_complete: true,
       webhook_type: 'TRANSACTIONS',
       webhook_code: 'SYNC_UPDATES_AVAILABLE',
-      item_id: item.id
+      item_id: item.id,
+      environment: WebhookEnvironmentValues.Production
     }, 
     destinations,
     scope,

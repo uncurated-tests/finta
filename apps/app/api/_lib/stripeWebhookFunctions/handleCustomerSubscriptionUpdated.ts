@@ -2,9 +2,8 @@ import Stripe from "stripe";
 import moment from "moment-timezone";
 
 import * as segment from "../segment";
-import * as stripe from "../../../../../functions/_lib/stripe";
+import * as stripe from "../stripe";
 import * as logsnag from "../logsnag";
-import { SegmentEventNames } from "../../../../../functions/_lib/types";
 
 export const handleCustomerSubscriptionUpdated = async ({ subscription, previousAttributes, timestamp }: { subscription: Stripe.Subscription, previousAttributes: Record<string, any>, timestamp: Date }) => {
   const { cancel_at_period_end, status, items } = subscription;
@@ -21,7 +20,7 @@ export const handleCustomerSubscriptionUpdated = async ({ subscription, previous
     await Promise.all([
       segment.track({
         userId,
-        event: SegmentEventNames.SUBSCRIPTION_CANCELED,
+        event: segment.Events.SUBSCRIPTION_CANCELED,
         properties: { plan: billing_interval },
         timestamp
       }),
@@ -41,7 +40,7 @@ export const handleCustomerSubscriptionUpdated = async ({ subscription, previous
     await Promise.all([
       segment.track({
         userId,
-        event: SegmentEventNames.SUBSCRIPTION_UNCANCELED,
+        event: segment.Events.SUBSCRIPTION_UNCANCELED,
         properties: { plan: billing_interval },
         timestamp
       }),
@@ -63,7 +62,7 @@ export const handleCustomerSubscriptionUpdated = async ({ subscription, previous
     await Promise.all([
       segment.track({
         userId,
-        event: SegmentEventNames.SUBSCRIPTION_STARTED,
+        event: segment.Events.SUBSCRIPTION_STARTED,
         properties: {
           plan: billing_interval,
           remaining_trial_days: remainingTrialDays

@@ -1,6 +1,6 @@
 import { Transaction } from "plaid";
 
-import { TransactionsTableFields, TableConfigFields } from "../../types/shared";
+import { TransactionsTableFields, TableConfigFields } from "@finta/types";
 
 export const transaction = {
   new: ({ transaction, accountPageId, categoryPageId, tableConfigFields }: {
@@ -23,6 +23,7 @@ export const transaction = {
   
     return Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
+      // eslint-disable-next-line
       [userDefinedField]: formattedTransaction[tableConfigField]
     }), {} as Record<string, string>);
   },
@@ -40,6 +41,7 @@ export const transaction = {
   
     return Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
+      // eslint-disable-next-line
       [userDefinedField]: formattedTransaction[tableConfigField]
     }), {} as Record<string, string>);
   }

@@ -1,3 +1,12 @@
+fragment DBPlaidItemFields on plaid_items {
+  id
+  user_id
+  disabled_at
+  consent_expires_at
+  access_token: accessToken
+  error
+}
+
 fragment AllPlaidItemFields on plaid_items {
   __typename
   id

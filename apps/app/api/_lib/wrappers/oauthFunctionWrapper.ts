@@ -1,15 +1,14 @@
 import { graphql } from "../graphql";
-import { Request, Response } from "express";
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 import * as crypto from "../crypto";
 import { WrappedOauthFunction } from "../types";
 import { Sentry } from "../sentry";
+import * as logsnag from "../logsnag";
+import { plaidEnvFromVercelEnv } from "../plaid";
 
-export const oauthFunctionWrapper = (fn: WrappedOauthFunction) => async (req: Request, res: Response) => {
-  if ( req.method === 'OPTIONS' ) {
-    return res.set('Access-Control-Allow-Origin', '*').send('ok');
-  }
-
+export const oauthFunctionWrapper = (fn: WrappedOauthFunction) => async (req: VercelRequest, res: VercelResponse) => {
   const transaction = Sentry.startTransaction({ op: "wrapper", name: "client function"});
+  const scope = new Sentry.Scope();
 
   const auth = req.headers['authorization'];
   if ( !auth ) { return res.status(500).send("Missing authorization header"); }
@@ -25,14 +24,14 @@ export const oauthFunctionWrapper = (fn: WrappedOauthFunction) => async (req: Re
   const destination = await graphql.GetDestinations({ where: { authentication: { _contains: { access_token_hash: tokenHash }}}}).then(response => response.destinations[0]);
 
   if ( !destination ) { return res.status(500).send("Invalid token")}
-  if ( !destination.user.stripe_data.has_app_access ) { return res.status(402)}
+  if ( !destination.user.stripeData.hasAppAccess ) { return res.status(402)}
 
   const asAdmin = req.body.asAdmin;
   const authentication = destination.authentication || {};
-  const plaidEnv = authentication.is_demo ? "sandbox" : process.env.PLAID_ENV as string;
+  const plaidEnv = authentication.is_demo ? "sandbox" : plaidEnvFromVercelEnv as string;
   const { status, message } = await fn(req, destination, plaidEnv, asAdmin)
-  .catch(err => {
-    Sentry.captureException(err);
+  .catch(async error => {
+    await logsnag.logError({ error, operation: "client function", scope })
     return { status: 500, message: "Internal Error" }
   })
 

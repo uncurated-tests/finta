@@ -70,7 +70,7 @@ interface PublishOptions extends LogSnagPublishOptions {
 const shouldMock = process.env.ENV !== 'production'
 
 const logsnag = new LogSnag({ 
-  token: process.env.LOGSNAG_TOKEN,
+  token: process.env.LOGSNAG_TOKEN!,
   project: 'finta'
 });
 

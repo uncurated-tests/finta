@@ -15,7 +15,7 @@ export default functionWrapper.client(async (req: types.ExchangeNotionTokenReque
     code,
     redirect_uri: redirectUri
   }, { auth: {
-    username: process.env.NOTION_OAUTH_CLIENT_ID!,
+    username: process.env.REACT_APP_NOTION_OAUTH_CLIENT_ID!,
     password: process.env.NOTION_OAUTH_SECRET!
   }})
   .then(response => {

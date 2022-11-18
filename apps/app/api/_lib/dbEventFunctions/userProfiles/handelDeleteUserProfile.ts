@@ -1,4 +1,4 @@
-import { DBEventPayload, DBUserProfile } from "../../../../../../functions/_lib/types";
+import { DBEventPayload, DBUserProfile } from "../../types";
 
 import * as easyCron from "../../easyCron";
 

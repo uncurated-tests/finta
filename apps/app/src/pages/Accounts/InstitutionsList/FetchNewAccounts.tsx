@@ -43,7 +43,7 @@ export const FetchNewAccounts = ({ plaidItem }: { plaidItem: PlaidItemModel }) =
     if ( isOpen && allAccounts === null && !isFetchingNewAccounts ) {
       setIsFetchingNewAccounts(true);
       nhost.functions.call(
-        '/plaid/get-accounts', 
+        '/plaid/getAccounts', 
         { accessToken: plaidItem.accessToken },
         { method: "POST" }
       )

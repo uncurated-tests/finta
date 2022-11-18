@@ -54,7 +54,7 @@ export type OauthInstitution = {
   name: string;
   created_at: string;
   synced_at?: string;
-  error?: string;
+  error?: string | null;
 }
 
 export type OauthDestination = {
@@ -68,7 +68,7 @@ export type OauthTransaction = {
   account_id: string;
   sub_account?: string;
   amount: number;
-  currency: string;
+  currency: string | null;
   authorized_date?: string;
   date?: string;
   pending: boolean;

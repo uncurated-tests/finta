@@ -105,7 +105,7 @@ export enum DestinationTableTypes {
 
 export type TableConfig = {
   is_enabled: boolean;
-  table_id: string;
+  table_id?: string;
   fields: {
     field: TableConfigFields;
     field_id: string;

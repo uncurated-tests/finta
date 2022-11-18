@@ -9,7 +9,7 @@ export const getOauthPlaidItems = async (destinationId: string, syncLogId?: stri
   return graphql.GetPlaidItems({ where: { accounts: accountsFilter }, accounts_where: accountsFilter })
   .then(async response => {
     const plaid_items = response.plaid_items.filter(item => returnIfNoAccounts || item.error !== 'NO_ACCOUNTS');
-    const errorCount = plaid_items.filter(item => authErrors.includes(item.error)).length;
+    const errorCount = plaid_items.filter(item => item.error && authErrors.includes(item.error)).length;
 
     if ( errorCount > 0 && syncLogId ) {
       await graphql.UpdateSyncLog({
@@ -36,7 +36,7 @@ export const handlePlaidError = async ({ error, item, syncLogId } : {
   const { error_code } = error;
 
   if ( authErrors.includes(error_code) ) {
-    await plaidWebhookFunctions.ITEM.ERROR({ item, data: { error }});
+    await plaidWebhookFunctions.handleItemError({ item, data: { error }});
     if ( syncLogId ) {
       await graphql.UpdateSyncLog({
         sync_log_id: syncLogId,

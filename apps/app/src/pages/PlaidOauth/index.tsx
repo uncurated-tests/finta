@@ -44,36 +44,35 @@ export const PlaidOauth = () => {
 
       return exchangePlaidPublicToken({ publicToken: public_token })
       .then(response => {
-        const { access_token, item_id } = response;
-        if ( !(access_token && item_id) ) {
+        const { access_token: accessToken, item_id } = response;
+        if ( !(accessToken && item_id) ) {
           return null;
-        }
-
-        const plaidItem = {
-          id: item_id,
-          access_token,
-          institution: {
-            data: {
-              name: institution?.name,
-              id: institution?.institution_id
-            },
-            on_conflict: {
-              constraint:Plaid_Institutions_Constraint.PlaidInstitutionsPkey,
-              update_columns: [ Plaid_Institutions_Update_Column.Name ]
-            } 
-          },
-          accounts: {
-            data: accounts.map(account => ({
-              id: account.id,
-              mask: account.mask,
-              name: account.name
-            }))
-          }
         }
 
         return createPlaidItemMutation({
           variables: {
-            plaid_item: plaidItem
+            plaid_item: {
+              id: item_id,
+              accessToken,
+              institution: {
+                data: {
+                  name: institution?.name,
+                  id: institution?.institution_id
+                },
+                on_conflict: {
+                  constraint:Plaid_Institutions_Constraint.PlaidInstitutionsPkey,
+                  update_columns: [ Plaid_Institutions_Update_Column.Name ]
+                } 
+              },
+              accounts: {
+                data: accounts.map(account => ({
+                  id: account.id,
+                  mask: account.mask,
+                  name: account.name
+                }))
+             
+              }
+            }
           }
         })
         .then(response => {

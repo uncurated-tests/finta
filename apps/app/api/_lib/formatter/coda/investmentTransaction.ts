@@ -1,5 +1,5 @@
 import { InvestmentTransaction, Security } from "plaid";
-import { OauthInvestmentTransaction } from "../../types/shared";
+import { OauthInvestmentTransaction } from "@finta/types";
 
 export const investmentTransaction = ({ security, investmentTransaction }: {
   security?: Security,

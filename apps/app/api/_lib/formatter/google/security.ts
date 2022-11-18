@@ -1,5 +1,5 @@
 import { Security } from "plaid";
-import { TableConfigFields, SecurityTableFields } from "../../types/shared";
+import { TableConfigFields, SecurityTableFields } from "@finta/types";
 
 export const security = {
   new: ({ security, headerValues, tableConfigFields }: { 
@@ -18,6 +18,7 @@ export const security = {
 
     const userFieldMapping = Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
+      // eslint-disable-next-line
       [userDefinedField]: formattedSecurity[tableConfigField]
     }), {} as Record<string, string>);
 
@@ -35,6 +36,7 @@ export const security = {
 
     const userFieldMapping = Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
+      // eslint-disable-next-line
       [userDefinedField]: formattedSecurity[tableConfigField]
     }), {} as Record<string, string>);
 

@@ -1,4 +1,4 @@
-import { InstitutionsTableFields, TableConfigFields } from "../../types/shared";
+import { InstitutionsTableFields, TableConfigFields } from "@finta/types";
 import { PlaidItemModel } from "../../types";
 
 export const institution = {
@@ -10,6 +10,7 @@ export const institution = {
   
     return Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
+      // eslint-disable-next-line
       [userDefinedField]: formattedItem[tableConfigField]
     }), {} as Record<string, string>);
   },
@@ -20,6 +21,7 @@ export const institution = {
 
     return Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
+      // eslint-disable-next-line
       [userDefinedField]: formattedItem[tableConfigField]
     }), {} as Record<string, string>);
   }

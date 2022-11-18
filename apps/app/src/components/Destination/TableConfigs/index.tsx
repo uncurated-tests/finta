@@ -79,6 +79,7 @@ export const TableConfigs = ({ destination, integrationId, credentials, tableCon
     setIsValidating(true);
     const backEndErrors = await Promise.all(Object.entries(tableConfigs).map(([ tableType, config ]) => {
       if ( !config.is_enabled ) { return null };
+      if ( !config.table_id ) { return { tableType, errorCode: 'missing_table' }}
       return checkDestinationTableConfig({ integrationId, dataType: tableType as DestinationTableTypes, tableId: config.table_id, credentials, fields: config.fields })
       .then(({ error }) => {
         if (!error) { return null }

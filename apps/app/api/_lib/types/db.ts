@@ -1,25 +1,12 @@
-import { Users, Plaid_Items, Plaid_Institutions, Destinations, Sync_Logs, UserProfiles } from "../graphql/sdk";
-
-type GetDBColumns<T extends object> = {
-  [K in keyof T]: T[K] extends string | boolean | number | object ? K : never
-}[keyof T]
-
-export type DBUser = Omit<Pick<Users, NonNullable<GetDBColumns<Users>>>, 'displayName' | 'createdAt'> & {
-  display_name: string;
-  created_at: any
-}
-
-export type DBPlaidItem = Pick<Plaid_Items, NonNullable<GetDBColumns<Plaid_Items>>>;
-
-export type DBPlaidInstitution = Pick<Plaid_Institutions, NonNullable<GetDBColumns<Plaid_Institutions>>>
-
-export type DBDestination = Pick<Destinations, NonNullable<GetDBColumns<Destinations>>>
-
-export type DBSyncLog = Pick<Sync_Logs, NonNullable<GetDBColumns<Sync_Logs>>>;
-
-export type DBUserProfile = Pick<UserProfiles, GetDBColumns<UserProfiles>>
-
-type DBObjects = DBUser | DBPlaidItem | DBPlaidInstitution | DBDestination | DBSyncLog | DBUserProfile;
+import { Users, Plaid_Institutions, Destinations, Sync_Logs, UserProfiles } from "../graphql/sdk";
+export type { 
+  DbPlaidItemFieldsFragment as DBPlaidItem,
+  DbPlaidInstitutionFieldsFragment as DBPlaidInstitution,
+  DbDestinationFieldsFragment as DBDestination,
+  DbUserFieldsFragment as DBUser,
+  DbSyncLogFieldsFragment as DBSyncLog,
+  DbUserProfileFieldsFragment as DBUserProfile
+} from "../graphql/sdk"
 
 type AdminSessionVariables = {
   "x-hasura-role": "admin"
@@ -38,8 +25,8 @@ export interface DBEventPayload<O extends 'INSERT' | 'UPDATE' | 'DELETE' = any, 
     session_variables: SessionVariables;
     op: O,
     data: {
-      old: T extends DBObjects ? (O extends 'UPDATE' | 'DELETE' ? T : null) : any;
-      new: T extends DBObjects ? (O extends 'INSERT' | 'UPDATE' ? T : null) : any;
+      old: O extends 'UPDATE' | 'DELETE' ? T : null
+      new: O extends 'INSERT' | 'UPDATE' ? T : null
     }
   };
   created_at: string;

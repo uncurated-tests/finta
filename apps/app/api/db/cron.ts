@@ -1,5 +1,4 @@
-import { functionWrapper, cronFunctions, logsnag, Sentry } from "../_lib";
-import { HttpStatusCodes, ErrorResponseMessages } from "../_lib/types";
+import { functionWrapper, cronFunctions, logsnag, Sentry, types } from "../_lib";
 
 type CronEvent = 'insights';
 
@@ -19,9 +18,9 @@ export default functionWrapper.public(async (req) => {
         throw new Error(`Unhandled cron event ${name}.`)
     }
 
-    return { status: HttpStatusCodes.OK, message: 'OK' }
+    return { status: types.StatusCodes.OK, message: 'OK' }
   } catch (error) {
     await logsnag.logError({ error, operation: "Database Cron Event", scope })
-    return { status: HttpStatusCodes.INERNAL_ERROR, message: ErrorResponseMessages.INERNAL_ERROR }
+    return { status: types.StatusCodes.INTERNAL_SERVER_ERROR, message: types.ErrorResponseMessages.INERNAL_ERROR }
   } finally { transaction.finish(); }
 })

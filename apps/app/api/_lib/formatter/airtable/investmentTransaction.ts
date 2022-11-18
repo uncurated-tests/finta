@@ -1,6 +1,6 @@
 import { InvestmentTransaction } from "plaid";
 
-import { InvestmentTransactionsTableFields, TableConfigFields } from "../../types/shared";
+import { InvestmentTransactionsTableFields, TableConfigFields } from "@finta/types";
 
 export const investmentTransaction = {
   new: ({ investmentTransaction, accountRecordId, securityRecordId, tableConfigFields }: {
@@ -26,6 +26,7 @@ export const investmentTransaction = {
   
     return Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
+      // eslint-disable-next-line
       [userDefinedField]: formattedTransaction[tableConfigField]
     }), {} as Record<string, string>);
   }

@@ -1,4 +1,4 @@
-import { TableConfigs, InstitutionsTableFields, SecurityTableFields, AccountsTableFields, TransactionsTableFields, HoldingsTableFields, InvestmentTransactionsTableFields, GetDestinationTablesResponse, CategoryTableFields } from "../../types/shared";
+import { TableConfigs, InstitutionsTableFields, SecurityTableFields, AccountsTableFields, TransactionsTableFields, HoldingsTableFields, InvestmentTransactionsTableFields, GetDestinationTablesResponse, CategoryTableFields } from "@finta/types";
 
 export const defaultConfig = ({ tables }: { tables: GetDestinationTablesResponse['tables'] }): TableConfigs => {
   const institutionsDatabase = tables.find(table => table.name === 'Institutions');

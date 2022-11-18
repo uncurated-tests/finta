@@ -34,7 +34,7 @@ client.interceptors.request.use(config => {
   return config;
 });
 
-export const upsertJob = async ({ jobId, job }: { jobId?: string; job: Job }): Promise<{ status: string; cron_job_id: string }> => {
+export const upsertJob = async ({ jobId, job }: { jobId?: string | null; job: Job }): Promise<{ status: string; cron_job_id: string }> => {
   return client.get(jobId ? '/edit' : '/add', { params: {
     id: jobId,
     cron_job_name: job.userId,

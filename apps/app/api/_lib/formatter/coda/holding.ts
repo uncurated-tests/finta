@@ -1,5 +1,5 @@
 import { Security, Holding } from "plaid";
-import { OauthHolding } from "../../types/shared";
+import { OauthHolding } from "@finta/types";
 
 export const holding = ({ holding, security }: { holding: Holding; security?: Security }): OauthHolding => ({
   account_id: holding.account_id,

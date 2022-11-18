@@ -1,8 +1,10 @@
-import { Configuration, PlaidApi, PlaidEnvironments, CountryCode, AccountsGetRequestOptions, PlaidError, InvestmentsHoldingsGetResponse, InvestmentsTransactionsGetResponse, AccountsGetResponse, LiabilitiesGetResponse, TransactionsGetResponse, TransactionsSyncResponse, Products, TransactionsGetRequestOptions } from "plaid";
+import { Configuration, PlaidApi, PlaidEnvironments, InvestmentHoldingsGetRequestOptions, LiabilitiesGetRequestOptions, CountryCode, InvestmentsTransactionsGetRequestOptions, AccountsGetRequestOptions, PlaidError, Products, TransactionsGetRequestOptions, Transaction, InvestmentTransaction } from "plaid";
 import * as _ from 'lodash';
 
 const allowedErrorCodes = ['NO_INVESTMENT_ACCOUNTS', 'NO_ACCOUNTS', "PRODUCT_NOT_READY"];
 export type PlaidEnv = 'sandbox' | 'production';
+
+export const plaidEnvFromVercelEnv = process.env.VERCEL_ENV === 'production' ? 'production' : 'sandbox'
 
 const constructPlaidError = (err: any) => {
   const { error_message, error_code } = err.response.data;
@@ -36,7 +38,7 @@ const getClient = (env: PlaidEnv) => {
 
 const getEnvFromAccessToken = (accessToken: string): PlaidEnv => {
   if ( accessToken.includes('production') ) { return 'production' }
-  if ( accessToken.includes('sandbox') ) { return 'sandbox' }
+  return 'sandbox'
 }
 
 export const createLinkToken = ({ userId, products, accessToken, webhookURL, redirectUri, env }: {
@@ -47,7 +49,7 @@ export const createLinkToken = ({ userId, products, accessToken, webhookURL, red
   redirectUri: string;
   env?: PlaidEnv
 }) =>
-  getClient(accessToken ? getEnvFromAccessToken(accessToken) : env).linkTokenCreate({
+  getClient(accessToken ? getEnvFromAccessToken(accessToken) : env || plaidEnvFromVercelEnv ).linkTokenCreate({
     user: { client_user_id: userId },
     client_name: "Finta",
     language: 'en',
@@ -74,13 +76,16 @@ export const getAccounts = async ({ accessToken, options = {} }: {
   .catch(err => {
     const error = err.response?.data as PlaidError;
     if ( error?.error_code && allowedErrorCodes.includes(error.error_code) ) {
-      return { data: { accounts: [], item: undefined, request_id: undefined } as AccountsGetResponse }
+      return { data: { accounts: [], item: undefined, request_id: undefined } }
     }
 
     throw err;
   })
 
-export const getHoldings = async ({ accessToken, options = {} }) =>
+export const getHoldings = async ({ accessToken, options = {} }: {
+  accessToken: string;
+  options?: InvestmentHoldingsGetRequestOptions
+}) =>
   getClient(getEnvFromAccessToken(accessToken)).investmentsHoldingsGet({ access_token: accessToken, options })
   .then(response => {
     const { holdings } = response.data
@@ -92,20 +97,25 @@ export const getHoldings = async ({ accessToken, options = {} }) =>
   .catch(err => {
     const error = err.response?.data as PlaidError;
     if ( error?.error_code && allowedErrorCodes.includes(error.error_code) ) {
-      return { data: { holdings: [], accounts: [], securities: [] } as InvestmentsHoldingsGetResponse }
+      return { data: { holdings: [], accounts: [], securities: [] } }
     }
 
     throw err;
   });
 
-export const getItem = ({ accessToken }) => getClient(getEnvFromAccessToken(accessToken)).itemGet({ access_token: accessToken });
+export const getItem = ({ accessToken }: { accessToken: string }) => getClient(getEnvFromAccessToken(accessToken)).itemGet({ access_token: accessToken });
 
-export const getInvestmentTransactions = async ({ accessToken, startDate, endDate, options }) => 
+export const getInvestmentTransactions = async ({ accessToken, startDate, endDate, options }: {
+  accessToken: string;
+  startDate: string;
+  endDate: string;
+  options?: InvestmentsTransactionsGetRequestOptions
+}) => 
   getClient(getEnvFromAccessToken(accessToken)).investmentsTransactionsGet({ access_token: accessToken, start_date: startDate, end_date: endDate, options: { ...options, count: 500 }})
   .catch(err => {
     const error = err.response?.data as PlaidError;
     if ( error?.error_code && allowedErrorCodes.includes(error.error_code) ) {
-      return { data: { investment_transactions: [], accounts: [], total_investment_transactions: 0, securities: [] } as InvestmentsTransactionsGetResponse}
+      return { data: { investment_transactions: [], accounts: [], total_investment_transactions: 0, securities: [] }}
     }
 
     throw err;
@@ -114,23 +124,26 @@ export const getInvestmentTransactions = async ({ accessToken, startDate, endDat
 export const getInstitution = ({ institutionId }: { institutionId: string }) =>
   getClient('production').institutionsGetById({institution_id: institutionId, country_codes: ["US", "CA"] as CountryCode[], options: { include_optional_metadata: true }});
 
-export const getLiabilities = async ({ accessToken, options = {} }) =>
+export const getLiabilities = async ({ accessToken, options = {} }: {
+  accessToken: string;
+  options?: LiabilitiesGetRequestOptions;
+}) =>
   getClient(getEnvFromAccessToken(accessToken)).liabilitiesGet({ access_token: accessToken, options })
   .catch(err => {
     const error = err.response?.data as PlaidError;
     if ( error?.error_code && allowedErrorCodes.includes(error.error_code) ) {
-      return { data: { accounts: [], item: undefined, request_id: undefined, liabilities: { student: [], mortgage: [], credit: [] } } as LiabilitiesGetResponse}
+      return { data: { accounts: [], item: undefined, request_id: undefined, liabilities: { student: [], mortgage: [], credit: [] } }}
     }
 
     throw err;
   });
 
-export const getTransactions = async ({ accessToken, startDate, endDate, options }: { accessToken: string; startDate: string; endDate: string, options: TransactionsGetRequestOptions }) =>
+export const getTransactions = async ({ accessToken, startDate, endDate, options = {} }: { accessToken: string; startDate: string; endDate: string, options?: TransactionsGetRequestOptions }) =>
   getClient(getEnvFromAccessToken(accessToken)).transactionsGet({ access_token: accessToken, start_date: startDate, end_date: endDate, options: { ...options, count: 500 }})
   .catch(err => {
     const error = err.response?.data as PlaidError;
     if ( error?.error_code && allowedErrorCodes.includes(error.error_code) ) {
-      return { data: { accounts: [], item: undefined, request_id: undefined, transactions: [], total_transactions: 0 } as TransactionsGetResponse}
+      return { data: { accounts: [], item: undefined, request_id: undefined, transactions: [], total_transactions: 0 }}
     }
 
     throw err;
@@ -143,7 +156,12 @@ export const transactionsSync = async ({ accessToken, cursor }: {
 }) =>
   getClient(getEnvFromAccessToken(accessToken)).transactionsSync({ access_token: accessToken, cursor, count: 500 })
 
-export const getAllTransactions = async ({ accessToken, startDate, endDate, options }) => {
+export const getAllTransactions = async ({ accessToken, startDate, endDate, options = {} }: {
+  accessToken: string;
+  startDate: string;
+  endDate: string;
+  options?: TransactionsGetRequestOptions
+}) => {
   const client = getClient(getEnvFromAccessToken(accessToken));
   const params = {
     access_token: accessToken,
@@ -154,10 +172,11 @@ export const getAllTransactions = async ({ accessToken, startDate, endDate, opti
   .catch(err => {
     const error = err.response?.data as PlaidError;
     if ( allowedErrorCodes.includes(error.error_code) ) {
-      return { data: { transactions: [], accounts: [], total_transactions: 0 } as TransactionsGetResponse}
+      return { data: { transactions: [], accounts: [], total_transactions: 0 }}
     }
   })
-  let transactions = response.data.transactions;
+  if ( !response ) { return { transactions: [], accounts: [] }}
+  let transactions = response.data.transactions as Transaction[];
   const accounts = response.data.accounts;
   const total_transactions = response.data.total_transactions;
 
@@ -169,7 +188,12 @@ export const getAllTransactions = async ({ accessToken, startDate, endDate, opti
   return { transactions, accounts }
 }
 
-export const getAllInvestmentTransactions = async ({ accessToken, startDate, endDate, options }) => {
+export const getAllInvestmentTransactions = async ({ accessToken, startDate, endDate, options = {} }: {
+  accessToken: string;
+  startDate: string;
+  endDate: string;
+  options?: InvestmentsTransactionsGetRequestOptions
+}) => {
   const client = getClient(getEnvFromAccessToken(accessToken));
   const params = {
     access_token: accessToken,
@@ -181,12 +205,12 @@ export const getAllInvestmentTransactions = async ({ accessToken, startDate, end
   .catch(err => {
     const error = err.response?.data as PlaidError;
     if ( error.error_code === 'NO_INVESTMENT_ACCOUNTS' ) {
-      return { data: { investment_transactions: [], accounts: [], total_investment_transactions: 0, securities: [] } as InvestmentsTransactionsGetResponse}
+      return { data: { investment_transactions: [], accounts: [], total_investment_transactions: 0, securities: [] }}
     }
 
     throw err;
   });
-  let investmentTransactions = response.data.investment_transactions;
+  let investmentTransactions = response.data.investment_transactions as InvestmentTransaction[];
   const { accounts, total_investment_transactions, securities } = response.data;
 
   while ( investmentTransactions.length < total_investment_transactions ) {

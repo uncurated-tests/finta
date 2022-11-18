@@ -1,3 +1,11 @@
+fragment DBUserProfileFields on userProfiles {
+  sync_updates_frequency
+  is_subscribed_sync_updates
+  timezone
+  user_id
+  sync_updates_job_id
+}
+
 fragment AllUserProfileFields on userProfiles {
   user_id
   timezone

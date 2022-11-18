@@ -1,4 +1,4 @@
-import { TableConfigs, InstitutionsTableFields, CategoryTableFields, AccountsTableFields, TransactionsTableFields, HoldingsTableFields, InvestmentTransactionsTableFields, SecurityTableFields } from "../../types/shared";
+import { TableConfigs, InstitutionsTableFields, CategoryTableFields, AccountsTableFields, TransactionsTableFields, HoldingsTableFields, InvestmentTransactionsTableFields, SecurityTableFields } from "@finta/types";
 
 export const defaultConfig = ({ sheets }: { sheets: { id: string; name: string }[] }): TableConfigs => {
   const institutionsSheet = sheets.find(sheet => sheet.name === 'Institutions');

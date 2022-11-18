@@ -1,8 +1,7 @@
-import { dbEventFunctions, functionWrapper, Sentry } from "../_lib";
-import { DBEventPayload, HttpStatusCodes, ErrorResponseMessages } from "../_lib/types";
+import { dbEventFunctions, functionWrapper, Sentry, types, logsnag } from "../_lib";
 
 export default functionWrapper.public(async (req) => {
-  const body = req.body as DBEventPayload;
+  const body = req.body as types.DBEventPayload;
 
   const transaction = Sentry.startTransaction({ op: "database event", name: body.trigger.name });
   const scope = new Sentry.Scope();
@@ -10,11 +9,11 @@ export default functionWrapper.public(async (req) => {
 
   const response = await dbEventFunctions[body.trigger.name]({ body })
   .then(() => {
-    return { status: HttpStatusCodes.OK, message: "OK" }
+    return { status: types.StatusCodes.OK, message: "OK" }
   })
-  .catch(err => {
-    Sentry.captureException(err, scope);
-    return { status: HttpStatusCodes.INERNAL_ERROR, message: ErrorResponseMessages.INERNAL_ERROR }
+  .catch(async error => {
+    await logsnag.logError({ operation: "database event", error, scope})
+    return { status: types.StatusCodes.INTERNAL_SERVER_ERROR, message: types.ErrorResponseMessages.INERNAL_ERROR }
   })
 
   transaction.finish();

@@ -1,6 +1,5 @@
-import { DestinationModel } from "../../../../../functions/_lib/types/models";
-import { SyncDataFuncProps, SyncDataFuncResponse, CheckTablesFuncProps, CheckTablesFuncResponse, IIntegration, IntegrationConfig, CheckAuthenticationFuncResponse, ValidateFuncProps, ValidateFuncResponse, CheckTableFuncProps, CheckTableFuncResponse, GetTablesFuncResponse } from "../../../../../functions/_lib/types";
-import { DestinationCredentials, DestinationError, DestinationTableTypes, TableConfigFields, TableConfigs } from "../../../../../functions/_lib/types/shared";
+import { DestinationModel, SyncDataFuncProps, SyncDataFuncResponse, CheckTablesFuncProps, CheckTablesFuncResponse, IIntegration, IntegrationConfig, CheckAuthenticationFuncResponse, ValidateFuncProps, ValidateFuncResponse, CheckTableFuncProps, CheckTableFuncResponse, GetTablesFuncResponse } from "../types";
+import { DestinationCredentials, DestinationError, DestinationTableTypes, TableConfigFields, TableConfigs } from "@finta/types";
 
 export class IntegrationBase implements IIntegration {
   destination?: DestinationModel;
@@ -27,6 +26,16 @@ export class IntegrationBase implements IIntegration {
           isEnabled: config?.is_enabled
         }]
       })) as IntegrationConfig // Object.fromEntries doesn't preserve type of key
+    } else { 
+      this.config = { 
+        institutions: { isEnabled: false, fields: [], tableId: ""},
+        accounts: { isEnabled: false, fields: [], tableId: ""},
+        transactions: { isEnabled: false, fields: [], tableId: ""},
+        categories: { isEnabled: false, fields: [], tableId: ""},
+        holdings: { isEnabled: false, fields: [], tableId: ""},
+        investment_transactions: { isEnabled: false, fields: [], tableId: ""},
+        securities: { isEnabled: false, fields: [], tableId: ""},
+      } 
     }
   }
 
@@ -38,12 +47,12 @@ export class IntegrationBase implements IIntegration {
     const authCheck = await this.checkAuthentication();
     if ( !authCheck.isValid ) {
       isValid = false;
-      error = { errorCode: authCheck.errorCode }
+      error = { errorCode: authCheck.errorCode! }
     } else {
       const tableCheck = await this.checkTables({ tableTypes });
       if ( !tableCheck.isValid ) {
         isValid = false;
-        error = tableCheck.error
+        error = tableCheck.error!
       }
     }
 
@@ -58,8 +67,9 @@ export class IntegrationBase implements IIntegration {
     const tableConfigs = this.destination!.table_configs;
     return Promise.all(tableTypes.map(tableType => {
       const tableConfig = tableConfigs[tableType]!;
-      const { table_id, fields } = tableConfig;
-      return this.checkTable({ tableId: table_id, fields, tableType })
+      const { table_id, fields, is_enabled } = tableConfig;
+      if ( !is_enabled ) { return { isValid: true, error: null }};
+      return this.checkTable({ tableId: table_id!, fields, tableType })
     }))
     .then(responses => {
       const invalidResponse = responses.find(response => !response.isValid);

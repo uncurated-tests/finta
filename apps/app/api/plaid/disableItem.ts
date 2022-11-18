@@ -8,7 +8,7 @@ export default functionWrapper.client(async (req: types.DisablePlaidItemRequest,
 
   const { plaidItemId } = req.body;
   const { plaidItem } = await graphql.GetPlaidItem({ plaid_item_id: plaidItemId });
-  if ( !plaidItem ) { return { status: types.HttpStatusCodes.NOT_FOUND, message: types.ErrorResponseMessages.ITEM_NOT_FOUND }};
+  if ( !plaidItem ) { return { status: types.StatusCodes.NOT_FOUND, message: types.ErrorResponseMessages.ITEM_NOT_FOUND }};
 
   const response = await disablePlaidItem(plaidItem)
   .catch(async error => {
@@ -23,7 +23,7 @@ export default functionWrapper.client(async (req: types.DisablePlaidItemRequest,
 
   transaction.finish();
 
-  if ( !response ) { return { status: types.HttpStatusCodes.INERNAL_ERROR, message: types.ErrorResponseMessages.INERNAL_ERROR }}
+  if ( !response ) { return { status: types.StatusCodes.INTERNAL_SERVER_ERROR, message: types.ErrorResponseMessages.INERNAL_ERROR }}
 
-  return { status: types.HttpStatusCodes.OK, message: "OK" }
+  return { status: types.StatusCodes.OK, message: "OK" }
 })

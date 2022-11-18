@@ -15,7 +15,7 @@ import { nhost } from "src/lib/nhost";
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DSN,
   integrations: [new Integrations.BrowserTracing()],
-  environment: process.env.REACT_APP_SENTRY_ENV,
+  environment: process.env.VERCEL_ENV,
   tracesSampleRate: 1.0,
 });
 

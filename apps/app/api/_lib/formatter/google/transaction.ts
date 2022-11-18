@@ -1,5 +1,5 @@
 import { Transaction } from "plaid";
-import { TableConfigFields, TransactionsTableFields } from "../../types/shared";
+import { TableConfigFields, TransactionsTableFields } from "@finta/types";
 
 export const transaction = {
   new: ({ transaction, headerValues, tableConfigFields }: { 
@@ -21,6 +21,7 @@ export const transaction = {
 
     const userFieldMapping = Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
+      // eslint-disable-next-line
       [userDefinedField]: formattedAccount[tableConfigField]
     }), {} as Record<string, string>);
 
@@ -40,6 +41,7 @@ export const transaction = {
 
     const userFieldMapping = Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
+      // eslint-disable-next-line
       [userDefinedField]: formattedAccount[tableConfigField]
     }), {} as Record<string, string>);
 

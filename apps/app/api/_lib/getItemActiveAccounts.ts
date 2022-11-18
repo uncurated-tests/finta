@@ -1,10 +1,11 @@
-import { handlePlaidError } from "../../../../functions/oauth/_helpers";
-import * as plaid from "../../../../functions/_lib/plaid";
+import { handlePlaidError } from "../oauth/_helpers";
+import * as plaid from "../_lib/plaid";
 import { graphql } from "./graphql";
-import { PlaidItemModel } from "../../../../functions/_lib/types";
+import { PlaidItemModel } from "../_lib/types";
 
 export const getItemActiveAccounts = async (item: PlaidItemModel, plaidEnv?: string ) => {
-  const { accountIds: validAccountIds, hasAuthError } = await plaid.getAccounts({ accessToken: item.access_token, env: item.access_token.includes('production') ? 'production' : 'sandbox'})
+  const { accessToken } = item;
+  const { accountIds: validAccountIds, hasAuthError } = await plaid.getAccounts({ accessToken })
     .then(response => ({ accountIds: response.data.accounts.map(account => account.account_id), hasAuthError: false }))
     .catch(async err => {
       const error = err.response.data;

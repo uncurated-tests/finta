@@ -42,17 +42,17 @@ export const AddConnection = ({ oauthClient, state }: AddDestinationProps) => {
     toggleIsLoading(true);
 
     createOauthCode({ clientId: oauthClient.id })
-    .then(({ access_token_hash, code }) => {
+    .then(({ accessTokenHash, code }) => {
       createDestinationMutation({
         variables: {
           destination: {
             integration_id: oauthClient.integration.id,
             name: destinationName,
             sync_start_date: moment(syncStartDate).format("YYYY-MM-DD"),
-            authentication: { access_token_hash },
+            authentication: { accessTokenHash },
             coda_config: {
               data: {
-                access_token_hash
+                access_token_hash: accessTokenHash
               }
             },
             account_connections: { data: connectedAccounts?.map(accountId => ({ account_id: accountId })) || [] },

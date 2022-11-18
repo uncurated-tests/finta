@@ -1,4 +1,4 @@
-import { disableUser, Sentry, functionWrapper } from "./_lib";
+import { disableUser, Sentry, functionWrapper, logsnag } from "../_lib";
 
 export default functionWrapper.public(async (req) => {
   const transaction = Sentry.startTransaction({ op: "webhook function", name: "Handle canceled subscription" });
@@ -9,9 +9,9 @@ export default functionWrapper.public(async (req) => {
   scope.setUser({ id: user_id });
 
   await disableUser(user_id)
-  .catch(err => {
-    Sentry.captureException(err, scope);
-  })
+  .catch(async error => 
+    logsnag.logError({ operation: "webhook function", scope, error})
+  )
 
   transaction.finish();
   return { status: 200, message: "OK"}

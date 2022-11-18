@@ -1,5 +1,5 @@
 import { AccountBase } from "plaid";
-import { TableConfigFields, AccountsTableFields } from "../../types/shared";
+import { TableConfigFields, AccountsTableFields } from "@finta/types";
 
 export const account = {
   new: ({ account, institutionPageId, tableConfigFields }: { 
@@ -22,6 +22,7 @@ export const account = {
 
     return Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
+      // eslint-disable-next-line
       [userDefinedField]: formattedAccount[tableConfigField]
     }), {} as Record<string, string>);
   },
@@ -37,6 +38,7 @@ export const account = {
   
     return Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
+      // eslint-disable-next-line
       [userDefinedField]: formattedAccount[tableConfigField]
     }), {} as Record<string, string>);
   }

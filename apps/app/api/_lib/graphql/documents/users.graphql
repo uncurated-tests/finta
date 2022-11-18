@@ -1,3 +1,11 @@
+fragment DBUserFields on users {
+  id
+  display_name: displayName
+  metadata
+  disabled
+  created_at: createdAt
+}
+
 fragment AllStripeDataFields on StripeData {
   trialEndsAt
   hasAppAccess

@@ -11445,6 +11445,8 @@ export type DeleteDestinationAccountsMutationVariables = Exact<{
 
 export type DeleteDestinationAccountsMutation = { __typename?: 'mutation_root', delete_destination_accounts?: { __typename?: 'destination_accounts_mutation_response', affected_rows: number } | null };
 
+export type DbDestinationFieldsFragment = { __typename?: 'destinations', id: any, user_id: any, integration_id: Integrations_Enum, created_at: any, disabled_at?: any | null };
+
 export type AllDestinationFieldsFragment = { __typename: 'destinations', id: any, name: string, authentication?: any | null, sync_start_date: string, should_sync_transactions: boolean, should_sync_investments: boolean, should_override_transaction_name: boolean, table_configs: any, integration: { __typename?: 'integrations', id: string, name: string }, account_connections: Array<{ __typename?: 'destination_accounts', account: { __typename?: 'plaid_accounts', id: string, plaid_item_id: string } }>, user: { __typename?: 'users', id: any, email?: any | null, metadata?: any | null, stripeData: { __typename?: 'StripeData', hasAppAccess: boolean, subscription?: { __typename?: 'StripeSubscription', status: SubscriptionStatus } | null } }, notion_connection?: { __typename?: 'notion_connections', access_token: string } | null };
 
 export type GetDestinationQueryVariables = Exact<{
@@ -11519,6 +11521,8 @@ export type UpdatePlaidAccountsMutationVariables = Exact<{
 
 export type UpdatePlaidAccountsMutation = { __typename?: 'mutation_root', update_plaid_accounts?: { __typename?: 'plaid_accounts_mutation_response', returning: Array<{ __typename: 'plaid_accounts', id: string, name: string, mask?: string | null, is_closed: boolean }> } | null };
 
+export type DbPlaidInstitutionFieldsFragment = { __typename?: 'plaid_institutions', id: string, name: string };
+
 export type UpdatePlaidInstitutionMutationVariables = Exact<{
   plaid_institution_id: Scalars['String'];
   _set: Plaid_Institutions_Set_Input;
@@ -11526,6 +11530,8 @@ export type UpdatePlaidInstitutionMutationVariables = Exact<{
 
 
 export type UpdatePlaidInstitutionMutation = { __typename?: 'mutation_root', institution?: { __typename?: 'plaid_institutions', id: string } | null };
+
+export type DbPlaidItemFieldsFragment = { __typename?: 'plaid_items', id: string, user_id: any, disabled_at?: any | null, consent_expires_at?: any | null, error?: string | null, access_token: string };
 
 export type AllPlaidItemFieldsFragment = { __typename: 'plaid_items', id: string, accessToken: string, billed_products?: any | null, available_products?: any | null, is_initial_update_complete: boolean, is_historical_update_complete: boolean, error?: string | null, created_at: any, synced_at?: any | null, plaid_sync_cursor?: string | null, plaid_sync_cursor_added_at?: any | null, institution: { __typename?: 'plaid_institutions', name: string, logo_file_id?: any | null }, removed_transactions?: Array<{ __typename?: 'removed_plaid_transactions', transaction_id: string }>, user: { __typename?: 'users', id: any, email?: any | null }, accounts: Array<{ __typename: 'plaid_accounts', id: string, name: string, mask?: string | null, is_closed: boolean }> };
 
@@ -11600,6 +11606,8 @@ export type UpdateStripeWebhookEventMutationVariables = Exact<{
 
 export type UpdateStripeWebhookEventMutation = { __typename?: 'mutation_root', webhook_event?: { __typename: 'stripe_webhook_events', id: string, event: string, state: Stripe_Webhook_Events_States_Enum } | null };
 
+export type DbSyncLogFieldsFragment = { __typename?: 'sync_logs', id: any, ended_at?: any | null, error?: any | null, trigger: string, is_success: boolean };
+
 export type AllSyncLogFieldsFragment = { __typename?: 'sync_logs', id: any, created_at: any, ended_at?: any | null, trigger: string, is_success: boolean, error?: any | null, metadata?: any | null };
 
 export type AllPlaidItemSyncLogFieldsFragment = { __typename?: 'plaid_item_sync_logs', plaid_item_id: string, sync_log_id: any, error?: any | null, accounts: any, holdings: any, transactions: any, investment_transactions: any };
@@ -11660,6 +11668,8 @@ export type GetUserSyncLogsQueryVariables = Exact<{
 
 export type GetUserSyncLogsQuery = { __typename?: 'query_root', sync_logs: Array<{ __typename?: 'sync_logs', id: any, is_success: boolean, error?: any | null, ended_at?: any | null, created_at: any, metadata?: any | null, trigger: string, destination_sync_logs: Array<{ __typename?: 'destination_sync_logs', accounts: any, destination_id: any, error?: any | null, holdings: any, investment_transactions: any, transactions: any }>, plaid_item_sync_logs: Array<{ __typename?: 'plaid_item_sync_logs', accounts: any, error?: any | null, holdings: any, investment_transactions: any, transactions: any }> }> };
 
+export type DbUserProfileFieldsFragment = { __typename?: 'userProfiles', sync_updates_frequency?: Frequencies_Enum | null, is_subscribed_sync_updates: boolean, timezone?: string | null, user_id: any, sync_updates_job_id?: string | null };
+
 export type AllUserProfileFieldsFragment = { __typename?: 'userProfiles', user_id: any, timezone?: string | null, is_subscribed_general: boolean, is_subscribed_sync_updates: boolean, sync_updates_frequency?: Frequencies_Enum | null, sync_updates_job_id?: string | null };
 
 export type GetUserProfileQueryVariables = Exact<{
@@ -11683,6 +11693,8 @@ export type UpdateUserProfileMutationVariables = Exact<{
 
 
 export type UpdateUserProfileMutation = { __typename?: 'mutation_root', userProfile?: { __typename?: 'userProfiles', user_id: any, timezone?: string | null, is_subscribed_general: boolean, is_subscribed_sync_updates: boolean, sync_updates_frequency?: Frequencies_Enum | null, sync_updates_job_id?: string | null } | null };
+
+export type DbUserFieldsFragment = { __typename?: 'users', id: any, metadata?: any | null, disabled: boolean, display_name: string, created_at: any };
 
 export type AllStripeDataFieldsFragment = { __typename?: 'StripeData', trialEndsAt: any, hasAppAccess: boolean, customer: { __typename?: 'StripeCustomer', id: string, createdAt: any }, subscription?: { __typename?: 'StripeSubscription', id: string, status: SubscriptionStatus, interval: Interval, cancelAtPeriodEnd: boolean, endedAt?: any | null, currentPeriodEnd: any, trialStartedAt?: any | null, trialEndedAt?: any | null } | null };
 
@@ -11716,6 +11728,16 @@ export const AllDestinationAccountFields = gql`
   __typename
   account_id
   destination_id
+}
+    `;
+export const DbDestinationFields = gql`
+    fragment DBDestinationFields on destinations {
+  id
+  user_id
+  integration_id
+  created_at
+  disabled_at
+  disabled_at
 }
     `;
 export const AllDestinationFields = gql`
@@ -11772,6 +11794,22 @@ export const AllOauthCodeFields = gql`
   oauth_client_id
 }
     `;
+export const DbPlaidInstitutionFields = gql`
+    fragment DBPlaidInstitutionFields on plaid_institutions {
+  id
+  name
+}
+    `;
+export const DbPlaidItemFields = gql`
+    fragment DBPlaidItemFields on plaid_items {
+  id
+  user_id
+  disabled_at
+  consent_expires_at
+  access_token: accessToken
+  error
+}
+    `;
 export const AllAccountFields = gql`
     fragment AllAccountFields on plaid_accounts {
   __typename
@@ -11826,6 +11864,15 @@ export const AllWebhookEventFields = gql`
   state
 }
     `;
+export const DbSyncLogFields = gql`
+    fragment DBSyncLogFields on sync_logs {
+  id
+  ended_at
+  error
+  trigger
+  is_success
+}
+    `;
 export const AllSyncLogFields = gql`
     fragment AllSyncLogFields on sync_logs {
   id
@@ -11859,6 +11906,15 @@ export const AllDestinationSyncLogFields = gql`
   investment_transactions
 }
     `;
+export const DbUserProfileFields = gql`
+    fragment DBUserProfileFields on userProfiles {
+  sync_updates_frequency
+  is_subscribed_sync_updates
+  timezone
+  user_id
+  sync_updates_job_id
+}
+    `;
 export const AllUserProfileFields = gql`
     fragment AllUserProfileFields on userProfiles {
   user_id
@@ -11867,6 +11923,15 @@ export const AllUserProfileFields = gql`
   is_subscribed_sync_updates
   sync_updates_frequency
   sync_updates_job_id
+}
+    `;
+export const DbUserFields = gql`
+    fragment DBUserFields on users {
+  id
+  display_name: displayName
+  metadata
+  disabled
+  created_at: createdAt
 }
     `;
 export const AllStripeDataFields = gql`
@@ -12233,6 +12298,16 @@ export const AllDestinationAccountFieldsFragmentDoc = gql`
   destination_id
 }
     `;
+export const DbDestinationFieldsFragmentDoc = gql`
+    fragment DBDestinationFields on destinations {
+  id
+  user_id
+  integration_id
+  created_at
+  disabled_at
+  disabled_at
+}
+    `;
 export const AllDestinationFieldsFragmentDoc = gql`
     fragment AllDestinationFields on destinations {
   __typename
@@ -12285,6 +12360,22 @@ export const AllOauthCodeFieldsFragmentDoc = gql`
   code
   access_token
   oauth_client_id
+}
+    `;
+export const DbPlaidInstitutionFieldsFragmentDoc = gql`
+    fragment DBPlaidInstitutionFields on plaid_institutions {
+  id
+  name
+}
+    `;
+export const DbPlaidItemFieldsFragmentDoc = gql`
+    fragment DBPlaidItemFields on plaid_items {
+  id
+  user_id
+  disabled_at
+  consent_expires_at
+  access_token: accessToken
+  error
 }
     `;
 export const AllAccountFieldsFragmentDoc = gql`
@@ -12341,6 +12432,15 @@ export const AllWebhookEventFieldsFragmentDoc = gql`
   state
 }
     `;
+export const DbSyncLogFieldsFragmentDoc = gql`
+    fragment DBSyncLogFields on sync_logs {
+  id
+  ended_at
+  error
+  trigger
+  is_success
+}
+    `;
 export const AllSyncLogFieldsFragmentDoc = gql`
     fragment AllSyncLogFields on sync_logs {
   id
@@ -12374,6 +12474,15 @@ export const AllDestinationSyncLogFieldsFragmentDoc = gql`
   investment_transactions
 }
     `;
+export const DbUserProfileFieldsFragmentDoc = gql`
+    fragment DBUserProfileFields on userProfiles {
+  sync_updates_frequency
+  is_subscribed_sync_updates
+  timezone
+  user_id
+  sync_updates_job_id
+}
+    `;
 export const AllUserProfileFieldsFragmentDoc = gql`
     fragment AllUserProfileFields on userProfiles {
   user_id
@@ -12382,6 +12491,15 @@ export const AllUserProfileFieldsFragmentDoc = gql`
   is_subscribed_sync_updates
   sync_updates_frequency
   sync_updates_job_id
+}
+    `;
+export const DbUserFieldsFragmentDoc = gql`
+    fragment DBUserFields on users {
+  id
+  display_name: displayName
+  metadata
+  disabled
+  created_at: createdAt
 }
     `;
 export const AllStripeDataFieldsFragmentDoc = gql`

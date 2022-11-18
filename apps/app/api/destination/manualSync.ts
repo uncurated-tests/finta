@@ -67,7 +67,7 @@ export default functionWrapper.client(async (req: types.ManualDestinationSyncReq
       tags: {
         [logsnag.LogSnagTags.SYNC_LOG_ID]: syncLog.id,
         [logsnag.LogSnagTags.DESTINATION_ID]: destination.id,
-        [logsnag.LogSnagTags.ERROR]: destinationCheck.error.errorCode
+        [logsnag.LogSnagTags.ERROR]: destinationCheck.error?.errorCode
       }
     });
 
@@ -83,7 +83,7 @@ export default functionWrapper.client(async (req: types.ManualDestinationSyncReq
       }
     });
 
-    destinationLogError = destinationCheck.error;
+    destinationLogError = destinationCheck.error || undefined;
     success = false;
   }
 

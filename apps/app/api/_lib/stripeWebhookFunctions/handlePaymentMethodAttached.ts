@@ -1,6 +1,6 @@
 import Stripe from "stripe";
 
-import * as stripe from "../../../../../functions/_lib/stripe";
+import * as stripe from "../stripe";
 import * as segment from "../segment";
 
 export const handlePaymentMethodAttached = async ({ paymentMethod, timestamp }: { paymentMethod: Stripe.PaymentMethod, timestamp: Date }) => {

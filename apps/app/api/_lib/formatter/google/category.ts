@@ -1,4 +1,4 @@
-import { CategoryTableFields, TableConfigFields } from "../../types/shared";
+import { CategoryTableFields, TableConfigFields } from "@finta/types";
 
 export const category = {
   new: ({ category, headerValues, tableConfigFields }: { 
@@ -14,6 +14,7 @@ export const category = {
 
     const userFieldMapping = Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
+      // eslint-disable-next-line
       [userDefinedField]: formattedCategory[tableConfigField]
     }), {} as Record<string, string>);
 

@@ -2,11 +2,11 @@ import { ItemErrorWebhook } from "plaid";
 
 import { graphql } from "../graphql";
 import * as segment from "../segment";
-import { PlaidItemModel, SegmentEventNames } from "../types";
+import { PlaidItemModel } from "../types";
 import * as logsnag from "../logsnag";
 
 export const handleItemError = async ({ item, data }: { item: PlaidItemModel; data: ItemErrorWebhook | { error: { error_code: string }}; }) => {
-  const { error: { error_code } } = data;
+  const { error_code } = data.error || { error_code: null };
   const { user, institution } = item;
   if ( !user.email ) { return; }
 
@@ -27,7 +27,7 @@ export const handleItemError = async ({ item, data }: { item: PlaidItemModel; da
     return Promise.all([
       segment.track({
         userId: user.id,
-        event: SegmentEventNames.INSTITUTION_ERROR_TRIGGERED,
+        event: segment.Events.INSTITUTION_ERROR_TRIGGERED,
         properties: {
           provider: 'plaid',
           institution: institution.name,

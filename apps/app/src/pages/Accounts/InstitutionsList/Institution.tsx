@@ -1,7 +1,9 @@
 import {
   Accordion,
   Avatar, 
-  Divider,
+  Card,
+  CardBody,
+  CardHeader,
   HStack,
   IconButton,
   Menu,
@@ -25,7 +27,6 @@ import { FetchNewAccounts } from "./FetchNewAccounts";
 import { FixConnection } from "./FixConnection";
 import { RemovePlaidItem } from "./RemovePlaidItem";
 import { AccordionItem } from "src/components/AccordionItem";
-import { Card } from "src/components/Card";
 import { PlaidItemModel } from "src/types";
 import { nhost } from "src/lib/nhost";
 
@@ -35,43 +36,43 @@ export const Institution = ({ plaidItem }: { plaidItem: PlaidItemModel}) => {
   const logoSrc = logoFileId ? nhost.storage.getPublicUrl({ fileId: logoFileId }): undefined;
 
   return (
-    <Card width = "full">
-      {/* Header */}
-      <HStack justifyContent = "space-between">
-        <HStack>
-          <Avatar
-            size = "sm"
-            mr = "1"
-            src = { logoSrc } 
-            icon = { <AiOutlineBank /> }
-            fontSize = "1.25rem"
-            shadow = { mode('xs', 'dark.xs') }
-          />
-          <Text fontWeight = "semibold">{ plaidItem.institution.name }</Text>
-        </HStack>
-
-        <HStack>
-          { ['ITEM_LOGIN_REQUIRED', 'NO_ACCOUNTS'].includes(plaidItem.error || "")|| plaidItem.consent_expires_at ? <FixConnection plaidItem = { plaidItem } /> : null }
-          <Menu>
-            <MenuButton
-              as = { IconButton }
-              aria-label = "Bank account options"
-              icon = { <DotsHorizontalIcon /> }
-              variant = "icon"
+    <Card size = "md" width = "full">
+      <CardHeader>
+        <HStack justifyContent = "space-between">
+          <HStack>
+            <Avatar
+              size = "sm"
+              mr = "1"
+              src = { logoSrc } 
+              icon = { <AiOutlineBank /> }
+              fontSize = "1.25rem"
+              shadow = { mode('xs', 'dark.xs') }
             />
-            <MenuList>
-              { plaidItem.error !== 'ITEM_LOGIN_REQUIRED' ? <FetchNewAccounts plaidItem = { plaidItem } /> : null }
-              <RemovePlaidItem plaidItem = { plaidItem } />
-            </MenuList>
-          </Menu>
-        </HStack>
-      </HStack>
+            <Text fontWeight = "semibold">{ plaidItem.institution.name }</Text>
+          </HStack>
 
+          <HStack>
+            { ['ITEM_LOGIN_REQUIRED', 'NO_ACCOUNTS'].includes(plaidItem.error || "")|| plaidItem.consent_expires_at ? <FixConnection plaidItem = { plaidItem } /> : null }
+            <Menu>
+              <MenuButton
+                as = { IconButton }
+                aria-label = "Bank account options"
+                icon = { <DotsHorizontalIcon /> }
+                variant = "icon"
+              />
+              <MenuList>
+                { plaidItem.error !== 'ITEM_LOGIN_REQUIRED' ? <FetchNewAccounts plaidItem = { plaidItem } /> : null }
+                <RemovePlaidItem plaidItem = { plaidItem } />
+              </MenuList>
+            </Menu>
+          </HStack>
+        </HStack>
+      </CardHeader>
+
+      <CardBody>
       <Text fontSize = "sm" mt = "1" variant = "helper">
         { plaidItem.synced_at ? `Last sync: ${ moment(plaidItem.synced_at).format("MMMM D hh:mm a") }` : null }
       </Text>
-
-      <Divider my = { 2 } />
 
       {/* Accounts List */}
       <Accordion defaultIndex={[0]} allowToggle>
@@ -97,6 +98,7 @@ export const Institution = ({ plaidItem }: { plaidItem: PlaidItemModel}) => {
           </Table>
         </AccordionItem>
       </Accordion>
+      </CardBody>
     </Card>
   )
 }

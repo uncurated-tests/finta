@@ -15,7 +15,7 @@ export const clientFunctionWrapper = (fn: WrappedClientFunction) => async (req: 
   } | null; 
 
   try {
-    const auth = req.headers['authorization'];
+    const auth = req.headers['authorization'] || '';
     const token = auth.split(' ')[1];
 
     user = req.body.userId ? { id: req.body.userId, asAdmin: true } : await getUserFromToken(token).then(response => response as { id: string });
@@ -30,7 +30,7 @@ export const clientFunctionWrapper = (fn: WrappedClientFunction) => async (req: 
   const { status, message } = await fn(req, user)
   .catch(async error => {
     await logsnag.logError({ operation: 'client function', error, scope, tags: {
-      [logsnag.LogSnagTags.USER_ID]: user.id
+      [logsnag.LogSnagTags.USER_ID]: user!.id
     }});
 
     transaction.finish();

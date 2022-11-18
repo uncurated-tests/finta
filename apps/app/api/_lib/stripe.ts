@@ -77,3 +77,26 @@ export const createCheckoutPortalSession = ({ customerId, priceId, successUrl, c
       trial_period_days: trialPeriodDays
     } : undefined
   }).then(response => ({ id: response.id, url: response.url }))
+
+export const getCustomerUserId = async ({ customerId }: { customerId: string }) => {
+  const customer = await getCustomer({ customerId }).then(response => response as Stripe.Customer);
+  const userId = customer.metadata.user_id;
+
+  if (!userId) { throw new Error(`Customer ${customerId} does not have a user ID`)}
+  return userId
+}
+
+export const getInvoices = (props: Stripe.InvoiceListParams) =>
+  client.invoices.list(props)
+
+export const getSubscription = ({ subscriptionId }: { subscriptionId: string }) => client.subscriptions.retrieve(subscriptionId);
+
+export const getLifetimeRevenue = (customerId: string) =>
+  client.invoices.list({
+    customer: customerId,
+    status: 'paid'
+  })
+  .then(response => {
+    const { data } = response;
+    return data.reduce((total, invoice) => total + (invoice.amount_due / 100), 0)
+  })

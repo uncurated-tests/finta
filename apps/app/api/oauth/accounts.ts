@@ -1,7 +1,7 @@
 import { functionWrapper, graphql, plaid, Sentry, formatter, getItemActiveAccounts, logsnag } from "../_lib";
 import { getOauthPlaidItems, handlePlaidError } from "./_helpers"
 import { OauthFunctionResponse, ErrorResponseMessages } from "../_lib/types";
-import { OauthAccount, OauthGetAccountsResponse } from "../_lib/types/shared";
+import { OauthAccount, OauthGetAccountsResponse } from "@finta/types";
 import { LiabilitiesGetRequestOptions, AccountBase, CreditCardLiability, MortgageLiability, StudentLoan } from "plaid";
 
 export default functionWrapper.oauth(async (req, destination, plaidEnv, asAdmin) => {
@@ -42,35 +42,47 @@ export default functionWrapper.oauth(async (req, destination, plaidEnv, asAdmin)
     if ( getItemActiveAccountsResponse.hasAuthError ) { return ({ accounts: [] as OauthAccount[], hasAuthError: true, itemId: item.id }) }
     
     const { accountIds: plaidAccountIds } = getItemActiveAccountsResponse;
-    const { access_token, billed_products = [], available_products = [] } = item;
+    const { accessToken, billed_products = [], available_products = [] } = item;
     if ( plaidAccountIds.length === 0) { return ({ accounts: [] as OauthAccount[], hasAuthError: false, itemId: item.id }) }
 
     const products = billed_products.concat(available_products) as string[];
     const options = { account_ids: plaidAccountIds } as LiabilitiesGetRequestOptions;
 
     let liabilities = [] as (CreditCardLiability | MortgageLiability | StudentLoan)[];
-    const { accounts: plaidAccounts, hasAuthError } = await plaid.getAccounts({ accessToken: access_token, options })
+    const { accounts: plaidAccounts, hasAuthError } = await plaid.getAccounts({ accessToken, options })
     .then(response => ({ accounts: response.data.accounts as AccountBase[], hasAuthError: false }))
-    .catch(async err => {
-      const error = err.response.data;
-      scope.setContext("Plaid error", error);
-      const { hasAuthError } = await handlePlaidError({ error, item, syncLogId: syncLog.id });
-      if ( !hasAuthError ) { Sentry.captureException(err, scope )};
+    .catch(async error => {
+      const errorData = error.response.data;
+      scope.setContext("Plaid error", errorData);
+      const { hasAuthError } = await handlePlaidError({ error: errorData, item, syncLogId: syncLog.id });
+      if ( !hasAuthError ) { 
+        await logsnag.logError({ 
+          operation: "Get accounts", 
+          error, 
+          scope, 
+          tags: {[logsnag.LogSnagTags.USER_ID]: user.id } 
+        })
+      };
       return ({ accounts: [] as AccountBase[], hasAuthError });
     })
 
     if ( !hasAuthError && plaidAccounts.length > 0 && products.includes('liabilities') ) {
-      liabilities = await plaid.getLiabilities({ accessToken: access_token, options })
+      liabilities = await plaid.getLiabilities({ accessToken, options })
       .then(liabilitiesResponse => {
         const { credit, mortgage, student } = liabilitiesResponse.data.liabilities;
         return ([] as (CreditCardLiability | MortgageLiability | StudentLoan)[]).concat(credit || []).concat(mortgage || []).concat(student || [])
       })
-      .catch(err => {
+      .catch(async err => {
         const errorData = err.response?.data;
         const errorCode = errorData?.error_code;
         if ( !['NO_LIABILITY_ACCOUNTS'].includes(errorCode) ) {
           scope.setContext("Plaid Get Liabilities Response", errorData ? errorData : err.response)
-          Sentry.captureException(new Error("Plaid Get Liabilities Error"), scope);
+          await logsnag.logError({ 
+            operation: "Get accounts", 
+            error: new Error("Plaid Get Liabilities Error"), 
+            scope, 
+            tags: {[logsnag.LogSnagTags.USER_ID]: user.id } 
+          })
         }
         return []
       })

@@ -2,7 +2,6 @@ import AirtableError from "airtable/lib/airtable_error";
 import { DestinationError, DestinationErrorCode, DestinationTableTypes } from "@finta/types"
 
 import * as logsnag from "../logsnag";
-import { Sentry } from "../sentry";
 
 export const parseAirtableError = async (err: AirtableError, table: string, tableType: DestinationTableTypes): Promise<DestinationError> => {
   if ( err.message === 'Could not find what you are looking for' || err.error === "AUTHENTICATION_REQUIRED" || err.message === 'Base not found') {

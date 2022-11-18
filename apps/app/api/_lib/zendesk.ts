@@ -1,5 +1,5 @@
 import axios from "axios";
-import { UserModel } from "../../../../functions/_lib/types";
+import { UserModel } from "./types";
 
 const authString = `taylor@finta.io/token:${process.env.ZENDESK_TOKEN}`;
 

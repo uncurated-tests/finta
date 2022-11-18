@@ -1,4 +1,4 @@
-import { DefaultUpdateWebhook } from "plaid";
+import { DefaultUpdateWebhook, WebhookEnvironmentValues } from "plaid";
 import { handleSyncUpdatesAvailable } from "./handleSyncUpdatesAvailable";
 import { DestinationModel, PlaidItemModel } from "../types"
 import { Sentry } from "../sentry";
@@ -19,7 +19,8 @@ export const handleTransactionsDefaultUpdate = async ({ item, destinations, scop
       initial_update_complete: item.is_initial_update_complete,
       webhook_type: 'TRANSACTIONS',
       webhook_code: 'SYNC_UPDATES_AVAILABLE',
-      item_id: item.id
+      item_id: item.id,
+      environment: WebhookEnvironmentValues.Production
     }, 
     destinations,
     scope,
