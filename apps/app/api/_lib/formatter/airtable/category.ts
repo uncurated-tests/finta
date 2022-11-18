@@ -11,7 +11,7 @@ export const category = {
     return Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
       // eslint-disable-next-line
-      [userDefinedField]: formattedCategory[tableConfigField]
-    }), {} as Record<string, string>);
+      [userDefinedField]: formattedCategory[tableConfigField as keyof typeof formattedCategory]
+    }), {} as Record<string, any>);
   }
 }

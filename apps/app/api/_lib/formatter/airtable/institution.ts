@@ -10,9 +10,8 @@ export const institution = {
   
     return Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
-      // eslint-disable-next-line
-      [userDefinedField]: formattedItem[tableConfigField]
-    }), {} as Record<string, string>);
+      [userDefinedField]: formattedItem[tableConfigField as keyof typeof formattedItem]
+    }), {} as Record<string, any>);
   },
   updated: ({ lastUpdate, tableConfigFields }: { lastUpdate: Date; tableConfigFields: Record<TableConfigFields, string> | {} }) => {
     const formattedItem = {
@@ -21,8 +20,7 @@ export const institution = {
 
     return Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
-      // eslint-disable-next-line
-      [userDefinedField]: formattedItem[tableConfigField]
-    }), {} as Record<string, string>);
+      [userDefinedField]: formattedItem[tableConfigField as keyof typeof formattedItem]
+    }), {} as Record<string, any>);
   }
 }

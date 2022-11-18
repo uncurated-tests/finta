@@ -314,7 +314,6 @@ async function retryWrapper<T extends Array<any>, U>(func: () => Promise<U>): Pr
         });
         return { didProcess: true, response: null }
       }
-      console.log(err.code)
     }));
 
     if ( !didProcess ) {

@@ -154,7 +154,7 @@ export default functionWrapper.client(async (req: types.ManualDestinationSyncReq
       },
       update_columns: [ Destination_Sync_Logs_Update_Column.Error ]
     }),
-    success && graphql.UpdateDestination({ destination_id: destination.id, _set: { sync_start_date: newSyncStartDate }}),
+    success ? graphql.UpdateDestination({ destination_id: destination.id, _set: { sync_start_date: newSyncStartDate }}) : Promise.resolve(),
     logsnag.publish({
       channel: logsnag.LogSnagChannel.SYNCS,
       event: success ? logsnag.LogSnagEvent.SYNC_COMPLETED : logsnag.LogSnagEvent.SYNC_FAILED,

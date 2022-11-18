@@ -16,9 +16,8 @@ export const institution = {
 
     return Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
-      // eslint-disable-next-line
-      [userDefinedField]: formattedItem[tableConfigField]
-    }), {} as Record<string, string>);
+      [userDefinedField]: formattedItem[tableConfigField as keyof typeof formattedItem]
+    }), {} as Record<string, any>);
   },
   updated: ({ item, tableConfigFields, timezone }: { 
     item: PlaidItemModel;
@@ -31,8 +30,7 @@ export const institution = {
 
     return Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
-      // eslint-disable-next-line
-      [userDefinedField]: formattedItem[tableConfigField]
-    }), {} as Record<string, string>);
+      [userDefinedField]: formattedItem[tableConfigField as keyof typeof formattedItem]
+    }), {} as Record<string, any>);
   }
 }

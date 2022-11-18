@@ -36,10 +36,7 @@ export interface DBEventPayload<O extends 'INSERT' | 'UPDATE' | 'DELETE' = any, 
     current_retry: number;
   };
   trigger: {
-    name: 'on_update_user' | 
-          'on_insert_plaid_item' | 'on_insert_plaid_institution' | 
-          'on_insert_destination' | 'on_update_destination' | 
-          'on_delete_plaid_item' | 'on_insert_user' | 'on_upsert_sync_log' | 'handleUpsertUserProfle' | 'handelDeleteUserProfile';
+    name: string
   }
   table: {
     schema: string;

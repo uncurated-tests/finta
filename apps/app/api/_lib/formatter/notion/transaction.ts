@@ -23,9 +23,8 @@ export const transaction = {
   
     return Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
-      // eslint-disable-next-line
-      [userDefinedField]: formattedTransaction[tableConfigField]
-    }), {} as Record<string, string>);
+      [userDefinedField]: formattedTransaction[tableConfigField as keyof typeof formattedTransaction]
+    }), {} as Record<string, any>);
   },
   updated: ({ transaction, tableConfigFields }: {
     transaction: Transaction;
@@ -38,11 +37,12 @@ export const transaction = {
       [TransactionsTableFields.PENDING]: { checkbox: transaction.pending },
       [TransactionsTableFields.SUB_ACCOUNT]: transaction.account_owner ? { rich_text: [{ text: { content: transaction.account_owner }}]} : undefined
     };
+
+
   
     return Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
-      // eslint-disable-next-line
-      [userDefinedField]: formattedTransaction[tableConfigField]
-    }), {} as Record<string, string>);
+      [userDefinedField]: formattedTransaction[tableConfigField as keyof typeof formattedTransaction]
+    }), {} as Record<string, any>);
   }
 }

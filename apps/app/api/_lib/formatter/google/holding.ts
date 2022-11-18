@@ -18,8 +18,8 @@ export const holding = {
     const userFieldMapping = Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
       // eslint-disable-next-line
-      [userDefinedField]: formattedHolding[tableConfigField]
-    }), {} as Record<string, string>);
+      [userDefinedField]: formattedHolding[tableConfigField as keyof typeof formattedHolding]
+    }), {} as Record<string, any>);
 
     return headerValues.map(headerValue => userFieldMapping[headerValue] || undefined)
   },
@@ -37,8 +37,8 @@ export const holding = {
     const userFieldMapping = Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
       // eslint-disable-next-line
-      [userDefinedField]: formattedHolding[tableConfigField]
-    }), {} as Record<string, string>);
+      [userDefinedField]: formattedHolding[tableConfigField as keyof typeof formattedHolding]
+    }), {} as Record<string, any>);
 
     return headerValues.map(headerValue => userFieldMapping[headerValue] || undefined)
   }

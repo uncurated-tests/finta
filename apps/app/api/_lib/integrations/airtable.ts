@@ -232,6 +232,9 @@ export class Airtable extends IntegrationBase {
     const { tableId, fields, isEnabled } = this.config.holdings;
     if ( !holdings || holdings.length === 0 || !isEnabled ) { return { added: 0, updated: 0 }};
 
+    const accountHeader = fields[HoldingsTableFields.ACCOUNT as keyof typeof fields];
+    const securityHeader = fields[HoldingsTableFields.SECURITY_ID as keyof typeof fields];
+
     const holdingsRecords = await this.getRecords({ table: tableId });
     const mappedHoldings = holdings.map(holding => {
       const accountRecord = accountsRecords.find(record => record.accountId === holding.account_id);
@@ -243,8 +246,8 @@ export class Airtable extends IntegrationBase {
         console.log(securitiesRecords[0])
       }
       const record = holdingsRecords.find(holdingRecord => 
-        (holdingRecord.fields[fields[HoldingsTableFields.ACCOUNT as keyof typeof fields]] || [])[0] === accountRecord!.recordId &&
-        (holdingRecord.fields[fields[HoldingsTableFields.SECURITY_ID as keyof typeof fields]] || [])[0] === securityRecord!.recordId
+        holdingRecord.fields[accountHeader] === accountRecord!.recordId &&
+        holdingRecord.fields[securityHeader] === securityRecord!.recordId
       );
       return { holding, accountRecord, holdingRecord: record, securityRecord }
     })

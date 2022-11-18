@@ -16,9 +16,8 @@ export const institution = ({ item, lastUpdate, headerValues, tableConfigFields 
 
   const userFieldMapping = Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
     ...allFields,
-    // eslint-disable-next-line
-    [userDefinedField]: formattedItem[tableConfigField]
-  }), {} as Record<string, string>);
+    [userDefinedField]: formattedItem[tableConfigField as keyof typeof formattedItem]
+  }), {} as Record<string, any>);
 
   return headerValues.map(headerValue => userFieldMapping[headerValue] || undefined)
 }

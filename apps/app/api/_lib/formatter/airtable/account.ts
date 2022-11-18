@@ -23,9 +23,8 @@ export const account = {
   
     return Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
-      // eslint-disable-next-line
-      [userDefinedField]: formattedAccount[tableConfigField]
-    }), {} as Record<string, string>);
+      [userDefinedField]: formattedAccount[tableConfigField as keyof typeof formattedAccount]
+    }), {} as Record<string, any>);
   },
   updated: ({ account, tableConfigFields }: {
     account: AccountBase
@@ -39,8 +38,7 @@ export const account = {
   
     return Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
-      // eslint-disable-next-line
-      [userDefinedField]: formattedAccount[tableConfigField]
-    }), {} as Record<string, string>);
+      [userDefinedField]: formattedAccount[tableConfigField as keyof typeof formattedAccount]
+    }), {} as Record<string, any>);
   }
 }

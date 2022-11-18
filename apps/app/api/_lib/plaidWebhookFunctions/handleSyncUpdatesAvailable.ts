@@ -62,6 +62,7 @@ export const handleSyncUpdatesAvailable = async ({ item, data, destinations, sco
       hasMore = data.has_more;
       cursor = data.next_cursor;
     } catch ( error ) {
+      scope.setContext("Plaid Error", error);
       const errorCode = error.response?.data?.error_code;
       const tags = {
         [logsnag.LogSnagTags.ITEM_ID]: item.id,
@@ -76,7 +77,7 @@ export const handleSyncUpdatesAvailable = async ({ item, data, destinations, sco
           tags
         })
       } else {
-        await logsnag.logError({ operation: 'Transactions sync webhook', scope, error, tags })
+        await logsnag.logError({ operation: 'Transactions sync webhook', scope, error: new Error("Sync Updates Available Error"), tags })
       }
       
       hasMore = false

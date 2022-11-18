@@ -18,9 +18,8 @@ export const security = {
 
     const userFieldMapping = Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
-      // eslint-disable-next-line
-      [userDefinedField]: formattedSecurity[tableConfigField]
-    }), {} as Record<string, string>);
+      [userDefinedField]: formattedSecurity[tableConfigField as keyof typeof formattedSecurity]
+    }), {} as Record<string, any>);
 
     return headerValues.map(headerValue => userFieldMapping[headerValue] || undefined)
   },
@@ -36,9 +35,8 @@ export const security = {
 
     const userFieldMapping = Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
-      // eslint-disable-next-line
-      [userDefinedField]: formattedSecurity[tableConfigField]
-    }), {} as Record<string, string>);
+      [userDefinedField]: formattedSecurity[tableConfigField as keyof typeof formattedSecurity]
+    }), {} as Record<string, any>);
 
     return headerValues.map(headerValue => userFieldMapping[headerValue] || undefined)
   }

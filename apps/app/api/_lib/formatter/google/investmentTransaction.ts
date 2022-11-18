@@ -24,9 +24,8 @@ export const investmentTransaction = {
 
     const userFieldMapping = Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
-      // eslint-disable-next-line
-      [userDefinedField]: formattedTransaction[tableConfigField]
-    }), {} as Record<string, string>);
+      [userDefinedField]: formattedTransaction[tableConfigField as keyof typeof formattedTransaction]
+    }), {} as Record<string, any>);
 
     return headerValues.map(headerValue => userFieldMapping[headerValue] || undefined)
   }

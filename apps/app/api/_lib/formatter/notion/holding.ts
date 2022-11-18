@@ -21,9 +21,8 @@ export const holding = {
   
     return Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
-      // eslint-disable-next-line
-      [userDefinedField]: formattedHolding[tableConfigField]
-    }), {} as Record<string, string>);
+      [userDefinedField]: formattedHolding[tableConfigField as keyof typeof formattedHolding]
+    }), {} as Record<string, any>);
   },
   updated: ({ holding, tableConfigFields }: {
     holding: Holding;
@@ -37,8 +36,7 @@ export const holding = {
   
     return Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
-      // eslint-disable-next-line
-      [userDefinedField]: formattedHolding[tableConfigField]
-    }), {} as Record<string, string>);
+      [userDefinedField]: formattedHolding[tableConfigField as keyof typeof formattedHolding]
+    }), {} as Record<string, any>);
   }
 }

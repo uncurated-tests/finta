@@ -16,8 +16,8 @@ export const security = {
     return Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
       // eslint-disable-next-line
-      [userDefinedField]: formattedSecurity[tableConfigField]
-    }), {} as Record<string, string>);
+      [userDefinedField]: formattedSecurity[tableConfigField as keyof typeof formattedSecurity]
+    }), {} as Record<string, any>);
   },
   updated: ({ security, tableConfigFields }: { security: Security; tableConfigFields: Record<TableConfigFields, string> | {} }) => {
     const formattedSecurity = {
@@ -28,7 +28,7 @@ export const security = {
     return Object.entries(tableConfigFields).reduce((allFields, [ tableConfigField, userDefinedField ]) => ({
       ...allFields,
       // eslint-disable-next-line
-      [userDefinedField]: formattedSecurity[tableConfigField]
-    }), {} as Record<string, string>);
+      [userDefinedField]: formattedSecurity[tableConfigField as keyof typeof formattedSecurity]
+    }), {} as Record<string, any>);
   }
 }
