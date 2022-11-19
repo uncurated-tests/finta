@@ -80,16 +80,20 @@ export default createServer<{ req: Request; res: Response; }>({
           }))) 
         },
         stripeData: async (_, { user_id }: StripeDataProps) => {
-          let customer: null | Stripe.Customer;
-          const user = await graphql.GetBaseUser({ user_id }).then(response => response.user!)
+          let customer: Stripe.Customer;
+          const user = await graphql.GetBaseUser({ user_id }).then(response => response.user)
+          if ( !user ) { throw new Error("Not Found") }
+          console.log("User ID", user.id)
           const customerId = user.metadata?.stripe_customer_id
           if ( !customerId ) {
             customer = await stripe.upsertCustomer({ userId: user.id, email: user.email, name: user.display_name });
+            console.log("Create customer");
           } else {
             customer = await stripe.getCustomer({ customerId }).then(response => response as Stripe.Customer)
+            console.log("Get customer")
           }
-
-          const subscription = await stripe.getSubscriptions({ status: 'all', customer: customer!.id, limit: 1})
+          console.log("Customer Id", customer.id);
+          const subscription = await stripe.getSubscriptions({ status: 'all', customer: customer.id, limit: 1})
           .then(response => response.data.map(subscription => ({
             id: subscription.id,
             status: subscription.status,
@@ -102,11 +106,11 @@ export default createServer<{ req: Request; res: Response; }>({
             currentPeriodEnd: moment.unix(subscription.current_period_end).toDate(),
             interval: subscription.items.data[0].plan.interval
           }))[0]);
-
-          const trialEndsAt = subscription?.trialEndedAt || (customer!.metadata.trial_ends_at 
+          console.log("Last subscription", subscription.id)
+          const trialEndsAt = subscription?.trialEndedAt || (customer.metadata.trial_ends_at 
             ? moment.unix(parseInt(customer!.metadata.trial_ends_at)).toDate() 
             : moment.unix(customer!.created).add(14, 'days').toDate());
-          
+          console.log(trialEndsAt)
           return {
             hasAppAccess: subscription 
               ? [ "active", "incomplete", "past_due", "trialing"].includes(subscription.status)
