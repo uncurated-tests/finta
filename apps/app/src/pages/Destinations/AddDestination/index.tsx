@@ -45,7 +45,7 @@ export const AddDestination = () => {
 
   const onCloseIntegrationComponent = () => setSelectedIntegration(null);
 
-  const disableAddDestination = !user //|| !user.stripe_data.has_app_access;
+  const disableAddDestination = !user || !user.stripeData.hasAppAccess;
   return (
     <>
       <Tooltip shouldWrapChildren isDisabled = { !disableAddDestination } label = "Please reactivate your subscription on the settings page to add a new destination">

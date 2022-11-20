@@ -6,7 +6,7 @@ export default functionWrapper.client(async (req: types. GetPlaidLinkTokenReques
   scope.setContext("Request Body", req.body);
   scope.setUser({ id: user.id });
 
-  const { accessToken, products, redirectUri, plaidEnv } = req.body;
+  const { accessToken, products, redirectUri, plaidEnv, isAccountSelectionEnabled } = req.body;
   const webhookURL = `${process.env.VERCEL_URL}/api/plaid/webhook`;
 
   return plaid.createLinkToken({
@@ -15,7 +15,8 @@ export default functionWrapper.client(async (req: types. GetPlaidLinkTokenReques
     accessToken,
     webhookURL,
     redirectUri,
-    env: plaidEnv as plaid.PlaidEnv
+    env: plaidEnv as plaid.PlaidEnv,
+    isAccountSelectionEnabled
   })
   .then(response => ({ status: types.StatusCodes.OK, message: response.data }))
   .catch(async error => {

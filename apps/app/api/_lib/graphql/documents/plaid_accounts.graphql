@@ -1,4 +1,4 @@
-fragment AllAccountFields on plaid_accounts {
+fragment AllAccountFields on plaidAccounts {
   __typename
   id
   name
@@ -6,8 +6,8 @@ fragment AllAccountFields on plaid_accounts {
   is_closed
 }
 
-mutation UpdatePlaidAccounts($_set: plaid_accounts_set_input!, $where: plaid_accounts_bool_exp!) {
-  update_plaid_accounts(where: $where, _set: $_set) {
+mutation UpdatePlaidAccounts($_set: plaidAccounts_set_input!, $where: plaidAccounts_bool_exp!) {
+  plaidAccounts: updatePlaidAccounts(where: $where, _set: $_set) {
     returning {
       ...AllAccountFields
     }

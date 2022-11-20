@@ -2,7 +2,7 @@ fragment DBPlaidItemFields on plaid_items {
   id
   user_id
   disabled_at
-  consent_expires_at
+  consent_expires_at: consentExpiresAt
   access_token: accessToken
   error
 }
@@ -36,19 +36,19 @@ fragment AllPlaidItemFields on plaid_items {
   plaid_sync_cursor_added_at
 }
 
-query GetPlaidItems($where: plaid_items_bool_exp = {}, $accounts_where: plaid_accounts_bool_exp = {}, $include_removed_transactions: Boolean = false, $date: timestamptz = "") {
-  plaid_items(where: $where) {
+query GetPlaidItems($where: plaid_items_bool_exp = {}, $accounts_where: plaidAccounts_bool_exp = {}, $include_removed_transactions: Boolean = false, $date: timestamptz = "") {
+  plaidItems(where: $where) {
     ...AllPlaidItemFields
   }
 }
 
-query GetPlaidItem($plaid_item_id: String!, $accounts_where: plaid_accounts_bool_exp = {}, $include_removed_transactions: Boolean = false, $date: timestamptz = "") {
+query GetPlaidItem($plaid_item_id: String!, $accounts_where: plaidAccounts_bool_exp = {}, $include_removed_transactions: Boolean = false, $date: timestamptz = "") {
   plaidItem(id: $plaid_item_id) {
     ...AllPlaidItemFields
   }
 }
 
-mutation UpdatePlaidItem($plaid_item_id: String!, $_set: plaid_items_set_input!, $accounts_where: plaid_accounts_bool_exp = {}, $include_removed_transactions: Boolean = false, $date: timestamptz = "") {
+mutation UpdatePlaidItem($plaid_item_id: String!, $_set: plaid_items_set_input!, $accounts_where: plaidAccounts_bool_exp = {}, $include_removed_transactions: Boolean = false, $date: timestamptz = "") {
   plaid_item: update_plaid_items_by_pk(pk_columns: { id: $plaid_item_id }, _set: $_set ) {
     ...AllPlaidItemFields
   }

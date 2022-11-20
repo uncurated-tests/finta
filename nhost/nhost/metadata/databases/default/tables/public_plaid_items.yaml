@@ -5,9 +5,14 @@ configuration:
   column_config:
     access_token:
       custom_name: accessToken
+    consent_expires_at:
+      custom_name: consentExpiresAt
   custom_column_names:
     access_token: accessToken
+    consent_expires_at: consentExpiresAt
   custom_root_fields:
+    insert_one: insertPlaidItem
+    select: plaidItems
     select_by_pk: plaidItem
 object_relationships:
   - name: institution
@@ -48,6 +53,8 @@ insert_permissions:
         user_id: x-hasura-User-Id
       columns:
         - access_token
+        - consent_expires_at
+        - error
         - id
         - institution_id
 select_permissions:

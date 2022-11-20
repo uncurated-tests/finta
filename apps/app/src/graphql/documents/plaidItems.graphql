@@ -1,4 +1,4 @@
-fragment AllPlaidAccountFields on plaid_accounts {
+fragment AllPlaidAccountFields on plaidAccounts {
   __typename
   id
   plaid_item_id
@@ -25,7 +25,7 @@ fragment AllPlaidItemFields on plaid_items {
   is_historical_update_complete
   error
   accessToken
-  consent_expires_at
+  consentExpiresAt
   institution {
     id
     name
@@ -39,20 +39,22 @@ fragment AllPlaidItemFields on plaid_items {
   disabled_at
 }
 
-mutation InsertPlaidItem($plaid_item: plaid_items_insert_input!) {
-  plaid_item: insert_plaid_items_one(object: $plaid_item) {
-    ...AllPlaidItemFields
-  }
-}
-
-mutation UpdatePlaidItem($plaid_item_id: String!, $_set: plaid_items_set_input) {
-  plaid_item: update_plaid_items_by_pk(pk_columns: { id: $plaid_item_id }, _set: $_set ) {
+mutation UpsertPlaidItem($plaidItem: plaid_items_insert_input!) {
+  plaidItem: insertPlaidItem(
+    object: $plaidItem,
+    on_conflict: {
+      constraint: plaid_items_pkey,
+      update_columns: [
+        error, consentExpiresAt
+      ]
+    }
+  ) {
     ...AllPlaidItemFields
   }
 }
 
 query GetPlaidItems {
-  plaid_items(order_by: {created_at: asc}) {
+  plaidItems(order_by: {created_at: asc}) {
     ...AllPlaidItemFields
   }
 }

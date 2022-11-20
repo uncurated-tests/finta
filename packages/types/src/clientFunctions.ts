@@ -18,6 +18,7 @@ export type CreatePlaidLinkTokenPayload = {
   products: Products[];
   redirectUri: string;
   plaidEnv: string;
+  isAccountSelectionEnabled?: boolean
 }
 
 export type CreatePlaidLinkTokenResponse = LinkTokenCreateResponse;

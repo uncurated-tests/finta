@@ -1,6 +1,19 @@
 table:
   name: plaid_accounts
   schema: public
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: plaidAccounts
+  custom_root_fields:
+    delete: deletePlaidAccounts
+    delete_by_pk: deletePlaidAccount
+    insert: insertPlaidAccounts
+    insert_one: insertPlaidAccount
+    select: plaidAccounts
+    select_by_pk: plaidAccount
+    update: updatePlaidAccounts
+    update_by_pk: updatePlaidAccount
 object_relationships:
   - name: item
     using:
@@ -48,6 +61,14 @@ update_permissions:
           user_id:
             _eq: X-Hasura-User-Id
       check:
+        item:
+          user_id:
+            _eq: X-Hasura-User-Id
+delete_permissions:
+  - role: user
+    permission:
+      backend_only: false
+      filter:
         item:
           user_id:
             _eq: X-Hasura-User-Id

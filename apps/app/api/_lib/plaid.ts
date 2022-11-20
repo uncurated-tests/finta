@@ -41,13 +41,14 @@ const getEnvFromAccessToken = (accessToken: string): PlaidEnv => {
   return 'sandbox'
 }
 
-export const createLinkToken = ({ userId, products, accessToken, webhookURL, redirectUri, env }: {
+export const createLinkToken = ({ userId, products, accessToken, webhookURL, redirectUri, env, isAccountSelectionEnabled = false }: {
   userId: string;
   products: Products[];
   accessToken?: string;
   webhookURL: string;
   redirectUri: string;
   env?: PlaidEnv
+  isAccountSelectionEnabled?: boolean
 }) =>
   getClient(accessToken ? getEnvFromAccessToken(accessToken) : env || plaidEnvFromVercelEnv ).linkTokenCreate({
     user: { client_user_id: userId },
@@ -57,7 +58,8 @@ export const createLinkToken = ({ userId, products, accessToken, webhookURL, red
     products,
     access_token: accessToken,
     webhook: webhookURL,
-    redirect_uri: redirectUri
+    redirect_uri: redirectUri,
+    update: accessToken ? { account_selection_enabled: isAccountSelectionEnabled } : undefined
   }).catch(constructPlaidError)
 
 export const exchangePublicToken = ({ publicToken, env }: { publicToken: string; env: PlaidEnv }) =>

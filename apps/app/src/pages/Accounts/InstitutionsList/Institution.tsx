@@ -52,7 +52,7 @@ export const Institution = ({ plaidItem }: { plaidItem: PlaidItemModel}) => {
           </HStack>
 
           <HStack>
-            { ['ITEM_LOGIN_REQUIRED', 'NO_ACCOUNTS'].includes(plaidItem.error || "")|| plaidItem.consent_expires_at ? <FixConnection plaidItem = { plaidItem } /> : null }
+            { ['ITEM_LOGIN_REQUIRED', 'NO_ACCOUNTS'].includes(plaidItem.error || "") || plaidItem.consentExpiresAt ? <FixConnection plaidItem = { plaidItem } /> : null }
             <Menu>
               <MenuButton
                 as = { IconButton }

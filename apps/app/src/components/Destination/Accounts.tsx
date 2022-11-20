@@ -29,7 +29,7 @@ export interface AccountsTableProps {
 
 export const DestinationAccounts = ({ destination, selectedAccountIds: selectedAccountIdsProp, initiallySelectAll = false, onChange }: AccountsTableProps) => {
   const { data } = useGetPlaidItemsQuery();
-  const allAccounts = useMemo(() =>  data?.plaid_items
+  const allAccounts = useMemo(() =>  data?.plaidItems
     .filter(item => !item.disabled_at)
     .map(item => item.accounts.map(account => ({ ...account, institutionName: item.institution.name })))
     .reduce((all, curr) => all.concat(curr), [])

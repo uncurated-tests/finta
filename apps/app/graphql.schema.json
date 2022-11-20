@@ -16748,7 +16748,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "plaid_accounts",
+                "name": "plaidAccounts",
                 "ofType": null
               }
             },
@@ -17097,7 +17097,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "plaid_accounts_bool_exp",
+              "name": "plaidAccounts_bool_exp",
               "ofType": null
             },
             "defaultValue": null,
@@ -17173,7 +17173,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "plaid_accounts_obj_rel_insert_input",
+              "name": "plaidAccounts_obj_rel_insert_input",
               "ofType": null
             },
             "defaultValue": null,
@@ -17486,7 +17486,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "plaid_accounts_order_by",
+              "name": "plaidAccounts_order_by",
               "ofType": null
             },
             "defaultValue": null,
@@ -28441,6 +28441,64 @@
             "deprecationReason": null
           },
           {
+            "name": "deletePlaidAccount",
+            "description": "delete single row from the table: \"plaid_accounts\"",
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "plaidAccounts",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "deletePlaidAccounts",
+            "description": "delete data from the table: \"plaid_accounts\"",
+            "args": [
+              {
+                "name": "where",
+                "description": "filter the rows which have to be deleted",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "plaidAccounts_bool_exp",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "plaidAccounts_mutation_response",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "deleteUser",
             "description": "delete single row from the table: \"auth.users\"",
             "args": [
@@ -29179,64 +29237,6 @@
             "type": {
               "kind": "OBJECT",
               "name": "oauth_codes",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "delete_plaid_accounts",
-            "description": "delete data from the table: \"plaid_accounts\"",
-            "args": [
-              {
-                "name": "where",
-                "description": "filter the rows which have to be deleted",
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "plaid_accounts_bool_exp",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "plaid_accounts_mutation_response",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "delete_plaid_accounts_by_pk",
-            "description": "delete single row from the table: \"plaid_accounts\"",
-            "args": [
-              {
-                "name": "id",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "plaid_accounts",
               "ofType": null
             },
             "isDeprecated": false,
@@ -30475,6 +30475,137 @@
             "deprecationReason": null
           },
           {
+            "name": "insertPlaidAccount",
+            "description": "insert a single row into the table: \"plaid_accounts\"",
+            "args": [
+              {
+                "name": "object",
+                "description": "the row to be inserted",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "plaidAccounts_insert_input",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "on_conflict",
+                "description": "upsert condition",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "plaidAccounts_on_conflict",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "plaidAccounts",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "insertPlaidAccounts",
+            "description": "insert data into the table: \"plaid_accounts\"",
+            "args": [
+              {
+                "name": "objects",
+                "description": "the rows to be inserted",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "plaidAccounts_insert_input",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "on_conflict",
+                "description": "upsert condition",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "plaidAccounts_on_conflict",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "plaidAccounts_mutation_response",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "insertPlaidItem",
+            "description": "insert a single row into the table: \"plaid_items\"",
+            "args": [
+              {
+                "name": "object",
+                "description": "the row to be inserted",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "plaid_items_insert_input",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "on_conflict",
+                "description": "upsert condition",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "plaid_items_on_conflict",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "plaid_items",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "insertUser",
             "description": "insert a single row into the table: \"auth.users\"",
             "args": [
@@ -31555,96 +31686,6 @@
             "deprecationReason": null
           },
           {
-            "name": "insert_plaid_accounts",
-            "description": "insert data into the table: \"plaid_accounts\"",
-            "args": [
-              {
-                "name": "objects",
-                "description": "the rows to be inserted",
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "name": null,
-                      "ofType": {
-                        "kind": "INPUT_OBJECT",
-                        "name": "plaid_accounts_insert_input",
-                        "ofType": null
-                      }
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "on_conflict",
-                "description": "upsert condition",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "plaid_accounts_on_conflict",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "plaid_accounts_mutation_response",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "insert_plaid_accounts_one",
-            "description": "insert a single row into the table: \"plaid_accounts\"",
-            "args": [
-              {
-                "name": "object",
-                "description": "the row to be inserted",
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "plaid_accounts_insert_input",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "on_conflict",
-                "description": "upsert condition",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "plaid_accounts_on_conflict",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "plaid_accounts",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "insert_plaid_institutions",
             "description": "insert data into the table: \"plaid_institutions\"",
             "args": [
@@ -31868,47 +31909,6 @@
             "type": {
               "kind": "OBJECT",
               "name": "plaid_items_mutation_response",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "insert_plaid_items_one",
-            "description": "insert a single row into the table: \"plaid_items\"",
-            "args": [
-              {
-                "name": "object",
-                "description": "the row to be inserted",
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "plaid_items_insert_input",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "on_conflict",
-                "description": "upsert condition",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "plaid_items_on_conflict",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "plaid_items",
               "ofType": null
             },
             "isDeprecated": false,
@@ -33228,6 +33228,88 @@
             "type": {
               "kind": "OBJECT",
               "name": "files_mutation_response",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updatePlaidAccount",
+            "description": "update single row of the table: \"plaid_accounts\"",
+            "args": [
+              {
+                "name": "_set",
+                "description": "sets the columns of the filtered rows to the given values",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "plaidAccounts_set_input",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "pk_columns",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "plaidAccounts_pk_columns_input",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "plaidAccounts",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updatePlaidAccounts",
+            "description": "update data of the table: \"plaid_accounts\"",
+            "args": [
+              {
+                "name": "_set",
+                "description": "sets the columns of the filtered rows to the given values",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "plaidAccounts_set_input",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "where",
+                "description": "filter the rows which have to be updated",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "plaidAccounts_bool_exp",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "plaidAccounts_mutation_response",
               "ofType": null
             },
             "isDeprecated": false,
@@ -35477,89 +35559,7 @@
             "deprecationReason": null
           },
           {
-            "name": "update_plaid_accounts",
-            "description": "update data of the table: \"plaid_accounts\"",
-            "args": [
-              {
-                "name": "_set",
-                "description": "sets the columns of the filtered rows to the given values",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "plaid_accounts_set_input",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "where",
-                "description": "filter the rows which have to be updated",
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "plaid_accounts_bool_exp",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "plaid_accounts_mutation_response",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "update_plaid_accounts_by_pk",
-            "description": "update single row of the table: \"plaid_accounts\"",
-            "args": [
-              {
-                "name": "_set",
-                "description": "sets the columns of the filtered rows to the given values",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "plaid_accounts_set_input",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "pk_columns",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "plaid_accounts_pk_columns_input",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "plaid_accounts",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "update_plaid_accounts_many",
+            "name": "update_plaidAccounts_many",
             "description": "update multiples rows of table: \"plaid_accounts\"",
             "args": [
               {
@@ -35576,7 +35576,7 @@
                       "name": null,
                       "ofType": {
                         "kind": "INPUT_OBJECT",
-                        "name": "plaid_accounts_updates",
+                        "name": "plaidAccounts_updates",
                         "ofType": null
                       }
                     }
@@ -35592,7 +35592,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "plaid_accounts_mutation_response",
+                "name": "plaidAccounts_mutation_response",
                 "ofType": null
               }
             },
@@ -41121,7 +41121,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "plaid_accounts",
+        "name": "plaidAccounts",
         "description": "columns and relationships of \"plaid_accounts\"",
         "fields": [
           {
@@ -41434,7 +41434,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "plaid_accounts_aggregate",
+        "name": "plaidAccounts_aggregate",
         "description": "aggregated selection of \"plaid_accounts\"",
         "fields": [
           {
@@ -41443,7 +41443,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "plaid_accounts_aggregate_fields",
+              "name": "plaidAccounts_aggregate_fields",
               "ofType": null
             },
             "isDeprecated": false,
@@ -41464,7 +41464,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "plaid_accounts",
+                    "name": "plaidAccounts",
                     "ofType": null
                   }
                 }
@@ -41481,7 +41481,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "plaid_accounts_aggregate_fields",
+        "name": "plaidAccounts_aggregate_fields",
         "description": "aggregate fields of \"plaid_accounts\"",
         "fields": [
           {
@@ -41499,7 +41499,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "ENUM",
-                      "name": "plaid_accounts_select_column",
+                      "name": "plaidAccounts_select_column",
                       "ofType": null
                     }
                   }
@@ -41539,7 +41539,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "plaid_accounts_max_fields",
+              "name": "plaidAccounts_max_fields",
               "ofType": null
             },
             "isDeprecated": false,
@@ -41551,7 +41551,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "plaid_accounts_min_fields",
+              "name": "plaidAccounts_min_fields",
               "ofType": null
             },
             "isDeprecated": false,
@@ -41565,7 +41565,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "plaid_accounts_aggregate_order_by",
+        "name": "plaidAccounts_aggregate_order_by",
         "description": "order by aggregate values of table \"plaid_accounts\"",
         "fields": null,
         "inputFields": [
@@ -41586,7 +41586,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "plaid_accounts_max_order_by",
+              "name": "plaidAccounts_max_order_by",
               "ofType": null
             },
             "defaultValue": null,
@@ -41598,7 +41598,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "plaid_accounts_min_order_by",
+              "name": "plaidAccounts_min_order_by",
               "ofType": null
             },
             "defaultValue": null,
@@ -41612,7 +41612,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "plaid_accounts_arr_rel_insert_input",
+        "name": "plaidAccounts_arr_rel_insert_input",
         "description": "input type for inserting array relation for remote table \"plaid_accounts\"",
         "fields": null,
         "inputFields": [
@@ -41630,7 +41630,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "INPUT_OBJECT",
-                    "name": "plaid_accounts_insert_input",
+                    "name": "plaidAccounts_insert_input",
                     "ofType": null
                   }
                 }
@@ -41645,7 +41645,7 @@
             "description": "upsert condition",
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "plaid_accounts_on_conflict",
+              "name": "plaidAccounts_on_conflict",
               "ofType": null
             },
             "defaultValue": null,
@@ -41659,7 +41659,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "plaid_accounts_bool_exp",
+        "name": "plaidAccounts_bool_exp",
         "description": "Boolean expression to filter rows from the table \"plaid_accounts\". All fields are combined with a logical 'AND'.",
         "fields": null,
         "inputFields": [
@@ -41674,7 +41674,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "INPUT_OBJECT",
-                  "name": "plaid_accounts_bool_exp",
+                  "name": "plaidAccounts_bool_exp",
                   "ofType": null
                 }
               }
@@ -41688,7 +41688,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "plaid_accounts_bool_exp",
+              "name": "plaidAccounts_bool_exp",
               "ofType": null
             },
             "defaultValue": null,
@@ -41706,7 +41706,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "INPUT_OBJECT",
-                  "name": "plaid_accounts_bool_exp",
+                  "name": "plaidAccounts_bool_exp",
                   "ofType": null
                 }
               }
@@ -41818,7 +41818,7 @@
       },
       {
         "kind": "ENUM",
-        "name": "plaid_accounts_constraint",
+        "name": "plaidAccounts_constraint",
         "description": "unique or primary key constraints on table \"plaid_accounts\"",
         "fields": null,
         "inputFields": null,
@@ -41835,7 +41835,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "plaid_accounts_insert_input",
+        "name": "plaidAccounts_insert_input",
         "description": "input type for inserting data into table \"plaid_accounts\"",
         "fields": null,
         "inputFields": [
@@ -41942,7 +41942,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "plaid_accounts_max_fields",
+        "name": "plaidAccounts_max_fields",
         "description": "aggregate max on columns",
         "fields": [
           {
@@ -42013,7 +42013,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "plaid_accounts_max_order_by",
+        "name": "plaidAccounts_max_order_by",
         "description": "order by max() on columns of table \"plaid_accounts\"",
         "fields": null,
         "inputFields": [
@@ -42084,7 +42084,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "plaid_accounts_min_fields",
+        "name": "plaidAccounts_min_fields",
         "description": "aggregate min on columns",
         "fields": [
           {
@@ -42155,7 +42155,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "plaid_accounts_min_order_by",
+        "name": "plaidAccounts_min_order_by",
         "description": "order by min() on columns of table \"plaid_accounts\"",
         "fields": null,
         "inputFields": [
@@ -42226,7 +42226,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "plaid_accounts_mutation_response",
+        "name": "plaidAccounts_mutation_response",
         "description": "response of any mutation on the table \"plaid_accounts\"",
         "fields": [
           {
@@ -42260,7 +42260,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "plaid_accounts",
+                    "name": "plaidAccounts",
                     "ofType": null
                   }
                 }
@@ -42277,7 +42277,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "plaid_accounts_obj_rel_insert_input",
+        "name": "plaidAccounts_obj_rel_insert_input",
         "description": "input type for inserting object relation for remote table \"plaid_accounts\"",
         "fields": null,
         "inputFields": [
@@ -42289,7 +42289,7 @@
               "name": null,
               "ofType": {
                 "kind": "INPUT_OBJECT",
-                "name": "plaid_accounts_insert_input",
+                "name": "plaidAccounts_insert_input",
                 "ofType": null
               }
             },
@@ -42302,7 +42302,7 @@
             "description": "upsert condition",
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "plaid_accounts_on_conflict",
+              "name": "plaidAccounts_on_conflict",
               "ofType": null
             },
             "defaultValue": null,
@@ -42316,7 +42316,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "plaid_accounts_on_conflict",
+        "name": "plaidAccounts_on_conflict",
         "description": "on_conflict condition type for table \"plaid_accounts\"",
         "fields": null,
         "inputFields": [
@@ -42328,7 +42328,7 @@
               "name": null,
               "ofType": {
                 "kind": "ENUM",
-                "name": "plaid_accounts_constraint",
+                "name": "plaidAccounts_constraint",
                 "ofType": null
               }
             },
@@ -42350,7 +42350,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "ENUM",
-                    "name": "plaid_accounts_update_column",
+                    "name": "plaidAccounts_update_column",
                     "ofType": null
                   }
                 }
@@ -42365,7 +42365,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "plaid_accounts_bool_exp",
+              "name": "plaidAccounts_bool_exp",
               "ofType": null
             },
             "defaultValue": null,
@@ -42379,7 +42379,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "plaid_accounts_order_by",
+        "name": "plaidAccounts_order_by",
         "description": "Ordering options when selecting data from \"plaid_accounts\".",
         "fields": null,
         "inputFields": [
@@ -42486,7 +42486,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "plaid_accounts_pk_columns_input",
+        "name": "plaidAccounts_pk_columns_input",
         "description": "primary key columns input for table: plaid_accounts",
         "fields": null,
         "inputFields": [
@@ -42513,7 +42513,7 @@
       },
       {
         "kind": "ENUM",
-        "name": "plaid_accounts_select_column",
+        "name": "plaidAccounts_select_column",
         "description": "select columns of table \"plaid_accounts\"",
         "fields": null,
         "inputFields": null,
@@ -42560,7 +42560,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "plaid_accounts_set_input",
+        "name": "plaidAccounts_set_input",
         "description": "input type for updating data in table \"plaid_accounts\"",
         "fields": null,
         "inputFields": [
@@ -42643,8 +42643,8 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "plaid_accounts_stream_cursor_input",
-        "description": "Streaming cursor of the table \"plaid_accounts\"",
+        "name": "plaidAccounts_stream_cursor_input",
+        "description": "Streaming cursor of the table \"plaidAccounts\"",
         "fields": null,
         "inputFields": [
           {
@@ -42655,7 +42655,7 @@
               "name": null,
               "ofType": {
                 "kind": "INPUT_OBJECT",
-                "name": "plaid_accounts_stream_cursor_value_input",
+                "name": "plaidAccounts_stream_cursor_value_input",
                 "ofType": null
               }
             },
@@ -42682,7 +42682,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "plaid_accounts_stream_cursor_value_input",
+        "name": "plaidAccounts_stream_cursor_value_input",
         "description": "Initial value of the column from where the streaming should start",
         "fields": null,
         "inputFields": [
@@ -42765,7 +42765,7 @@
       },
       {
         "kind": "ENUM",
-        "name": "plaid_accounts_update_column",
+        "name": "plaidAccounts_update_column",
         "description": "update columns of table \"plaid_accounts\"",
         "fields": null,
         "inputFields": null,
@@ -42812,7 +42812,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "plaid_accounts_updates",
+        "name": "plaidAccounts_updates",
         "description": null,
         "fields": null,
         "inputFields": [
@@ -42821,7 +42821,7 @@
             "description": "sets the columns of the filtered rows to the given values",
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "plaid_accounts_set_input",
+              "name": "plaidAccounts_set_input",
               "ofType": null
             },
             "defaultValue": null,
@@ -42836,7 +42836,7 @@
               "name": null,
               "ofType": {
                 "kind": "INPUT_OBJECT",
-                "name": "plaid_accounts_bool_exp",
+                "name": "plaidAccounts_bool_exp",
                 "ofType": null
               }
             },
@@ -45826,7 +45826,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "ENUM",
-                      "name": "plaid_accounts_select_column",
+                      "name": "plaidAccounts_select_column",
                       "ofType": null
                     }
                   }
@@ -45870,7 +45870,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "plaid_accounts_order_by",
+                      "name": "plaidAccounts_order_by",
                       "ofType": null
                     }
                   }
@@ -45884,7 +45884,7 @@
                 "description": "filter the rows returned",
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "plaid_accounts_bool_exp",
+                  "name": "plaidAccounts_bool_exp",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -45903,7 +45903,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "plaid_accounts",
+                    "name": "plaidAccounts",
                     "ofType": null
                   }
                 }
@@ -45927,7 +45927,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "ENUM",
-                      "name": "plaid_accounts_select_column",
+                      "name": "plaidAccounts_select_column",
                       "ofType": null
                     }
                   }
@@ -45971,7 +45971,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "plaid_accounts_order_by",
+                      "name": "plaidAccounts_order_by",
                       "ofType": null
                     }
                   }
@@ -45985,7 +45985,7 @@
                 "description": "filter the rows returned",
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "plaid_accounts_bool_exp",
+                  "name": "plaidAccounts_bool_exp",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -45998,7 +45998,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "plaid_accounts_aggregate",
+                "name": "plaidAccounts_aggregate",
                 "ofType": null
               }
             },
@@ -46056,7 +46056,7 @@
             "deprecationReason": null
           },
           {
-            "name": "consent_expires_at",
+            "name": "consentExpiresAt",
             "description": null,
             "args": [],
             "type": {
@@ -46984,7 +46984,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "plaid_accounts_bool_exp",
+              "name": "plaidAccounts_bool_exp",
               "ofType": null
             },
             "defaultValue": null,
@@ -47016,7 +47016,7 @@
             "deprecationReason": null
           },
           {
-            "name": "consent_expires_at",
+            "name": "consentExpiresAt",
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
@@ -47373,7 +47373,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "plaid_accounts_arr_rel_insert_input",
+              "name": "plaidAccounts_arr_rel_insert_input",
               "ofType": null
             },
             "defaultValue": null,
@@ -47405,7 +47405,7 @@
             "deprecationReason": null
           },
           {
-            "name": "consent_expires_at",
+            "name": "consentExpiresAt",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -47619,7 +47619,7 @@
             "deprecationReason": null
           },
           {
-            "name": "consent_expires_at",
+            "name": "consentExpiresAt",
             "description": null,
             "args": [],
             "type": {
@@ -47763,7 +47763,7 @@
             "deprecationReason": null
           },
           {
-            "name": "consent_expires_at",
+            "name": "consentExpiresAt",
             "description": null,
             "type": {
               "kind": "ENUM",
@@ -47905,7 +47905,7 @@
             "deprecationReason": null
           },
           {
-            "name": "consent_expires_at",
+            "name": "consentExpiresAt",
             "description": null,
             "args": [],
             "type": {
@@ -48049,7 +48049,7 @@
             "deprecationReason": null
           },
           {
-            "name": "consent_expires_at",
+            "name": "consentExpiresAt",
             "description": null,
             "type": {
               "kind": "ENUM",
@@ -48349,7 +48349,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "plaid_accounts_aggregate_order_by",
+              "name": "plaidAccounts_aggregate_order_by",
               "ofType": null
             },
             "defaultValue": null,
@@ -48381,7 +48381,7 @@
             "deprecationReason": null
           },
           {
-            "name": "consent_expires_at",
+            "name": "consentExpiresAt",
             "description": null,
             "type": {
               "kind": "ENUM",
@@ -48666,7 +48666,7 @@
             "deprecationReason": null
           },
           {
-            "name": "consent_expires_at",
+            "name": "consentExpiresAt",
             "description": "column name",
             "isDeprecated": false,
             "deprecationReason": null
@@ -48783,7 +48783,7 @@
             "deprecationReason": null
           },
           {
-            "name": "consent_expires_at",
+            "name": "consentExpiresAt",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -49013,7 +49013,7 @@
             "deprecationReason": null
           },
           {
-            "name": "consent_expires_at",
+            "name": "consentExpiresAt",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -49188,7 +49188,7 @@
             "deprecationReason": null
           },
           {
-            "name": "consent_expires_at",
+            "name": "consentExpiresAt",
             "description": "column name",
             "isDeprecated": false,
             "deprecationReason": null
@@ -53652,6 +53652,229 @@
             "deprecationReason": null
           },
           {
+            "name": "plaidAccount",
+            "description": "fetch data from the table: \"plaid_accounts\" using primary key columns",
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "plaidAccounts",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "plaidAccounts",
+            "description": "fetch data from the table: \"plaid_accounts\"",
+            "args": [
+              {
+                "name": "distinct_on",
+                "description": "distinct select on columns",
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "plaidAccounts_select_column",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "limit",
+                "description": "limit the number of rows returned",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "offset",
+                "description": "skip the first n rows. Use only with order_by",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "order_by",
+                "description": "sort the rows by one or more columns",
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "plaidAccounts_order_by",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "where",
+                "description": "filter the rows returned",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "plaidAccounts_bool_exp",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "plaidAccounts",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "plaidAccounts_aggregate",
+            "description": "fetch aggregated fields from the table: \"plaid_accounts\"",
+            "args": [
+              {
+                "name": "distinct_on",
+                "description": "distinct select on columns",
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "plaidAccounts_select_column",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "limit",
+                "description": "limit the number of rows returned",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "offset",
+                "description": "skip the first n rows. Use only with order_by",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "order_by",
+                "description": "sort the rows by one or more columns",
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "plaidAccounts_order_by",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "where",
+                "description": "filter the rows returned",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "plaidAccounts_bool_exp",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "plaidAccounts_aggregate",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "plaidItem",
             "description": "fetch data from the table: \"plaid_items\" using primary key columns",
             "args": [
@@ -53681,8 +53904,8 @@
             "deprecationReason": null
           },
           {
-            "name": "plaid_accounts",
-            "description": "fetch data from the table: \"plaid_accounts\"",
+            "name": "plaidItems",
+            "description": "fetch data from the table: \"plaid_items\"",
             "args": [
               {
                 "name": "distinct_on",
@@ -53695,7 +53918,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "ENUM",
-                      "name": "plaid_accounts_select_column",
+                      "name": "plaid_items_select_column",
                       "ofType": null
                     }
                   }
@@ -53739,7 +53962,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "plaid_accounts_order_by",
+                      "name": "plaid_items_order_by",
                       "ofType": null
                     }
                   }
@@ -53753,7 +53976,7 @@
                 "description": "filter the rows returned",
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "plaid_accounts_bool_exp",
+                  "name": "plaid_items_bool_exp",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -53772,133 +53995,11 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "plaid_accounts",
+                    "name": "plaid_items",
                     "ofType": null
                   }
                 }
               }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "plaid_accounts_aggregate",
-            "description": "fetch aggregated fields from the table: \"plaid_accounts\"",
-            "args": [
-              {
-                "name": "distinct_on",
-                "description": "distinct select on columns",
-                "type": {
-                  "kind": "LIST",
-                  "name": null,
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "ENUM",
-                      "name": "plaid_accounts_select_column",
-                      "ofType": null
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "limit",
-                "description": "limit the number of rows returned",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "offset",
-                "description": "skip the first n rows. Use only with order_by",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "order_by",
-                "description": "sort the rows by one or more columns",
-                "type": {
-                  "kind": "LIST",
-                  "name": null,
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "plaid_accounts_order_by",
-                      "ofType": null
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "where",
-                "description": "filter the rows returned",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "plaid_accounts_bool_exp",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "plaid_accounts_aggregate",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "plaid_accounts_by_pk",
-            "description": "fetch data from the table: \"plaid_accounts\" using primary key columns",
-            "args": [
-              {
-                "name": "id",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "plaid_accounts",
-              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -54361,107 +54462,6 @@
               "kind": "OBJECT",
               "name": "plaid_item_sync_logs",
               "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "plaid_items",
-            "description": "An array relationship",
-            "args": [
-              {
-                "name": "distinct_on",
-                "description": "distinct select on columns",
-                "type": {
-                  "kind": "LIST",
-                  "name": null,
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "ENUM",
-                      "name": "plaid_items_select_column",
-                      "ofType": null
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "limit",
-                "description": "limit the number of rows returned",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "offset",
-                "description": "skip the first n rows. Use only with order_by",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "order_by",
-                "description": "sort the rows by one or more columns",
-                "type": {
-                  "kind": "LIST",
-                  "name": null,
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "plaid_items_order_by",
-                      "ofType": null
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "where",
-                "description": "filter the rows returned",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "plaid_items_bool_exp",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "plaid_items",
-                    "ofType": null
-                  }
-                }
-              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -64447,230 +64447,7 @@
             "deprecationReason": null
           },
           {
-            "name": "plaidItem",
-            "description": "fetch data from the table: \"plaid_items\" using primary key columns",
-            "args": [
-              {
-                "name": "id",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "plaid_items",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "plaid_accounts",
-            "description": "fetch data from the table: \"plaid_accounts\"",
-            "args": [
-              {
-                "name": "distinct_on",
-                "description": "distinct select on columns",
-                "type": {
-                  "kind": "LIST",
-                  "name": null,
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "ENUM",
-                      "name": "plaid_accounts_select_column",
-                      "ofType": null
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "limit",
-                "description": "limit the number of rows returned",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "offset",
-                "description": "skip the first n rows. Use only with order_by",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "order_by",
-                "description": "sort the rows by one or more columns",
-                "type": {
-                  "kind": "LIST",
-                  "name": null,
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "plaid_accounts_order_by",
-                      "ofType": null
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "where",
-                "description": "filter the rows returned",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "plaid_accounts_bool_exp",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "plaid_accounts",
-                    "ofType": null
-                  }
-                }
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "plaid_accounts_aggregate",
-            "description": "fetch aggregated fields from the table: \"plaid_accounts\"",
-            "args": [
-              {
-                "name": "distinct_on",
-                "description": "distinct select on columns",
-                "type": {
-                  "kind": "LIST",
-                  "name": null,
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "ENUM",
-                      "name": "plaid_accounts_select_column",
-                      "ofType": null
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "limit",
-                "description": "limit the number of rows returned",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "offset",
-                "description": "skip the first n rows. Use only with order_by",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "order_by",
-                "description": "sort the rows by one or more columns",
-                "type": {
-                  "kind": "LIST",
-                  "name": null,
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "plaid_accounts_order_by",
-                      "ofType": null
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "where",
-                "description": "filter the rows returned",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "plaid_accounts_bool_exp",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "plaid_accounts_aggregate",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "plaid_accounts_by_pk",
+            "name": "plaidAccount",
             "description": "fetch data from the table: \"plaid_accounts\" using primary key columns",
             "args": [
               {
@@ -64692,14 +64469,208 @@
             ],
             "type": {
               "kind": "OBJECT",
-              "name": "plaid_accounts",
+              "name": "plaidAccounts",
               "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "plaid_accounts_stream",
+            "name": "plaidAccounts",
+            "description": "fetch data from the table: \"plaid_accounts\"",
+            "args": [
+              {
+                "name": "distinct_on",
+                "description": "distinct select on columns",
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "plaidAccounts_select_column",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "limit",
+                "description": "limit the number of rows returned",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "offset",
+                "description": "skip the first n rows. Use only with order_by",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "order_by",
+                "description": "sort the rows by one or more columns",
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "plaidAccounts_order_by",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "where",
+                "description": "filter the rows returned",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "plaidAccounts_bool_exp",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "plaidAccounts",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "plaidAccounts_aggregate",
+            "description": "fetch aggregated fields from the table: \"plaid_accounts\"",
+            "args": [
+              {
+                "name": "distinct_on",
+                "description": "distinct select on columns",
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "plaidAccounts_select_column",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "limit",
+                "description": "limit the number of rows returned",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "offset",
+                "description": "skip the first n rows. Use only with order_by",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "order_by",
+                "description": "sort the rows by one or more columns",
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "plaidAccounts_order_by",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "where",
+                "description": "filter the rows returned",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "plaidAccounts_bool_exp",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "plaidAccounts_aggregate",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "plaidAccounts_stream",
             "description": "fetch data from the table in a streaming manner : \"plaid_accounts\"",
             "args": [
               {
@@ -64729,7 +64700,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "plaid_accounts_stream_cursor_input",
+                      "name": "plaidAccounts_stream_cursor_input",
                       "ofType": null
                     }
                   }
@@ -64743,7 +64714,7 @@
                 "description": "filter the rows returned",
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "plaid_accounts_bool_exp",
+                  "name": "plaidAccounts_bool_exp",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -64762,7 +64733,137 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "plaid_accounts",
+                    "name": "plaidAccounts",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "plaidItem",
+            "description": "fetch data from the table: \"plaid_items\" using primary key columns",
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "plaid_items",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "plaidItems",
+            "description": "fetch data from the table: \"plaid_items\"",
+            "args": [
+              {
+                "name": "distinct_on",
+                "description": "distinct select on columns",
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "plaid_items_select_column",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "limit",
+                "description": "limit the number of rows returned",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "offset",
+                "description": "skip the first n rows. Use only with order_by",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "order_by",
+                "description": "sort the rows by one or more columns",
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "plaid_items_order_by",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "where",
+                "description": "filter the rows returned",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "plaid_items_bool_exp",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "plaid_items",
                     "ofType": null
                   }
                 }
@@ -65371,107 +65472,6 @@
                   "ofType": {
                     "kind": "OBJECT",
                     "name": "plaid_item_sync_logs",
-                    "ofType": null
-                  }
-                }
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "plaid_items",
-            "description": "An array relationship",
-            "args": [
-              {
-                "name": "distinct_on",
-                "description": "distinct select on columns",
-                "type": {
-                  "kind": "LIST",
-                  "name": null,
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "ENUM",
-                      "name": "plaid_items_select_column",
-                      "ofType": null
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "limit",
-                "description": "limit the number of rows returned",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "offset",
-                "description": "skip the first n rows. Use only with order_by",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "order_by",
-                "description": "sort the rows by one or more columns",
-                "type": {
-                  "kind": "LIST",
-                  "name": null,
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "plaid_items_order_by",
-                      "ofType": null
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "where",
-                "description": "filter the rows returned",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "plaid_items_bool_exp",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "plaid_items",
                     "ofType": null
                   }
                 }

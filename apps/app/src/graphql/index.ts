@@ -2402,7 +2402,7 @@ export enum Cursor_Ordering {
 export type Destination_Accounts = {
   __typename?: 'destination_accounts';
   /** An object relationship */
-  account: Plaid_Accounts;
+  account: PlaidAccounts;
   account_id: Scalars['String'];
   /** An object relationship */
   destination: Destinations;
@@ -2450,7 +2450,7 @@ export type Destination_Accounts_Bool_Exp = {
   _and?: InputMaybe<Array<Destination_Accounts_Bool_Exp>>;
   _not?: InputMaybe<Destination_Accounts_Bool_Exp>;
   _or?: InputMaybe<Array<Destination_Accounts_Bool_Exp>>;
-  account?: InputMaybe<Plaid_Accounts_Bool_Exp>;
+  account?: InputMaybe<PlaidAccounts_Bool_Exp>;
   account_id?: InputMaybe<String_Comparison_Exp>;
   destination?: InputMaybe<Destinations_Bool_Exp>;
   destination_id?: InputMaybe<Uuid_Comparison_Exp>;
@@ -2464,7 +2464,7 @@ export enum Destination_Accounts_Constraint {
 
 /** input type for inserting data into table "destination_accounts" */
 export type Destination_Accounts_Insert_Input = {
-  account?: InputMaybe<Plaid_Accounts_Obj_Rel_Insert_Input>;
+  account?: InputMaybe<PlaidAccounts_Obj_Rel_Insert_Input>;
   account_id?: InputMaybe<Scalars['String']>;
   destination?: InputMaybe<Destinations_Obj_Rel_Insert_Input>;
   destination_id?: InputMaybe<Scalars['uuid']>;
@@ -2514,7 +2514,7 @@ export type Destination_Accounts_On_Conflict = {
 
 /** Ordering options when selecting data from "destination_accounts". */
 export type Destination_Accounts_Order_By = {
-  account?: InputMaybe<Plaid_Accounts_Order_By>;
+  account?: InputMaybe<PlaidAccounts_Order_By>;
   account_id?: InputMaybe<Order_By>;
   destination?: InputMaybe<Destinations_Order_By>;
   destination_id?: InputMaybe<Order_By>;
@@ -4106,6 +4106,10 @@ export type Mutation_Root = {
   deleteFile?: Maybe<Files>;
   /** delete data from the table: "storage.files" */
   deleteFiles?: Maybe<Files_Mutation_Response>;
+  /** delete single row from the table: "plaid_accounts" */
+  deletePlaidAccount?: Maybe<PlaidAccounts>;
+  /** delete data from the table: "plaid_accounts" */
+  deletePlaidAccounts?: Maybe<PlaidAccounts_Mutation_Response>;
   /** delete single row from the table: "auth.users" */
   deleteUser?: Maybe<Users>;
   /** delete single row from the table: "user_profiles" */
@@ -4154,10 +4158,6 @@ export type Mutation_Root = {
   delete_oauth_codes?: Maybe<Oauth_Codes_Mutation_Response>;
   /** delete single row from the table: "oauth_codes" */
   delete_oauth_codes_by_pk?: Maybe<Oauth_Codes>;
-  /** delete data from the table: "plaid_accounts" */
-  delete_plaid_accounts?: Maybe<Plaid_Accounts_Mutation_Response>;
-  /** delete single row from the table: "plaid_accounts" */
-  delete_plaid_accounts_by_pk?: Maybe<Plaid_Accounts>;
   /** delete data from the table: "plaid_institutions" */
   delete_plaid_institutions?: Maybe<Plaid_Institutions_Mutation_Response>;
   /** delete single row from the table: "plaid_institutions" */
@@ -4222,6 +4222,12 @@ export type Mutation_Root = {
   insertFile?: Maybe<Files>;
   /** insert data into the table: "storage.files" */
   insertFiles?: Maybe<Files_Mutation_Response>;
+  /** insert a single row into the table: "plaid_accounts" */
+  insertPlaidAccount?: Maybe<PlaidAccounts>;
+  /** insert data into the table: "plaid_accounts" */
+  insertPlaidAccounts?: Maybe<PlaidAccounts_Mutation_Response>;
+  /** insert a single row into the table: "plaid_items" */
+  insertPlaidItem?: Maybe<Plaid_Items>;
   /** insert a single row into the table: "auth.users" */
   insertUser?: Maybe<Users>;
   /** insert a single row into the table: "user_profiles" */
@@ -4270,10 +4276,6 @@ export type Mutation_Root = {
   insert_oauth_codes?: Maybe<Oauth_Codes_Mutation_Response>;
   /** insert a single row into the table: "oauth_codes" */
   insert_oauth_codes_one?: Maybe<Oauth_Codes>;
-  /** insert data into the table: "plaid_accounts" */
-  insert_plaid_accounts?: Maybe<Plaid_Accounts_Mutation_Response>;
-  /** insert a single row into the table: "plaid_accounts" */
-  insert_plaid_accounts_one?: Maybe<Plaid_Accounts>;
   /** insert data into the table: "plaid_institutions" */
   insert_plaid_institutions?: Maybe<Plaid_Institutions_Mutation_Response>;
   /** insert a single row into the table: "plaid_institutions" */
@@ -4284,8 +4286,6 @@ export type Mutation_Root = {
   insert_plaid_item_sync_logs_one?: Maybe<Plaid_Item_Sync_Logs>;
   /** insert data into the table: "plaid_items" */
   insert_plaid_items?: Maybe<Plaid_Items_Mutation_Response>;
-  /** insert a single row into the table: "plaid_items" */
-  insert_plaid_items_one?: Maybe<Plaid_Items>;
   /** insert data into the table: "removed_plaid_transactions" */
   insert_removed_plaid_transactions?: Maybe<Removed_Plaid_Transactions_Mutation_Response>;
   /** insert a single row into the table: "removed_plaid_transactions" */
@@ -4340,6 +4340,10 @@ export type Mutation_Root = {
   updateFile?: Maybe<Files>;
   /** update data of the table: "storage.files" */
   updateFiles?: Maybe<Files_Mutation_Response>;
+  /** update single row of the table: "plaid_accounts" */
+  updatePlaidAccount?: Maybe<PlaidAccounts>;
+  /** update data of the table: "plaid_accounts" */
+  updatePlaidAccounts?: Maybe<PlaidAccounts_Mutation_Response>;
   /** update single row of the table: "auth.users" */
   updateUser?: Maybe<Users>;
   /** update single row of the table: "user_profiles" */
@@ -4426,12 +4430,8 @@ export type Mutation_Root = {
   update_oauth_codes_by_pk?: Maybe<Oauth_Codes>;
   /** update multiples rows of table: "oauth_codes" */
   update_oauth_codes_many?: Maybe<Array<Maybe<Oauth_Codes_Mutation_Response>>>;
-  /** update data of the table: "plaid_accounts" */
-  update_plaid_accounts?: Maybe<Plaid_Accounts_Mutation_Response>;
-  /** update single row of the table: "plaid_accounts" */
-  update_plaid_accounts_by_pk?: Maybe<Plaid_Accounts>;
   /** update multiples rows of table: "plaid_accounts" */
-  update_plaid_accounts_many?: Maybe<Array<Maybe<Plaid_Accounts_Mutation_Response>>>;
+  update_plaidAccounts_many?: Maybe<Array<Maybe<PlaidAccounts_Mutation_Response>>>;
   /** update data of the table: "plaid_institutions" */
   update_plaid_institutions?: Maybe<Plaid_Institutions_Mutation_Response>;
   /** update single row of the table: "plaid_institutions" */
@@ -4590,6 +4590,18 @@ export type Mutation_RootDeleteFilesArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDeletePlaidAccountArgs = {
+  id: Scalars['String'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDeletePlaidAccountsArgs = {
+  where: PlaidAccounts_Bool_Exp;
+};
+
+
+/** mutation root */
 export type Mutation_RootDeleteUserArgs = {
   id: Scalars['uuid'];
 };
@@ -4733,18 +4745,6 @@ export type Mutation_RootDelete_Oauth_CodesArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Oauth_Codes_By_PkArgs = {
   code: Scalars['uuid'];
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Plaid_AccountsArgs = {
-  where: Plaid_Accounts_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Plaid_Accounts_By_PkArgs = {
-  id: Scalars['String'];
 };
 
 
@@ -4960,6 +4960,27 @@ export type Mutation_RootInsertFilesArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsertPlaidAccountArgs = {
+  object: PlaidAccounts_Insert_Input;
+  on_conflict?: InputMaybe<PlaidAccounts_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsertPlaidAccountsArgs = {
+  objects: Array<PlaidAccounts_Insert_Input>;
+  on_conflict?: InputMaybe<PlaidAccounts_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsertPlaidItemArgs = {
+  object: Plaid_Items_Insert_Input;
+  on_conflict?: InputMaybe<Plaid_Items_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsertUserArgs = {
   object: Users_Insert_Input;
   on_conflict?: InputMaybe<Users_On_Conflict>;
@@ -5128,20 +5149,6 @@ export type Mutation_RootInsert_Oauth_Codes_OneArgs = {
 
 
 /** mutation root */
-export type Mutation_RootInsert_Plaid_AccountsArgs = {
-  objects: Array<Plaid_Accounts_Insert_Input>;
-  on_conflict?: InputMaybe<Plaid_Accounts_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Plaid_Accounts_OneArgs = {
-  object: Plaid_Accounts_Insert_Input;
-  on_conflict?: InputMaybe<Plaid_Accounts_On_Conflict>;
-};
-
-
-/** mutation root */
 export type Mutation_RootInsert_Plaid_InstitutionsArgs = {
   objects: Array<Plaid_Institutions_Insert_Input>;
   on_conflict?: InputMaybe<Plaid_Institutions_On_Conflict>;
@@ -5172,13 +5179,6 @@ export type Mutation_RootInsert_Plaid_Item_Sync_Logs_OneArgs = {
 /** mutation root */
 export type Mutation_RootInsert_Plaid_ItemsArgs = {
   objects: Array<Plaid_Items_Insert_Input>;
-  on_conflict?: InputMaybe<Plaid_Items_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Plaid_Items_OneArgs = {
-  object: Plaid_Items_Insert_Input;
   on_conflict?: InputMaybe<Plaid_Items_On_Conflict>;
 };
 
@@ -5384,6 +5384,20 @@ export type Mutation_RootUpdateFilesArgs = {
   _inc?: InputMaybe<Files_Inc_Input>;
   _set?: InputMaybe<Files_Set_Input>;
   where: Files_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdatePlaidAccountArgs = {
+  _set?: InputMaybe<PlaidAccounts_Set_Input>;
+  pk_columns: PlaidAccounts_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdatePlaidAccountsArgs = {
+  _set?: InputMaybe<PlaidAccounts_Set_Input>;
+  where: PlaidAccounts_Bool_Exp;
 };
 
 
@@ -5710,22 +5724,8 @@ export type Mutation_RootUpdate_Oauth_Codes_ManyArgs = {
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Plaid_AccountsArgs = {
-  _set?: InputMaybe<Plaid_Accounts_Set_Input>;
-  where: Plaid_Accounts_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Plaid_Accounts_By_PkArgs = {
-  _set?: InputMaybe<Plaid_Accounts_Set_Input>;
-  pk_columns: Plaid_Accounts_Pk_Columns_Input;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Plaid_Accounts_ManyArgs = {
-  updates: Array<Plaid_Accounts_Updates>;
+export type Mutation_RootUpdate_PlaidAccounts_ManyArgs = {
+  updates: Array<PlaidAccounts_Updates>;
 };
 
 
@@ -6562,8 +6562,8 @@ export enum Order_By {
 }
 
 /** columns and relationships of "plaid_accounts" */
-export type Plaid_Accounts = {
-  __typename?: 'plaid_accounts';
+export type PlaidAccounts = {
+  __typename?: 'plaidAccounts';
   created_at: Scalars['timestamptz'];
   /** An array relationship */
   destination_connections: Array<Destination_Accounts>;
@@ -6580,7 +6580,7 @@ export type Plaid_Accounts = {
 
 
 /** columns and relationships of "plaid_accounts" */
-export type Plaid_AccountsDestination_ConnectionsArgs = {
+export type PlaidAccountsDestination_ConnectionsArgs = {
   distinct_on?: InputMaybe<Array<Destination_Accounts_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
@@ -6590,7 +6590,7 @@ export type Plaid_AccountsDestination_ConnectionsArgs = {
 
 
 /** columns and relationships of "plaid_accounts" */
-export type Plaid_AccountsDestination_Connections_AggregateArgs = {
+export type PlaidAccountsDestination_Connections_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Destination_Accounts_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
@@ -6599,46 +6599,46 @@ export type Plaid_AccountsDestination_Connections_AggregateArgs = {
 };
 
 /** aggregated selection of "plaid_accounts" */
-export type Plaid_Accounts_Aggregate = {
-  __typename?: 'plaid_accounts_aggregate';
-  aggregate?: Maybe<Plaid_Accounts_Aggregate_Fields>;
-  nodes: Array<Plaid_Accounts>;
+export type PlaidAccounts_Aggregate = {
+  __typename?: 'plaidAccounts_aggregate';
+  aggregate?: Maybe<PlaidAccounts_Aggregate_Fields>;
+  nodes: Array<PlaidAccounts>;
 };
 
 /** aggregate fields of "plaid_accounts" */
-export type Plaid_Accounts_Aggregate_Fields = {
-  __typename?: 'plaid_accounts_aggregate_fields';
+export type PlaidAccounts_Aggregate_Fields = {
+  __typename?: 'plaidAccounts_aggregate_fields';
   count: Scalars['Int'];
-  max?: Maybe<Plaid_Accounts_Max_Fields>;
-  min?: Maybe<Plaid_Accounts_Min_Fields>;
+  max?: Maybe<PlaidAccounts_Max_Fields>;
+  min?: Maybe<PlaidAccounts_Min_Fields>;
 };
 
 
 /** aggregate fields of "plaid_accounts" */
-export type Plaid_Accounts_Aggregate_FieldsCountArgs = {
-  columns?: InputMaybe<Array<Plaid_Accounts_Select_Column>>;
+export type PlaidAccounts_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<PlaidAccounts_Select_Column>>;
   distinct?: InputMaybe<Scalars['Boolean']>;
 };
 
 /** order by aggregate values of table "plaid_accounts" */
-export type Plaid_Accounts_Aggregate_Order_By = {
+export type PlaidAccounts_Aggregate_Order_By = {
   count?: InputMaybe<Order_By>;
-  max?: InputMaybe<Plaid_Accounts_Max_Order_By>;
-  min?: InputMaybe<Plaid_Accounts_Min_Order_By>;
+  max?: InputMaybe<PlaidAccounts_Max_Order_By>;
+  min?: InputMaybe<PlaidAccounts_Min_Order_By>;
 };
 
 /** input type for inserting array relation for remote table "plaid_accounts" */
-export type Plaid_Accounts_Arr_Rel_Insert_Input = {
-  data: Array<Plaid_Accounts_Insert_Input>;
+export type PlaidAccounts_Arr_Rel_Insert_Input = {
+  data: Array<PlaidAccounts_Insert_Input>;
   /** upsert condition */
-  on_conflict?: InputMaybe<Plaid_Accounts_On_Conflict>;
+  on_conflict?: InputMaybe<PlaidAccounts_On_Conflict>;
 };
 
 /** Boolean expression to filter rows from the table "plaid_accounts". All fields are combined with a logical 'AND'. */
-export type Plaid_Accounts_Bool_Exp = {
-  _and?: InputMaybe<Array<Plaid_Accounts_Bool_Exp>>;
-  _not?: InputMaybe<Plaid_Accounts_Bool_Exp>;
-  _or?: InputMaybe<Array<Plaid_Accounts_Bool_Exp>>;
+export type PlaidAccounts_Bool_Exp = {
+  _and?: InputMaybe<Array<PlaidAccounts_Bool_Exp>>;
+  _not?: InputMaybe<PlaidAccounts_Bool_Exp>;
+  _or?: InputMaybe<Array<PlaidAccounts_Bool_Exp>>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   destination_connections?: InputMaybe<Destination_Accounts_Bool_Exp>;
   id?: InputMaybe<String_Comparison_Exp>;
@@ -6650,13 +6650,13 @@ export type Plaid_Accounts_Bool_Exp = {
 };
 
 /** unique or primary key constraints on table "plaid_accounts" */
-export enum Plaid_Accounts_Constraint {
+export enum PlaidAccounts_Constraint {
   /** unique or primary key constraint on columns "id" */
   PlaidAccountsPkey = 'plaid_accounts_pkey'
 }
 
 /** input type for inserting data into table "plaid_accounts" */
-export type Plaid_Accounts_Insert_Input = {
+export type PlaidAccounts_Insert_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']>;
   destination_connections?: InputMaybe<Destination_Accounts_Arr_Rel_Insert_Input>;
   id?: InputMaybe<Scalars['String']>;
@@ -6668,8 +6668,8 @@ export type Plaid_Accounts_Insert_Input = {
 };
 
 /** aggregate max on columns */
-export type Plaid_Accounts_Max_Fields = {
-  __typename?: 'plaid_accounts_max_fields';
+export type PlaidAccounts_Max_Fields = {
+  __typename?: 'plaidAccounts_max_fields';
   created_at?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['String']>;
   mask?: Maybe<Scalars['String']>;
@@ -6678,7 +6678,7 @@ export type Plaid_Accounts_Max_Fields = {
 };
 
 /** order by max() on columns of table "plaid_accounts" */
-export type Plaid_Accounts_Max_Order_By = {
+export type PlaidAccounts_Max_Order_By = {
   created_at?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   mask?: InputMaybe<Order_By>;
@@ -6687,8 +6687,8 @@ export type Plaid_Accounts_Max_Order_By = {
 };
 
 /** aggregate min on columns */
-export type Plaid_Accounts_Min_Fields = {
-  __typename?: 'plaid_accounts_min_fields';
+export type PlaidAccounts_Min_Fields = {
+  __typename?: 'plaidAccounts_min_fields';
   created_at?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['String']>;
   mask?: Maybe<Scalars['String']>;
@@ -6697,7 +6697,7 @@ export type Plaid_Accounts_Min_Fields = {
 };
 
 /** order by min() on columns of table "plaid_accounts" */
-export type Plaid_Accounts_Min_Order_By = {
+export type PlaidAccounts_Min_Order_By = {
   created_at?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   mask?: InputMaybe<Order_By>;
@@ -6706,30 +6706,30 @@ export type Plaid_Accounts_Min_Order_By = {
 };
 
 /** response of any mutation on the table "plaid_accounts" */
-export type Plaid_Accounts_Mutation_Response = {
-  __typename?: 'plaid_accounts_mutation_response';
+export type PlaidAccounts_Mutation_Response = {
+  __typename?: 'plaidAccounts_mutation_response';
   /** number of rows affected by the mutation */
   affected_rows: Scalars['Int'];
   /** data from the rows affected by the mutation */
-  returning: Array<Plaid_Accounts>;
+  returning: Array<PlaidAccounts>;
 };
 
 /** input type for inserting object relation for remote table "plaid_accounts" */
-export type Plaid_Accounts_Obj_Rel_Insert_Input = {
-  data: Plaid_Accounts_Insert_Input;
+export type PlaidAccounts_Obj_Rel_Insert_Input = {
+  data: PlaidAccounts_Insert_Input;
   /** upsert condition */
-  on_conflict?: InputMaybe<Plaid_Accounts_On_Conflict>;
+  on_conflict?: InputMaybe<PlaidAccounts_On_Conflict>;
 };
 
 /** on_conflict condition type for table "plaid_accounts" */
-export type Plaid_Accounts_On_Conflict = {
-  constraint: Plaid_Accounts_Constraint;
-  update_columns?: Array<Plaid_Accounts_Update_Column>;
-  where?: InputMaybe<Plaid_Accounts_Bool_Exp>;
+export type PlaidAccounts_On_Conflict = {
+  constraint: PlaidAccounts_Constraint;
+  update_columns?: Array<PlaidAccounts_Update_Column>;
+  where?: InputMaybe<PlaidAccounts_Bool_Exp>;
 };
 
 /** Ordering options when selecting data from "plaid_accounts". */
-export type Plaid_Accounts_Order_By = {
+export type PlaidAccounts_Order_By = {
   created_at?: InputMaybe<Order_By>;
   destination_connections_aggregate?: InputMaybe<Destination_Accounts_Aggregate_Order_By>;
   id?: InputMaybe<Order_By>;
@@ -6741,12 +6741,12 @@ export type Plaid_Accounts_Order_By = {
 };
 
 /** primary key columns input for table: plaid_accounts */
-export type Plaid_Accounts_Pk_Columns_Input = {
+export type PlaidAccounts_Pk_Columns_Input = {
   id: Scalars['String'];
 };
 
 /** select columns of table "plaid_accounts" */
-export enum Plaid_Accounts_Select_Column {
+export enum PlaidAccounts_Select_Column {
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
@@ -6762,7 +6762,7 @@ export enum Plaid_Accounts_Select_Column {
 }
 
 /** input type for updating data in table "plaid_accounts" */
-export type Plaid_Accounts_Set_Input = {
+export type PlaidAccounts_Set_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']>;
   id?: InputMaybe<Scalars['String']>;
   is_closed?: InputMaybe<Scalars['Boolean']>;
@@ -6771,16 +6771,16 @@ export type Plaid_Accounts_Set_Input = {
   plaid_item_id?: InputMaybe<Scalars['String']>;
 };
 
-/** Streaming cursor of the table "plaid_accounts" */
-export type Plaid_Accounts_Stream_Cursor_Input = {
+/** Streaming cursor of the table "plaidAccounts" */
+export type PlaidAccounts_Stream_Cursor_Input = {
   /** Stream column input with initial value */
-  initial_value: Plaid_Accounts_Stream_Cursor_Value_Input;
+  initial_value: PlaidAccounts_Stream_Cursor_Value_Input;
   /** cursor ordering */
   ordering?: InputMaybe<Cursor_Ordering>;
 };
 
 /** Initial value of the column from where the streaming should start */
-export type Plaid_Accounts_Stream_Cursor_Value_Input = {
+export type PlaidAccounts_Stream_Cursor_Value_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']>;
   id?: InputMaybe<Scalars['String']>;
   is_closed?: InputMaybe<Scalars['Boolean']>;
@@ -6790,7 +6790,7 @@ export type Plaid_Accounts_Stream_Cursor_Value_Input = {
 };
 
 /** update columns of table "plaid_accounts" */
-export enum Plaid_Accounts_Update_Column {
+export enum PlaidAccounts_Update_Column {
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
@@ -6805,10 +6805,10 @@ export enum Plaid_Accounts_Update_Column {
   PlaidItemId = 'plaid_item_id'
 }
 
-export type Plaid_Accounts_Updates = {
+export type PlaidAccounts_Updates = {
   /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Plaid_Accounts_Set_Input>;
-  where: Plaid_Accounts_Bool_Exp;
+  _set?: InputMaybe<PlaidAccounts_Set_Input>;
+  where: PlaidAccounts_Bool_Exp;
 };
 
 /** columns and relationships of "plaid_institutions" */
@@ -7278,12 +7278,12 @@ export type Plaid_Items = {
   __typename?: 'plaid_items';
   accessToken: Scalars['String'];
   /** An array relationship */
-  accounts: Array<Plaid_Accounts>;
+  accounts: Array<PlaidAccounts>;
   /** An aggregate relationship */
-  accounts_aggregate: Plaid_Accounts_Aggregate;
+  accounts_aggregate: PlaidAccounts_Aggregate;
   available_products?: Maybe<Scalars['jsonb']>;
   billed_products?: Maybe<Scalars['jsonb']>;
-  consent_expires_at?: Maybe<Scalars['timestamptz']>;
+  consentExpiresAt?: Maybe<Scalars['timestamptz']>;
   created_at: Scalars['timestamptz'];
   disabled_at?: Maybe<Scalars['timestamptz']>;
   error?: Maybe<Scalars['String']>;
@@ -7312,21 +7312,21 @@ export type Plaid_Items = {
 
 /** columns and relationships of "plaid_items" */
 export type Plaid_ItemsAccountsArgs = {
-  distinct_on?: InputMaybe<Array<Plaid_Accounts_Select_Column>>;
+  distinct_on?: InputMaybe<Array<PlaidAccounts_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Plaid_Accounts_Order_By>>;
-  where?: InputMaybe<Plaid_Accounts_Bool_Exp>;
+  order_by?: InputMaybe<Array<PlaidAccounts_Order_By>>;
+  where?: InputMaybe<PlaidAccounts_Bool_Exp>;
 };
 
 
 /** columns and relationships of "plaid_items" */
 export type Plaid_ItemsAccounts_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Plaid_Accounts_Select_Column>>;
+  distinct_on?: InputMaybe<Array<PlaidAccounts_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Plaid_Accounts_Order_By>>;
-  where?: InputMaybe<Plaid_Accounts_Bool_Exp>;
+  order_by?: InputMaybe<Array<PlaidAccounts_Order_By>>;
+  where?: InputMaybe<PlaidAccounts_Bool_Exp>;
 };
 
 
@@ -7429,10 +7429,10 @@ export type Plaid_Items_Bool_Exp = {
   _not?: InputMaybe<Plaid_Items_Bool_Exp>;
   _or?: InputMaybe<Array<Plaid_Items_Bool_Exp>>;
   accessToken?: InputMaybe<String_Comparison_Exp>;
-  accounts?: InputMaybe<Plaid_Accounts_Bool_Exp>;
+  accounts?: InputMaybe<PlaidAccounts_Bool_Exp>;
   available_products?: InputMaybe<Jsonb_Comparison_Exp>;
   billed_products?: InputMaybe<Jsonb_Comparison_Exp>;
-  consent_expires_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  consentExpiresAt?: InputMaybe<Timestamptz_Comparison_Exp>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   disabled_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   error?: InputMaybe<String_Comparison_Exp>;
@@ -7477,10 +7477,10 @@ export type Plaid_Items_Delete_Key_Input = {
 /** input type for inserting data into table "plaid_items" */
 export type Plaid_Items_Insert_Input = {
   accessToken?: InputMaybe<Scalars['String']>;
-  accounts?: InputMaybe<Plaid_Accounts_Arr_Rel_Insert_Input>;
+  accounts?: InputMaybe<PlaidAccounts_Arr_Rel_Insert_Input>;
   available_products?: InputMaybe<Scalars['jsonb']>;
   billed_products?: InputMaybe<Scalars['jsonb']>;
-  consent_expires_at?: InputMaybe<Scalars['timestamptz']>;
+  consentExpiresAt?: InputMaybe<Scalars['timestamptz']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
   disabled_at?: InputMaybe<Scalars['timestamptz']>;
   error?: InputMaybe<Scalars['String']>;
@@ -7502,7 +7502,7 @@ export type Plaid_Items_Insert_Input = {
 export type Plaid_Items_Max_Fields = {
   __typename?: 'plaid_items_max_fields';
   accessToken?: Maybe<Scalars['String']>;
-  consent_expires_at?: Maybe<Scalars['timestamptz']>;
+  consentExpiresAt?: Maybe<Scalars['timestamptz']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   disabled_at?: Maybe<Scalars['timestamptz']>;
   error?: Maybe<Scalars['String']>;
@@ -7517,7 +7517,7 @@ export type Plaid_Items_Max_Fields = {
 /** order by max() on columns of table "plaid_items" */
 export type Plaid_Items_Max_Order_By = {
   accessToken?: InputMaybe<Order_By>;
-  consent_expires_at?: InputMaybe<Order_By>;
+  consentExpiresAt?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   disabled_at?: InputMaybe<Order_By>;
   error?: InputMaybe<Order_By>;
@@ -7533,7 +7533,7 @@ export type Plaid_Items_Max_Order_By = {
 export type Plaid_Items_Min_Fields = {
   __typename?: 'plaid_items_min_fields';
   accessToken?: Maybe<Scalars['String']>;
-  consent_expires_at?: Maybe<Scalars['timestamptz']>;
+  consentExpiresAt?: Maybe<Scalars['timestamptz']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   disabled_at?: Maybe<Scalars['timestamptz']>;
   error?: Maybe<Scalars['String']>;
@@ -7548,7 +7548,7 @@ export type Plaid_Items_Min_Fields = {
 /** order by min() on columns of table "plaid_items" */
 export type Plaid_Items_Min_Order_By = {
   accessToken?: InputMaybe<Order_By>;
-  consent_expires_at?: InputMaybe<Order_By>;
+  consentExpiresAt?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   disabled_at?: InputMaybe<Order_By>;
   error?: InputMaybe<Order_By>;
@@ -7586,10 +7586,10 @@ export type Plaid_Items_On_Conflict = {
 /** Ordering options when selecting data from "plaid_items". */
 export type Plaid_Items_Order_By = {
   accessToken?: InputMaybe<Order_By>;
-  accounts_aggregate?: InputMaybe<Plaid_Accounts_Aggregate_Order_By>;
+  accounts_aggregate?: InputMaybe<PlaidAccounts_Aggregate_Order_By>;
   available_products?: InputMaybe<Order_By>;
   billed_products?: InputMaybe<Order_By>;
-  consent_expires_at?: InputMaybe<Order_By>;
+  consentExpiresAt?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   disabled_at?: InputMaybe<Order_By>;
   error?: InputMaybe<Order_By>;
@@ -7627,7 +7627,7 @@ export enum Plaid_Items_Select_Column {
   /** column name */
   BilledProducts = 'billed_products',
   /** column name */
-  ConsentExpiresAt = 'consent_expires_at',
+  ConsentExpiresAt = 'consentExpiresAt',
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
@@ -7657,7 +7657,7 @@ export type Plaid_Items_Set_Input = {
   accessToken?: InputMaybe<Scalars['String']>;
   available_products?: InputMaybe<Scalars['jsonb']>;
   billed_products?: InputMaybe<Scalars['jsonb']>;
-  consent_expires_at?: InputMaybe<Scalars['timestamptz']>;
+  consentExpiresAt?: InputMaybe<Scalars['timestamptz']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
   disabled_at?: InputMaybe<Scalars['timestamptz']>;
   error?: InputMaybe<Scalars['String']>;
@@ -7684,7 +7684,7 @@ export type Plaid_Items_Stream_Cursor_Value_Input = {
   accessToken?: InputMaybe<Scalars['String']>;
   available_products?: InputMaybe<Scalars['jsonb']>;
   billed_products?: InputMaybe<Scalars['jsonb']>;
-  consent_expires_at?: InputMaybe<Scalars['timestamptz']>;
+  consentExpiresAt?: InputMaybe<Scalars['timestamptz']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
   disabled_at?: InputMaybe<Scalars['timestamptz']>;
   error?: InputMaybe<Scalars['String']>;
@@ -7707,7 +7707,7 @@ export enum Plaid_Items_Update_Column {
   /** column name */
   BilledProducts = 'billed_products',
   /** column name */
-  ConsentExpiresAt = 'consent_expires_at',
+  ConsentExpiresAt = 'consentExpiresAt',
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
@@ -7864,14 +7864,16 @@ export type Query_Root = {
   oauth_codes_aggregate: Oauth_Codes_Aggregate;
   /** fetch data from the table: "oauth_codes" using primary key columns */
   oauth_codes_by_pk?: Maybe<Oauth_Codes>;
+  /** fetch data from the table: "plaid_accounts" using primary key columns */
+  plaidAccount?: Maybe<PlaidAccounts>;
+  /** fetch data from the table: "plaid_accounts" */
+  plaidAccounts: Array<PlaidAccounts>;
+  /** fetch aggregated fields from the table: "plaid_accounts" */
+  plaidAccounts_aggregate: PlaidAccounts_Aggregate;
   /** fetch data from the table: "plaid_items" using primary key columns */
   plaidItem?: Maybe<Plaid_Items>;
-  /** fetch data from the table: "plaid_accounts" */
-  plaid_accounts: Array<Plaid_Accounts>;
-  /** fetch aggregated fields from the table: "plaid_accounts" */
-  plaid_accounts_aggregate: Plaid_Accounts_Aggregate;
-  /** fetch data from the table: "plaid_accounts" using primary key columns */
-  plaid_accounts_by_pk?: Maybe<Plaid_Accounts>;
+  /** fetch data from the table: "plaid_items" */
+  plaidItems: Array<Plaid_Items>;
   /** fetch data from the table: "plaid_institutions" */
   plaid_institutions: Array<Plaid_Institutions>;
   /** fetch aggregated fields from the table: "plaid_institutions" */
@@ -7884,8 +7886,6 @@ export type Query_Root = {
   plaid_item_sync_logs_aggregate: Plaid_Item_Sync_Logs_Aggregate;
   /** fetch data from the table: "plaid_item_sync_logs" using primary key columns */
   plaid_item_sync_logs_by_pk?: Maybe<Plaid_Item_Sync_Logs>;
-  /** An array relationship */
-  plaid_items: Array<Plaid_Items>;
   /** An aggregate relationship */
   plaid_items_aggregate: Plaid_Items_Aggregate;
   /** fetch data from the table: "removed_plaid_transactions" */
@@ -8369,31 +8369,40 @@ export type Query_RootOauth_Codes_By_PkArgs = {
 };
 
 
+export type Query_RootPlaidAccountArgs = {
+  id: Scalars['String'];
+};
+
+
+export type Query_RootPlaidAccountsArgs = {
+  distinct_on?: InputMaybe<Array<PlaidAccounts_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<PlaidAccounts_Order_By>>;
+  where?: InputMaybe<PlaidAccounts_Bool_Exp>;
+};
+
+
+export type Query_RootPlaidAccounts_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<PlaidAccounts_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<PlaidAccounts_Order_By>>;
+  where?: InputMaybe<PlaidAccounts_Bool_Exp>;
+};
+
+
 export type Query_RootPlaidItemArgs = {
   id: Scalars['String'];
 };
 
 
-export type Query_RootPlaid_AccountsArgs = {
-  distinct_on?: InputMaybe<Array<Plaid_Accounts_Select_Column>>;
+export type Query_RootPlaidItemsArgs = {
+  distinct_on?: InputMaybe<Array<Plaid_Items_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Plaid_Accounts_Order_By>>;
-  where?: InputMaybe<Plaid_Accounts_Bool_Exp>;
-};
-
-
-export type Query_RootPlaid_Accounts_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Plaid_Accounts_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Plaid_Accounts_Order_By>>;
-  where?: InputMaybe<Plaid_Accounts_Bool_Exp>;
-};
-
-
-export type Query_RootPlaid_Accounts_By_PkArgs = {
-  id: Scalars['String'];
+  order_by?: InputMaybe<Array<Plaid_Items_Order_By>>;
+  where?: InputMaybe<Plaid_Items_Bool_Exp>;
 };
 
 
@@ -8441,15 +8450,6 @@ export type Query_RootPlaid_Item_Sync_Logs_AggregateArgs = {
 export type Query_RootPlaid_Item_Sync_Logs_By_PkArgs = {
   plaid_item_id: Scalars['String'];
   sync_log_id: Scalars['uuid'];
-};
-
-
-export type Query_RootPlaid_ItemsArgs = {
-  distinct_on?: InputMaybe<Array<Plaid_Items_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Plaid_Items_Order_By>>;
-  where?: InputMaybe<Plaid_Items_Bool_Exp>;
 };
 
 
@@ -9226,16 +9226,18 @@ export type Subscription_Root = {
   oauth_codes_by_pk?: Maybe<Oauth_Codes>;
   /** fetch data from the table in a streaming manner : "oauth_codes" */
   oauth_codes_stream: Array<Oauth_Codes>;
+  /** fetch data from the table: "plaid_accounts" using primary key columns */
+  plaidAccount?: Maybe<PlaidAccounts>;
+  /** fetch data from the table: "plaid_accounts" */
+  plaidAccounts: Array<PlaidAccounts>;
+  /** fetch aggregated fields from the table: "plaid_accounts" */
+  plaidAccounts_aggregate: PlaidAccounts_Aggregate;
+  /** fetch data from the table in a streaming manner : "plaid_accounts" */
+  plaidAccounts_stream: Array<PlaidAccounts>;
   /** fetch data from the table: "plaid_items" using primary key columns */
   plaidItem?: Maybe<Plaid_Items>;
-  /** fetch data from the table: "plaid_accounts" */
-  plaid_accounts: Array<Plaid_Accounts>;
-  /** fetch aggregated fields from the table: "plaid_accounts" */
-  plaid_accounts_aggregate: Plaid_Accounts_Aggregate;
-  /** fetch data from the table: "plaid_accounts" using primary key columns */
-  plaid_accounts_by_pk?: Maybe<Plaid_Accounts>;
-  /** fetch data from the table in a streaming manner : "plaid_accounts" */
-  plaid_accounts_stream: Array<Plaid_Accounts>;
+  /** fetch data from the table: "plaid_items" */
+  plaidItems: Array<Plaid_Items>;
   /** fetch data from the table: "plaid_institutions" */
   plaid_institutions: Array<Plaid_Institutions>;
   /** fetch aggregated fields from the table: "plaid_institutions" */
@@ -9252,8 +9254,6 @@ export type Subscription_Root = {
   plaid_item_sync_logs_by_pk?: Maybe<Plaid_Item_Sync_Logs>;
   /** fetch data from the table in a streaming manner : "plaid_item_sync_logs" */
   plaid_item_sync_logs_stream: Array<Plaid_Item_Sync_Logs>;
-  /** An array relationship */
-  plaid_items: Array<Plaid_Items>;
   /** An aggregate relationship */
   plaid_items_aggregate: Plaid_Items_Aggregate;
   /** fetch data from the table in a streaming manner : "plaid_items" */
@@ -9882,38 +9882,47 @@ export type Subscription_RootOauth_Codes_StreamArgs = {
 };
 
 
+export type Subscription_RootPlaidAccountArgs = {
+  id: Scalars['String'];
+};
+
+
+export type Subscription_RootPlaidAccountsArgs = {
+  distinct_on?: InputMaybe<Array<PlaidAccounts_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<PlaidAccounts_Order_By>>;
+  where?: InputMaybe<PlaidAccounts_Bool_Exp>;
+};
+
+
+export type Subscription_RootPlaidAccounts_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<PlaidAccounts_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<PlaidAccounts_Order_By>>;
+  where?: InputMaybe<PlaidAccounts_Bool_Exp>;
+};
+
+
+export type Subscription_RootPlaidAccounts_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<PlaidAccounts_Stream_Cursor_Input>>;
+  where?: InputMaybe<PlaidAccounts_Bool_Exp>;
+};
+
+
 export type Subscription_RootPlaidItemArgs = {
   id: Scalars['String'];
 };
 
 
-export type Subscription_RootPlaid_AccountsArgs = {
-  distinct_on?: InputMaybe<Array<Plaid_Accounts_Select_Column>>;
+export type Subscription_RootPlaidItemsArgs = {
+  distinct_on?: InputMaybe<Array<Plaid_Items_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Plaid_Accounts_Order_By>>;
-  where?: InputMaybe<Plaid_Accounts_Bool_Exp>;
-};
-
-
-export type Subscription_RootPlaid_Accounts_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Plaid_Accounts_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Plaid_Accounts_Order_By>>;
-  where?: InputMaybe<Plaid_Accounts_Bool_Exp>;
-};
-
-
-export type Subscription_RootPlaid_Accounts_By_PkArgs = {
-  id: Scalars['String'];
-};
-
-
-export type Subscription_RootPlaid_Accounts_StreamArgs = {
-  batch_size: Scalars['Int'];
-  cursor: Array<InputMaybe<Plaid_Accounts_Stream_Cursor_Input>>;
-  where?: InputMaybe<Plaid_Accounts_Bool_Exp>;
+  order_by?: InputMaybe<Array<Plaid_Items_Order_By>>;
+  where?: InputMaybe<Plaid_Items_Bool_Exp>;
 };
 
 
@@ -9975,15 +9984,6 @@ export type Subscription_RootPlaid_Item_Sync_Logs_StreamArgs = {
   batch_size: Scalars['Int'];
   cursor: Array<InputMaybe<Plaid_Item_Sync_Logs_Stream_Cursor_Input>>;
   where?: InputMaybe<Plaid_Item_Sync_Logs_Bool_Exp>;
-};
-
-
-export type Subscription_RootPlaid_ItemsArgs = {
-  distinct_on?: InputMaybe<Array<Plaid_Items_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Plaid_Items_Order_By>>;
-  where?: InputMaybe<Plaid_Items_Bool_Exp>;
 };
 
 
@@ -11457,19 +11457,19 @@ export type GetDestinationAccountsQueryVariables = Exact<{ [key: string]: never;
 
 export type GetDestinationAccountsQuery = { __typename?: 'query_root', destination_accounts: Array<{ __typename: 'destination_accounts', account_id: string, destination_id: any }> };
 
-export type AllDestinationFieldsFragment = { __typename: 'destinations', id: any, created_at: any, integration_id: Integrations_Enum, name: string, sync_start_date: string, should_sync_transactions: boolean, should_sync_investments: boolean, authentication?: any | null, disabled_at?: any | null, table_configs: any, integration: { __typename?: 'integrations', id: string, name: string }, account_connections: Array<{ __typename?: 'destination_accounts', account: { __typename?: 'plaid_accounts', id: string } }>, notion_connection?: { __typename?: 'notion_connections', access_token: string, bot_id: string } | null };
+export type AllDestinationFieldsFragment = { __typename: 'destinations', id: any, created_at: any, integration_id: Integrations_Enum, name: string, sync_start_date: string, should_sync_transactions: boolean, should_sync_investments: boolean, authentication?: any | null, disabled_at?: any | null, table_configs: any, integration: { __typename?: 'integrations', id: string, name: string }, account_connections: Array<{ __typename?: 'destination_accounts', account: { __typename?: 'plaidAccounts', id: string } }>, notion_connection?: { __typename?: 'notion_connections', access_token: string, bot_id: string } | null };
 
 export type InsertDestinationMutationVariables = Exact<{
   destination: Destinations_Insert_Input;
 }>;
 
 
-export type InsertDestinationMutation = { __typename?: 'mutation_root', destination?: { __typename: 'destinations', id: any, created_at: any, integration_id: Integrations_Enum, name: string, sync_start_date: string, should_sync_transactions: boolean, should_sync_investments: boolean, authentication?: any | null, disabled_at?: any | null, table_configs: any, integration: { __typename?: 'integrations', id: string, name: string }, account_connections: Array<{ __typename?: 'destination_accounts', account: { __typename?: 'plaid_accounts', id: string } }>, notion_connection?: { __typename?: 'notion_connections', access_token: string, bot_id: string } | null } | null };
+export type InsertDestinationMutation = { __typename?: 'mutation_root', destination?: { __typename: 'destinations', id: any, created_at: any, integration_id: Integrations_Enum, name: string, sync_start_date: string, should_sync_transactions: boolean, should_sync_investments: boolean, authentication?: any | null, disabled_at?: any | null, table_configs: any, integration: { __typename?: 'integrations', id: string, name: string }, account_connections: Array<{ __typename?: 'destination_accounts', account: { __typename?: 'plaidAccounts', id: string } }>, notion_connection?: { __typename?: 'notion_connections', access_token: string, bot_id: string } | null } | null };
 
 export type GetDestinationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetDestinationsQuery = { __typename?: 'query_root', destinations: Array<{ __typename: 'destinations', id: any, created_at: any, integration_id: Integrations_Enum, name: string, sync_start_date: string, should_sync_transactions: boolean, should_sync_investments: boolean, authentication?: any | null, disabled_at?: any | null, table_configs: any, integration: { __typename?: 'integrations', id: string, name: string }, account_connections: Array<{ __typename?: 'destination_accounts', account: { __typename?: 'plaid_accounts', id: string } }>, notion_connection?: { __typename?: 'notion_connections', access_token: string, bot_id: string } | null }> };
+export type GetDestinationsQuery = { __typename?: 'query_root', destinations: Array<{ __typename: 'destinations', id: any, created_at: any, integration_id: Integrations_Enum, name: string, sync_start_date: string, should_sync_transactions: boolean, should_sync_investments: boolean, authentication?: any | null, disabled_at?: any | null, table_configs: any, integration: { __typename?: 'integrations', id: string, name: string }, account_connections: Array<{ __typename?: 'destination_accounts', account: { __typename?: 'plaidAccounts', id: string } }>, notion_connection?: { __typename?: 'notion_connections', access_token: string, bot_id: string } | null }> };
 
 export type UpdateDestinationMutationVariables = Exact<{
   destination_id: Scalars['uuid'];
@@ -11478,7 +11478,7 @@ export type UpdateDestinationMutationVariables = Exact<{
 }>;
 
 
-export type UpdateDestinationMutation = { __typename?: 'mutation_root', destination?: { __typename: 'destinations', id: any, created_at: any, integration_id: Integrations_Enum, name: string, sync_start_date: string, should_sync_transactions: boolean, should_sync_investments: boolean, authentication?: any | null, disabled_at?: any | null, table_configs: any, integration: { __typename?: 'integrations', id: string, name: string }, account_connections: Array<{ __typename?: 'destination_accounts', account: { __typename?: 'plaid_accounts', id: string } }>, notion_connection?: { __typename?: 'notion_connections', access_token: string, bot_id: string } | null } | null };
+export type UpdateDestinationMutation = { __typename?: 'mutation_root', destination?: { __typename: 'destinations', id: any, created_at: any, integration_id: Integrations_Enum, name: string, sync_start_date: string, should_sync_transactions: boolean, should_sync_investments: boolean, authentication?: any | null, disabled_at?: any | null, table_configs: any, integration: { __typename?: 'integrations', id: string, name: string }, account_connections: Array<{ __typename?: 'destination_accounts', account: { __typename?: 'plaidAccounts', id: string } }>, notion_connection?: { __typename?: 'notion_connections', access_token: string, bot_id: string } | null } | null };
 
 export type AllIntegrationFieldsFragment = { __typename: 'integrations', id: string, name: string };
 
@@ -11504,43 +11504,42 @@ export type GetOAuthClientQueryVariables = Exact<{
 export type GetOAuthClientQuery = { __typename?: 'query_root', oauth_client?: { __typename: 'oauth_clients', id: any, name: string, integration: { __typename?: 'integrations', id: string, name: string } } | null };
 
 export type InsertPlaidAccountsMutationVariables = Exact<{
-  plaid_accounts: Array<Plaid_Accounts_Insert_Input> | Plaid_Accounts_Insert_Input;
+  plaidAccounts: Array<PlaidAccounts_Insert_Input> | PlaidAccounts_Insert_Input;
 }>;
 
 
-export type InsertPlaidAccountsMutation = { __typename?: 'mutation_root', plaid_accounts?: { __typename?: 'plaid_accounts_mutation_response', returning: Array<{ __typename: 'plaid_accounts', id: string, plaid_item_id: string, created_at: any, mask?: string | null, name: string, destination_connections: Array<{ __typename?: 'destination_accounts', destination: { __typename?: 'destinations', id: any, integration: { __typename?: 'integrations', id: string, name: string } } }> }> } | null };
+export type InsertPlaidAccountsMutation = { __typename?: 'mutation_root', plaidAccounts?: { __typename?: 'plaidAccounts_mutation_response', returning: Array<{ __typename: 'plaidAccounts', id: string, plaid_item_id: string, created_at: any, mask?: string | null, name: string, destination_connections: Array<{ __typename?: 'destination_accounts', destination: { __typename?: 'destinations', id: any, integration: { __typename?: 'integrations', id: string, name: string } } }> }> } | null };
 
 export type UpdatePlaidAccountMutationVariables = Exact<{
   plaid_account_id: Scalars['String'];
-  _set: Plaid_Accounts_Set_Input;
+  _set: PlaidAccounts_Set_Input;
 }>;
 
 
-export type UpdatePlaidAccountMutation = { __typename?: 'mutation_root', plaid_account?: { __typename: 'plaid_accounts', id: string, plaid_item_id: string, created_at: any, mask?: string | null, name: string, destination_connections: Array<{ __typename?: 'destination_accounts', destination: { __typename?: 'destinations', id: any, integration: { __typename?: 'integrations', id: string, name: string } } }> } | null };
+export type UpdatePlaidAccountMutation = { __typename?: 'mutation_root', plaidAccount?: { __typename: 'plaidAccounts', id: string, plaid_item_id: string, created_at: any, mask?: string | null, name: string, destination_connections: Array<{ __typename?: 'destination_accounts', destination: { __typename?: 'destinations', id: any, integration: { __typename?: 'integrations', id: string, name: string } } }> } | null };
 
-export type AllPlaidAccountFieldsFragment = { __typename: 'plaid_accounts', id: string, plaid_item_id: string, created_at: any, mask?: string | null, name: string, destination_connections: Array<{ __typename?: 'destination_accounts', destination: { __typename?: 'destinations', id: any, integration: { __typename?: 'integrations', id: string, name: string } } }> };
-
-export type AllPlaidItemFieldsFragment = { __typename: 'plaid_items', id: string, created_at: any, synced_at?: any | null, is_initial_update_complete: boolean, is_historical_update_complete: boolean, error?: string | null, accessToken: string, consent_expires_at?: any | null, disabled_at?: any | null, institution: { __typename?: 'plaid_institutions', id: string, name: string, logo_file?: { __typename?: 'files', id: any } | null }, accounts: Array<{ __typename: 'plaid_accounts', id: string, plaid_item_id: string, created_at: any, mask?: string | null, name: string, destination_connections: Array<{ __typename?: 'destination_accounts', destination: { __typename?: 'destinations', id: any, integration: { __typename?: 'integrations', id: string, name: string } } }> }> };
-
-export type InsertPlaidItemMutationVariables = Exact<{
-  plaid_item: Plaid_Items_Insert_Input;
+export type DeletePlaidAccountsMutationVariables = Exact<{
+  where: PlaidAccounts_Bool_Exp;
 }>;
 
 
-export type InsertPlaidItemMutation = { __typename?: 'mutation_root', plaid_item?: { __typename: 'plaid_items', id: string, created_at: any, synced_at?: any | null, is_initial_update_complete: boolean, is_historical_update_complete: boolean, error?: string | null, accessToken: string, consent_expires_at?: any | null, disabled_at?: any | null, institution: { __typename?: 'plaid_institutions', id: string, name: string, logo_file?: { __typename?: 'files', id: any } | null }, accounts: Array<{ __typename: 'plaid_accounts', id: string, plaid_item_id: string, created_at: any, mask?: string | null, name: string, destination_connections: Array<{ __typename?: 'destination_accounts', destination: { __typename?: 'destinations', id: any, integration: { __typename?: 'integrations', id: string, name: string } } }> }> } | null };
+export type DeletePlaidAccountsMutation = { __typename?: 'mutation_root', deletePlaidAccounts?: { __typename?: 'plaidAccounts_mutation_response', returning: Array<{ __typename: 'plaidAccounts', id: string, plaid_item_id: string, created_at: any, mask?: string | null, name: string, destination_connections: Array<{ __typename?: 'destination_accounts', destination: { __typename?: 'destinations', id: any, integration: { __typename?: 'integrations', id: string, name: string } } }> }> } | null };
 
-export type UpdatePlaidItemMutationVariables = Exact<{
-  plaid_item_id: Scalars['String'];
-  _set?: InputMaybe<Plaid_Items_Set_Input>;
+export type AllPlaidAccountFieldsFragment = { __typename: 'plaidAccounts', id: string, plaid_item_id: string, created_at: any, mask?: string | null, name: string, destination_connections: Array<{ __typename?: 'destination_accounts', destination: { __typename?: 'destinations', id: any, integration: { __typename?: 'integrations', id: string, name: string } } }> };
+
+export type AllPlaidItemFieldsFragment = { __typename: 'plaid_items', id: string, created_at: any, synced_at?: any | null, is_initial_update_complete: boolean, is_historical_update_complete: boolean, error?: string | null, accessToken: string, consentExpiresAt?: any | null, disabled_at?: any | null, institution: { __typename?: 'plaid_institutions', id: string, name: string, logo_file?: { __typename?: 'files', id: any } | null }, accounts: Array<{ __typename: 'plaidAccounts', id: string, plaid_item_id: string, created_at: any, mask?: string | null, name: string, destination_connections: Array<{ __typename?: 'destination_accounts', destination: { __typename?: 'destinations', id: any, integration: { __typename?: 'integrations', id: string, name: string } } }> }> };
+
+export type UpsertPlaidItemMutationVariables = Exact<{
+  plaidItem: Plaid_Items_Insert_Input;
 }>;
 
 
-export type UpdatePlaidItemMutation = { __typename?: 'mutation_root', plaid_item?: { __typename: 'plaid_items', id: string, created_at: any, synced_at?: any | null, is_initial_update_complete: boolean, is_historical_update_complete: boolean, error?: string | null, accessToken: string, consent_expires_at?: any | null, disabled_at?: any | null, institution: { __typename?: 'plaid_institutions', id: string, name: string, logo_file?: { __typename?: 'files', id: any } | null }, accounts: Array<{ __typename: 'plaid_accounts', id: string, plaid_item_id: string, created_at: any, mask?: string | null, name: string, destination_connections: Array<{ __typename?: 'destination_accounts', destination: { __typename?: 'destinations', id: any, integration: { __typename?: 'integrations', id: string, name: string } } }> }> } | null };
+export type UpsertPlaidItemMutation = { __typename?: 'mutation_root', plaidItem?: { __typename: 'plaid_items', id: string, created_at: any, synced_at?: any | null, is_initial_update_complete: boolean, is_historical_update_complete: boolean, error?: string | null, accessToken: string, consentExpiresAt?: any | null, disabled_at?: any | null, institution: { __typename?: 'plaid_institutions', id: string, name: string, logo_file?: { __typename?: 'files', id: any } | null }, accounts: Array<{ __typename: 'plaidAccounts', id: string, plaid_item_id: string, created_at: any, mask?: string | null, name: string, destination_connections: Array<{ __typename?: 'destination_accounts', destination: { __typename?: 'destinations', id: any, integration: { __typename?: 'integrations', id: string, name: string } } }> }> } | null };
 
 export type GetPlaidItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetPlaidItemsQuery = { __typename?: 'query_root', plaid_items: Array<{ __typename: 'plaid_items', id: string, created_at: any, synced_at?: any | null, is_initial_update_complete: boolean, is_historical_update_complete: boolean, error?: string | null, accessToken: string, consent_expires_at?: any | null, disabled_at?: any | null, institution: { __typename?: 'plaid_institutions', id: string, name: string, logo_file?: { __typename?: 'files', id: any } | null }, accounts: Array<{ __typename: 'plaid_accounts', id: string, plaid_item_id: string, created_at: any, mask?: string | null, name: string, destination_connections: Array<{ __typename?: 'destination_accounts', destination: { __typename?: 'destinations', id: any, integration: { __typename?: 'integrations', id: string, name: string } } }> }> }> };
+export type GetPlaidItemsQuery = { __typename?: 'query_root', plaidItems: Array<{ __typename: 'plaid_items', id: string, created_at: any, synced_at?: any | null, is_initial_update_complete: boolean, is_historical_update_complete: boolean, error?: string | null, accessToken: string, consentExpiresAt?: any | null, disabled_at?: any | null, institution: { __typename?: 'plaid_institutions', id: string, name: string, logo_file?: { __typename?: 'files', id: any } | null }, accounts: Array<{ __typename: 'plaidAccounts', id: string, plaid_item_id: string, created_at: any, mask?: string | null, name: string, destination_connections: Array<{ __typename?: 'destination_accounts', destination: { __typename?: 'destinations', id: any, integration: { __typename?: 'integrations', id: string, name: string } } }> }> }> };
 
 export type AllSubscriptionPricesFieldsFragment = { __typename?: 'StripePrice', id: string, interval: Interval, unitAmount: number, productId: string };
 
@@ -11549,14 +11548,14 @@ export type GetSubscriptionPricesQueryVariables = Exact<{ [key: string]: never; 
 
 export type GetSubscriptionPricesQuery = { __typename?: 'query_root', stripePrices: Array<{ __typename?: 'StripePrice', id: string, interval: Interval, unitAmount: number, productId: string }> };
 
-export type AllSyncLogFieldsFragment = { __typename?: 'sync_logs', id: any, created_at: any, ended_at?: any | null, trigger: string, is_success: boolean, error?: any | null, metadata?: any | null, destination_sync_logs: Array<{ __typename?: 'destination_sync_logs', error?: any | null, accounts: any, holdings: any, transactions: any, investment_transactions: any, destination: { __typename?: 'destinations', id: any, name: string, integration: { __typename?: 'integrations', id: string, name: string } } }>, plaid_item_sync_logs: Array<{ __typename?: 'plaid_item_sync_logs', error?: any | null, accounts: any, holdings: any, transactions: any, investment_transactions: any, plaid_item: { __typename: 'plaid_items', id: string, institution: { __typename?: 'plaid_institutions', name: string, logo_file?: { __typename?: 'files', id: any } | null }, accounts: Array<{ __typename: 'plaid_accounts', id: string, name: string }> } }> };
+export type AllSyncLogFieldsFragment = { __typename?: 'sync_logs', id: any, created_at: any, ended_at?: any | null, trigger: string, is_success: boolean, error?: any | null, metadata?: any | null, destination_sync_logs: Array<{ __typename?: 'destination_sync_logs', error?: any | null, accounts: any, holdings: any, transactions: any, investment_transactions: any, destination: { __typename?: 'destinations', id: any, name: string, integration: { __typename?: 'integrations', id: string, name: string } } }>, plaid_item_sync_logs: Array<{ __typename?: 'plaid_item_sync_logs', error?: any | null, accounts: any, holdings: any, transactions: any, investment_transactions: any, plaid_item: { __typename: 'plaid_items', id: string, institution: { __typename?: 'plaid_institutions', name: string, logo_file?: { __typename?: 'files', id: any } | null }, accounts: Array<{ __typename: 'plaidAccounts', id: string, name: string }> } }> };
 
 export type GetSyncLogsQueryVariables = Exact<{
   offset: Scalars['Int'];
 }>;
 
 
-export type GetSyncLogsQuery = { __typename?: 'query_root', sync_logs: Array<{ __typename?: 'sync_logs', id: any, created_at: any, ended_at?: any | null, trigger: string, is_success: boolean, error?: any | null, metadata?: any | null, destination_sync_logs: Array<{ __typename?: 'destination_sync_logs', error?: any | null, accounts: any, holdings: any, transactions: any, investment_transactions: any, destination: { __typename?: 'destinations', id: any, name: string, integration: { __typename?: 'integrations', id: string, name: string } } }>, plaid_item_sync_logs: Array<{ __typename?: 'plaid_item_sync_logs', error?: any | null, accounts: any, holdings: any, transactions: any, investment_transactions: any, plaid_item: { __typename: 'plaid_items', id: string, institution: { __typename?: 'plaid_institutions', name: string, logo_file?: { __typename?: 'files', id: any } | null }, accounts: Array<{ __typename: 'plaid_accounts', id: string, name: string }> } }> }>, count: { __typename?: 'sync_logs_aggregate', aggregate?: { __typename?: 'sync_logs_aggregate_fields', count: number } | null } };
+export type GetSyncLogsQuery = { __typename?: 'query_root', sync_logs: Array<{ __typename?: 'sync_logs', id: any, created_at: any, ended_at?: any | null, trigger: string, is_success: boolean, error?: any | null, metadata?: any | null, destination_sync_logs: Array<{ __typename?: 'destination_sync_logs', error?: any | null, accounts: any, holdings: any, transactions: any, investment_transactions: any, destination: { __typename?: 'destinations', id: any, name: string, integration: { __typename?: 'integrations', id: string, name: string } } }>, plaid_item_sync_logs: Array<{ __typename?: 'plaid_item_sync_logs', error?: any | null, accounts: any, holdings: any, transactions: any, investment_transactions: any, plaid_item: { __typename: 'plaid_items', id: string, institution: { __typename?: 'plaid_institutions', name: string, logo_file?: { __typename?: 'files', id: any } | null }, accounts: Array<{ __typename: 'plaidAccounts', id: string, name: string }> } }> }>, count: { __typename?: 'sync_logs_aggregate', aggregate?: { __typename?: 'sync_logs_aggregate_fields', count: number } | null } };
 
 export type AllStripeDataFieldsFragment = { __typename?: 'StripeData', trialEndsAt: any, hasAppAccess: boolean, customer: { __typename?: 'StripeCustomer', id: string, createdAt: any }, subscription?: { __typename?: 'StripeSubscription', id: string, status: SubscriptionStatus, interval: Interval, cancelAtPeriodEnd: boolean, endedAt?: any | null, currentPeriodEnd: any, trialStartedAt?: any | null, trialEndedAt?: any | null } | null };
 
@@ -11671,7 +11670,7 @@ export const AllOauthClientFieldsFragmentDoc = gql`
 }
     `;
 export const AllPlaidAccountFieldsFragmentDoc = gql`
-    fragment AllPlaidAccountFields on plaid_accounts {
+    fragment AllPlaidAccountFields on plaidAccounts {
   __typename
   id
   plaid_item_id
@@ -11699,7 +11698,7 @@ export const AllPlaidItemFieldsFragmentDoc = gql`
   is_historical_update_complete
   error
   accessToken
-  consent_expires_at
+  consentExpiresAt
   institution {
     id
     name
@@ -12136,8 +12135,11 @@ export type GetOAuthClientQueryHookResult = ReturnType<typeof useGetOAuthClientQ
 export type GetOAuthClientLazyQueryHookResult = ReturnType<typeof useGetOAuthClientLazyQuery>;
 export type GetOAuthClientQueryResult = Apollo.QueryResult<GetOAuthClientQuery, GetOAuthClientQueryVariables>;
 export const InsertPlaidAccountsDocument = gql`
-    mutation InsertPlaidAccounts($plaid_accounts: [plaid_accounts_insert_input!]!) {
-  plaid_accounts: insert_plaid_accounts(objects: $plaid_accounts) {
+    mutation InsertPlaidAccounts($plaidAccounts: [plaidAccounts_insert_input!]!) {
+  plaidAccounts: insertPlaidAccounts(
+    objects: $plaidAccounts
+    on_conflict: {constraint: plaid_accounts_pkey, update_columns: []}
+  ) {
     returning {
       ...AllPlaidAccountFields
     }
@@ -12159,7 +12161,7 @@ export type InsertPlaidAccountsMutationFn = Apollo.MutationFunction<InsertPlaidA
  * @example
  * const [insertPlaidAccountsMutation, { data, loading, error }] = useInsertPlaidAccountsMutation({
  *   variables: {
- *      plaid_accounts: // value for 'plaid_accounts'
+ *      plaidAccounts: // value for 'plaidAccounts'
  *   },
  * });
  */
@@ -12171,8 +12173,8 @@ export type InsertPlaidAccountsMutationHookResult = ReturnType<typeof useInsertP
 export type InsertPlaidAccountsMutationResult = Apollo.MutationResult<InsertPlaidAccountsMutation>;
 export type InsertPlaidAccountsMutationOptions = Apollo.BaseMutationOptions<InsertPlaidAccountsMutation, InsertPlaidAccountsMutationVariables>;
 export const UpdatePlaidAccountDocument = gql`
-    mutation UpdatePlaidAccount($plaid_account_id: String!, $_set: plaid_accounts_set_input!) {
-  plaid_account: update_plaid_accounts_by_pk(
+    mutation UpdatePlaidAccount($plaid_account_id: String!, $_set: plaidAccounts_set_input!) {
+  plaidAccount: updatePlaidAccount(
     pk_columns: {id: $plaid_account_id}
     _set: $_set
   ) {
@@ -12207,79 +12209,80 @@ export function useUpdatePlaidAccountMutation(baseOptions?: Apollo.MutationHookO
 export type UpdatePlaidAccountMutationHookResult = ReturnType<typeof useUpdatePlaidAccountMutation>;
 export type UpdatePlaidAccountMutationResult = Apollo.MutationResult<UpdatePlaidAccountMutation>;
 export type UpdatePlaidAccountMutationOptions = Apollo.BaseMutationOptions<UpdatePlaidAccountMutation, UpdatePlaidAccountMutationVariables>;
-export const InsertPlaidItemDocument = gql`
-    mutation InsertPlaidItem($plaid_item: plaid_items_insert_input!) {
-  plaid_item: insert_plaid_items_one(object: $plaid_item) {
-    ...AllPlaidItemFields
+export const DeletePlaidAccountsDocument = gql`
+    mutation DeletePlaidAccounts($where: plaidAccounts_bool_exp!) {
+  deletePlaidAccounts(where: $where) {
+    returning {
+      ...AllPlaidAccountFields
+    }
   }
 }
-    ${AllPlaidItemFieldsFragmentDoc}`;
-export type InsertPlaidItemMutationFn = Apollo.MutationFunction<InsertPlaidItemMutation, InsertPlaidItemMutationVariables>;
+    ${AllPlaidAccountFieldsFragmentDoc}`;
+export type DeletePlaidAccountsMutationFn = Apollo.MutationFunction<DeletePlaidAccountsMutation, DeletePlaidAccountsMutationVariables>;
 
 /**
- * __useInsertPlaidItemMutation__
+ * __useDeletePlaidAccountsMutation__
  *
- * To run a mutation, you first call `useInsertPlaidItemMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useInsertPlaidItemMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useDeletePlaidAccountsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeletePlaidAccountsMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [insertPlaidItemMutation, { data, loading, error }] = useInsertPlaidItemMutation({
+ * const [deletePlaidAccountsMutation, { data, loading, error }] = useDeletePlaidAccountsMutation({
  *   variables: {
- *      plaid_item: // value for 'plaid_item'
+ *      where: // value for 'where'
  *   },
  * });
  */
-export function useInsertPlaidItemMutation(baseOptions?: Apollo.MutationHookOptions<InsertPlaidItemMutation, InsertPlaidItemMutationVariables>) {
+export function useDeletePlaidAccountsMutation(baseOptions?: Apollo.MutationHookOptions<DeletePlaidAccountsMutation, DeletePlaidAccountsMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<InsertPlaidItemMutation, InsertPlaidItemMutationVariables>(InsertPlaidItemDocument, options);
+        return Apollo.useMutation<DeletePlaidAccountsMutation, DeletePlaidAccountsMutationVariables>(DeletePlaidAccountsDocument, options);
       }
-export type InsertPlaidItemMutationHookResult = ReturnType<typeof useInsertPlaidItemMutation>;
-export type InsertPlaidItemMutationResult = Apollo.MutationResult<InsertPlaidItemMutation>;
-export type InsertPlaidItemMutationOptions = Apollo.BaseMutationOptions<InsertPlaidItemMutation, InsertPlaidItemMutationVariables>;
-export const UpdatePlaidItemDocument = gql`
-    mutation UpdatePlaidItem($plaid_item_id: String!, $_set: plaid_items_set_input) {
-  plaid_item: update_plaid_items_by_pk(
-    pk_columns: {id: $plaid_item_id}
-    _set: $_set
+export type DeletePlaidAccountsMutationHookResult = ReturnType<typeof useDeletePlaidAccountsMutation>;
+export type DeletePlaidAccountsMutationResult = Apollo.MutationResult<DeletePlaidAccountsMutation>;
+export type DeletePlaidAccountsMutationOptions = Apollo.BaseMutationOptions<DeletePlaidAccountsMutation, DeletePlaidAccountsMutationVariables>;
+export const UpsertPlaidItemDocument = gql`
+    mutation UpsertPlaidItem($plaidItem: plaid_items_insert_input!) {
+  plaidItem: insertPlaidItem(
+    object: $plaidItem
+    on_conflict: {constraint: plaid_items_pkey, update_columns: [error, consentExpiresAt]}
   ) {
     ...AllPlaidItemFields
   }
 }
     ${AllPlaidItemFieldsFragmentDoc}`;
-export type UpdatePlaidItemMutationFn = Apollo.MutationFunction<UpdatePlaidItemMutation, UpdatePlaidItemMutationVariables>;
+export type UpsertPlaidItemMutationFn = Apollo.MutationFunction<UpsertPlaidItemMutation, UpsertPlaidItemMutationVariables>;
 
 /**
- * __useUpdatePlaidItemMutation__
+ * __useUpsertPlaidItemMutation__
  *
- * To run a mutation, you first call `useUpdatePlaidItemMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdatePlaidItemMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useUpsertPlaidItemMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpsertPlaidItemMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [updatePlaidItemMutation, { data, loading, error }] = useUpdatePlaidItemMutation({
+ * const [upsertPlaidItemMutation, { data, loading, error }] = useUpsertPlaidItemMutation({
  *   variables: {
- *      plaid_item_id: // value for 'plaid_item_id'
- *      _set: // value for '_set'
+ *      plaidItem: // value for 'plaidItem'
  *   },
  * });
  */
-export function useUpdatePlaidItemMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePlaidItemMutation, UpdatePlaidItemMutationVariables>) {
+export function useUpsertPlaidItemMutation(baseOptions?: Apollo.MutationHookOptions<UpsertPlaidItemMutation, UpsertPlaidItemMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdatePlaidItemMutation, UpdatePlaidItemMutationVariables>(UpdatePlaidItemDocument, options);
+        return Apollo.useMutation<UpsertPlaidItemMutation, UpsertPlaidItemMutationVariables>(UpsertPlaidItemDocument, options);
       }
-export type UpdatePlaidItemMutationHookResult = ReturnType<typeof useUpdatePlaidItemMutation>;
-export type UpdatePlaidItemMutationResult = Apollo.MutationResult<UpdatePlaidItemMutation>;
-export type UpdatePlaidItemMutationOptions = Apollo.BaseMutationOptions<UpdatePlaidItemMutation, UpdatePlaidItemMutationVariables>;
+export type UpsertPlaidItemMutationHookResult = ReturnType<typeof useUpsertPlaidItemMutation>;
+export type UpsertPlaidItemMutationResult = Apollo.MutationResult<UpsertPlaidItemMutation>;
+export type UpsertPlaidItemMutationOptions = Apollo.BaseMutationOptions<UpsertPlaidItemMutation, UpsertPlaidItemMutationVariables>;
 export const GetPlaidItemsDocument = gql`
     query GetPlaidItems {
-  plaid_items(order_by: {created_at: asc}) {
+  plaidItems(order_by: {created_at: asc}) {
     ...AllPlaidItemFields
   }
 }

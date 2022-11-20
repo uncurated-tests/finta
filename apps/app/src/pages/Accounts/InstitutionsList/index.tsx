@@ -11,11 +11,11 @@ import { useGetPlaidItemsQuery } from "src/graphql";
 
 export const InstitutionsList = () => {
   const { data, startPolling, stopPolling, previousData } = useGetPlaidItemsQuery();
-  const plaidItems = useMemo(() => data?.plaid_items || [], [ data ]);
+  const plaidItems = useMemo(() => data?.plaidItems || [], [ data ]);
   const activeItems = plaidItems.filter(item => !item.disabled_at);
 
   useEffect(() => {
-    const previousPlaidItems = previousData?.plaid_items || [];
+    const previousPlaidItems = previousData?.plaidItems || [];
 
     const currentLoadingItemsCount = plaidItems.filter(item => !item.synced_at).length;
     const previousLoadingItemsCount = previousPlaidItems.filter(item => !item.synced_at).length;

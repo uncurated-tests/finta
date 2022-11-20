@@ -6,6 +6,7 @@
     headers:
       - name: ngrok-skip-browser-warning
         value: "true"
+  comment: ""
   permissions:
     - role: user
       definition:

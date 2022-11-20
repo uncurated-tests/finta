@@ -30,13 +30,14 @@ export const exchangePlaidPublicToken = async ({ publicToken }: { publicToken: s
   .then(response => response.data)
 }
 
-export const createPlaidLinkToken = async ({ products, accessToken }: {
+export const createPlaidLinkToken = async ({ products, accessToken, isAccountSelectionEnabled = false }: {
   products: Products[];
   accessToken?: string;
+  isAccountSelectionEnabled?: boolean;
 }): Promise<types.CreatePlaidLinkTokenResponse> => {
   const redirectUri = window.location.origin + '/plaid-oauth';
   const plaidEnv = isDemoUser() ? "sandbox" : getPlaidEnv();
-  return client.post('/plaid/createLinkToken', { products, redirectUri, plaidEnv, accessToken } as types.CreatePlaidLinkTokenPayload)
+  return client.post('/plaid/createLinkToken', { products, redirectUri, plaidEnv, accessToken, isAccountSelectionEnabled } as types.CreatePlaidLinkTokenPayload)
   .then(response => response.data)
 }
 
@@ -84,4 +85,8 @@ export const exchangeNotionToken = (props: types.ExchangeNotionTokenPayload): Pr
 
 export const createOauthCode = (props: types.CreateCodePayload): Promise<types.CreateCodeResponse> =>
   client.post('/oauth/createCode', props)
+  .then(response => response.data)
+
+export const getAccounts = (props: types.GetPlaidAccountsPayload): Promise<types.GetPlaidAccountsResponse> =>
+  client.post('/plaid/getAccounts', props)
   .then(response => response.data)

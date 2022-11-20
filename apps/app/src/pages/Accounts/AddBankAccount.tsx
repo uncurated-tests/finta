@@ -16,12 +16,11 @@ import * as Sentry from "@sentry/react";
 
 import { LargeIconButton } from "src/components/LargeIconButton";
 import { ConnectNewInstitutionToDestinations } from "src/components/ConnectNewInstitutionToDestinations";
-import { PlaidLink, PlaidLinkOnSuccessMetadata } from "src/components/PlaidLink";
+import { PlaidLink } from "src/components/PlaidLink";
 import { errorToastConfig } from "src/lib/commonToasts";
 import { useToast } from "src/lib/useToast";
-import { createPlaidLinkToken, exchangePlaidPublicToken } from "src/lib/functions";
+import { createPlaidLinkToken } from "src/lib/functions";
 import { PlaidItemModel } from "src/types";
-import { useInsertPlaidItemMutation, Plaid_Institutions_Constraint, Plaid_Institutions_Update_Column } from "src/graphql";
 import { Products } from "plaid";
 import { useAuth } from "src/lib/useAuth";
 
@@ -39,8 +38,6 @@ export const AddBankAccount = () => {
     setLinkToken(null);
   }, [ isOpen ]);
 
-  const [ createPlaidItemMutation ] = useInsertPlaidItemMutation({ refetchQueries: 'all' });
-
   const onClickIconButton = async ( product: Products ) => {
     setloadingProduct(product);
     createPlaidLinkToken({  products: [ product ] })
@@ -51,63 +48,20 @@ export const AddBankAccount = () => {
       if ( !link_token ) { return null; }
 
       localStorage.setItem('link_token', link_token);
-      localStorage.setItem('link_mode', "create");
-      localStorage.setItem('link_item_id', "" )
       setLinkToken(link_token);
     })
     .catch(() => renderToast(errorToastConfig))
     .finally(() => setloadingProduct(null))
   };
 
-  const onSuccessCallback = useCallback(async (public_token: string, metadata: PlaidLinkOnSuccessMetadata) => {
-    const { institution, accounts } = metadata;
-
-    exchangePlaidPublicToken({ publicToken: public_token })
-    .then(response => {
-      const { access_token: accessToken, item_id } = response;
-      if ( !(accessToken && item_id) ) { return null; }
-
-      return createPlaidItemMutation({
-        variables: {
-          plaid_item: {
-            id: item_id,
-            accessToken,
-            institution: {
-              data: {
-                name: institution?.name,
-                id: institution?.institution_id
-              },
-              on_conflict: {
-                constraint: Plaid_Institutions_Constraint.PlaidInstitutionsPkey,
-                update_columns: [ Plaid_Institutions_Update_Column.Name ]
-              }
-            },
-            accounts: {
-              data: accounts.map(account => ({
-                id: account.id,
-                mask: account.mask,
-                name: account.name
-              }))
-            }
-          }
-        }
-      })
-      .then(response => {
-        const plaidItem = response.data?.plaid_item;
-        if (!plaidItem) { return; };
-  
-        setNewPlaidItem(plaidItem)
-      })
-    })
-    .catch(error => {
-      console.log(error)
-      renderToast(errorToastConfig)
-    })
-  }, [ createPlaidItemMutation, renderToast ]);
+  const onSuccessCallback = useCallback(async (plaidItem?: PlaidItemModel | null) => {
+    if ( !plaidItem ) { return; };
+    setNewPlaidItem(plaidItem)
+  }, []);
 
   const onExitCallback = useCallback(() => setLinkToken(null), []);
 
-  const disableAddBankAccount = !user //|| !user.stripe_data.has_app_access;
+  const disableAddBankAccount = !user || !user.stripeData.hasAppAccess;
 
   return (
     <>
@@ -160,13 +114,13 @@ export const AddBankAccount = () => {
         </ModalContent>
       </Modal>
 
-      { linkToken ? (
+      { linkToken && (
         <PlaidLink 
           linkToken = { linkToken } 
           onSuccessCallback = { onSuccessCallback }
           onExitCallback = { onExitCallback }
         />
-      ) : null }
+      )}
     </>
   )
 }
