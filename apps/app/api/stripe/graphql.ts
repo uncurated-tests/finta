@@ -96,7 +96,6 @@ export default createServer<{ req: Request; res: Response; }>({
             customer = await stripe.upsertCustomer({ userId: user.id, email: user.email, name: user.display_name });
           }
 
-          console.log("Customer Id", customer.id);
           const subscription = await stripe.getSubscriptions({ status: 'all', customer: customer.id, limit: 1})
           .then(response => response.data.map(subscription => ({
             id: subscription.id,
@@ -110,14 +109,11 @@ export default createServer<{ req: Request; res: Response; }>({
             currentPeriodEnd: moment.unix(subscription.current_period_end).toDate(),
             interval: subscription.items.data[0].plan.interval
           }))[0]);
-          console.log("Last subscription", subscription.id)
-          console.log("Subscription trial ends at", subscription?.trialEndedAt)
-          console.log("Customer", customer)
           
           const trialEndsAt = subscription?.trialEndedAt || (customer.metadata.trial_ends_at 
             ? moment.unix(parseInt(customer!.metadata.trial_ends_at)).toDate() 
             : moment.unix(customer!.created).add(14, 'days').toDate());
-          console.log(trialEndsAt)
+
           return {
             hasAppAccess: subscription 
               ? [ "active", "incomplete", "past_due", "trialing"].includes(subscription.status)
