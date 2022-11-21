@@ -1,1 +1,1 @@
-alter table "public"."plaid_institutions" drop column "logo" cascade;
+alter table "public"."plaid_institutions" drop column if exists  "logo" cascade;

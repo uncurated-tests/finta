@@ -1,1 +1,1 @@
-alter table "public"."integrations" drop column "logo" cascade;
+alter table "public"."integrations" drop column if exists  "logo" cascade;

@@ -1,1 +1,1 @@
-alter table "public"."plaid_items" drop column "sync_start_date" cascade;
+alter table "public"."plaid_items" drop column if exists  "sync_start_date" cascade;

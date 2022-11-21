@@ -1,1 +1,1 @@
-alter table "public"."integrations" drop column "is_active" cascade;
+alter table "public"."integrations" drop column if exists  "is_active" cascade;

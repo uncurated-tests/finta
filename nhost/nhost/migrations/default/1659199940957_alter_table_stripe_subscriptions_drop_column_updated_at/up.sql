@@ -1,1 +1,1 @@
-alter table "stripe"."subscriptions" drop column "updated_at" cascade;
+alter table "stripe"."subscriptions" drop column if exists  "updated_at" cascade;

@@ -1,1 +1,1 @@
-alter table "public"."plaid_items" drop column "is_disabled" cascade;
+alter table "public"."plaid_items" drop column if exists  "is_disabled" cascade;

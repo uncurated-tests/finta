@@ -1,1 +1,1 @@
-alter table "public"."plaid_accounts" drop column "is_visible" cascade;
+alter table "public"."plaid_accounts" drop column if exists  "is_visible" cascade;

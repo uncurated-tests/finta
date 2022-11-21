@@ -1,1 +1,1 @@
-alter table "public"."integrations" drop column "connection_type" cascade;
+alter table "public"."integrations" drop column if exists  "connection_type" cascade;

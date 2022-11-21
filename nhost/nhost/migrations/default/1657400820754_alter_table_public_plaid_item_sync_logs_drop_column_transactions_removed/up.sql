@@ -1,1 +1,1 @@
-alter table "public"."plaid_item_sync_logs" drop column "transactions_removed" cascade;
+alter table "public"."plaid_item_sync_logs" drop column if exists  "transactions_removed" cascade;
