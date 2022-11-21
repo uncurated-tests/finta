@@ -19,12 +19,13 @@ export default functionWrapper.client(async (req: types.ManualDestinationSyncReq
   const newSyncStartDate = moment.min(moment(startDate), moment(destination.sync_start_date)).format("YYYY-MM-DD");
 
   const accountsQuery = { is_closed: { _eq: false }, destination_connections: { destination_id: { _eq: destinationId }}};
-  const plaidItems = await graphql.GetPlaidItems({ 
-    where: { accounts: accountsQuery},
+  const { plaidItems } = await graphql.GetPlaidItems({ 
+    where: { accounts: accountsQuery },
     accounts_where: accountsQuery,
     include_removed_transactions: true,
     date: newSyncStartDate
-  }).then(response => response.plaid_items);
+  })
+
   if ( destination.integration.id === Integrations_Enum.Coda || plaidItems.length === 0 ) {
     await graphql.UpdateDestination({ destination_id: destination.id, _set: { sync_start_date: newSyncStartDate }});
     return { status: 200, message: { sync_start_date: newSyncStartDate } }
@@ -154,7 +155,6 @@ export default functionWrapper.client(async (req: types.ManualDestinationSyncReq
       },
       update_columns: [ Destination_Sync_Logs_Update_Column.Error ]
     }),
-    success ? graphql.UpdateDestination({ destination_id: destination.id, _set: { sync_start_date: newSyncStartDate }}) : Promise.resolve(),
     logsnag.publish({
       channel: logsnag.LogSnagChannel.SYNCS,
       event: success ? logsnag.LogSnagEvent.SYNC_COMPLETED : logsnag.LogSnagEvent.SYNC_FAILED,
@@ -169,7 +169,11 @@ export default functionWrapper.client(async (req: types.ManualDestinationSyncReq
         [logsnag.LogSnagTags.SYNC_LOG_ID]: syncLog.id
       }
     })
-  ])
+  ]);
+
+  if ( success ) {
+    await graphql.UpdateDestination({ destination_id: destination.id, _set: { sync_start_date: newSyncStartDate }})
+  }
 
   transaction.finish();
   if ( success ) {
@@ -184,7 +188,7 @@ export default functionWrapper.client(async (req: types.ManualDestinationSyncReq
 })
 
 // Helper Functions
-const getPlaidData = async ({ item, accountIds, tableTypes, startDate, endDate }: { item: GetPlaidItemsQuery['plaid_items'][0], accountIds: string[], tableTypes: DestinationTableTypes[], startDate: string; endDate: string }) => {
+const getPlaidData = async ({ item, accountIds, tableTypes, startDate, endDate }: { item: GetPlaidItemsQuery['plaidItems'][0], accountIds: string[], tableTypes: DestinationTableTypes[], startDate: string; endDate: string }) => {
   const { accessToken } = item;
   const products = (item.billed_products || []).concat(item.available_products || []) as Products[];
   const accounts = await plaid.getAccounts({ accessToken, options: { account_ids: accountIds }}).then(response => response.data.accounts);
