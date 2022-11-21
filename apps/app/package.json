@@ -24,6 +24,7 @@
     "@nhost/nhost-js": "^1.6.0",
     "@nhost/react": "^0.14.2",
     "@nhost/react-apollo": "^4.8.2",
+    "@notionhq/client": "^2.2.2",
     "@radix-ui/react-icons": "^1.1.1",
     "@sentry/node": "^7.20.0",
     "@sentry/react": "^7.19.0",

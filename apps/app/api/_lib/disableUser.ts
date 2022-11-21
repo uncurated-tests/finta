@@ -10,8 +10,7 @@ export const disableUser = async (userId: string) => {
     await cancelSubscription({ subscriptionId: userSubscription.id })
   }
 
-  const plaidItems = await graphql.GetPlaidItems({ where: { user_id: { _eq: userId }}})
-  .then(response => response.plaid_items);
+  const { plaidItems } = await graphql.GetPlaidItems({ where: { user_id: { _eq: userId }}});
 
   const destinations = await graphql.GetDestinations({ where: { user_id: { _eq: userId }}})
   .then(response => response.destinations);

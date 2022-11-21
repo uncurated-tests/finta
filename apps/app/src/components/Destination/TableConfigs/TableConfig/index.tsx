@@ -40,7 +40,9 @@ export const TableConfig = ({ tableType, destinationTables, tableConfig, refresh
   }, [ TABLE_FIELDS, tableConfig, onChange, hasSetRequiredFields ]);
 
   const tableOptions = destinationTables.map(table => ({ label: table.name, value: table.tableId }));
-  const fieldOptions = destinationTables.find(table => table.tableId === tableConfig.table_id)?.fields.map(field => ({ label: field.name, value: field.fieldId })) || []
+  const fieldOptions = destinationTables
+    .find(table => table.tableId === tableConfig.table_id)?.fields
+    .map(field => ({ label: field.name, value: field.fieldId, type: field.type })) || []
   const tableFieldOptions = getTableFieldOptions({ tableType, integrationId, fields: tableConfig.fields });
 
   const onChangeIsEnabled = (e: React.ChangeEvent<HTMLInputElement>) => onChange({ ...tableConfig, is_enabled: e.target.checked });
@@ -90,6 +92,7 @@ export const TableConfig = ({ tableType, destinationTables, tableConfig, refresh
                 onChangeField = { onChangeField }
                 errorMessage = { parseErrorCode(errors?.find(error => error.tableId === tableConfig.table_id && (error.fieldType === field.field || error.fieldId === field.field_id))?.errorCode)}
                 index = { index }
+                integrationId = { integrationId }
               />
             ))}
           </Stack>

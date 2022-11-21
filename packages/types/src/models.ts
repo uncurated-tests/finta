@@ -1,3 +1,6 @@
+import { PropertyItemObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+export type NotionPropertyTypes = PropertyItemObjectResponse['type']
+
 export type AirtableCredentials = {
   api_key: string;
   base_id: string;
@@ -142,3 +145,172 @@ export type DestinationError = {
   tableType?: DestinationTableTypes;
   fieldType?: TableConfigFields
 } | undefined;
+
+export const fieldToTypeMapping = {
+  [DestinationTableTypes.INSTITUTIONS]: {
+    [InstitutionsTableFields.ID]: {
+      notion: [ 'rich_text' ]
+    },
+    [InstitutionsTableFields.NAME]: {
+      notion: [ 'title' ]
+    },
+    [InstitutionsTableFields.ERROR]: {
+      notion: ['rich_text']
+    },
+    [InstitutionsTableFields.LAST_UPDATE]: {
+      notion: [ 'date' ]
+    }
+  },
+  [DestinationTableTypes.ACCOUNTS]: {
+    [AccountsTableFields.ID]: {
+      notion: [ 'rich_text' ]
+    },
+    [AccountsTableFields.NAME]: {
+      notion: [ 'title' ]
+    },
+    [AccountsTableFields.INSTITUTION]: {
+      notion: [ 'relation' ]
+    },
+    [AccountsTableFields.AVAILABLE]: {
+      notion: [ 'number' ]
+    },
+    [AccountsTableFields.CURRENT]: {
+      notion: [ 'number' ]
+    },
+    [AccountsTableFields.CURRENCY]: {
+      notion: [ 'select' ]
+    },
+    [AccountsTableFields.MASK]: {
+      notion: [ 'rich_text' ]
+    },
+    [AccountsTableFields.TYPE]: {
+      notion: [ 'select' ]
+    },
+    [AccountsTableFields.SUBTYPE]: {
+      notion: [ 'select' ]
+    },
+    [AccountsTableFields.LIMIT]: {
+      notion: [ 'number' ]
+    }
+  },
+  [DestinationTableTypes.CATEGORIES]: {
+    [CategoryTableFields.ID]: {
+      notion: [ 'rich_text' ]
+    },
+    [CategoryTableFields.CATEGORY_GROUP]: {
+      notion: ['select']
+    },
+    [CategoryTableFields.NAME]: {
+      notion: ['title']
+    }
+  },
+  [DestinationTableTypes.HOLDINGS]: {
+    [HoldingsTableFields.ACCOUNT]: {
+      notion: ['relation']
+    },
+    [HoldingsTableFields.COST_BASIS]: {
+      notion: ['number']
+    },
+    [HoldingsTableFields.CURRENCY]: {
+      notion: ['select']
+    },
+    [HoldingsTableFields.QUANTITY]: {
+      notion: ['number']
+    },
+    [HoldingsTableFields.SECURITY_ID]: {
+      notion: ['relation']
+    },
+    [HoldingsTableFields.SUMMARY]: {
+      notion: ['title']
+    }
+  },
+  [DestinationTableTypes.INVESTMENT_TRANSACTIONS]: {
+    [InvestmentTransactionsTableFields.ACCOUNT]: {
+      notion: ['relation']
+    },
+    [InvestmentTransactionsTableFields.AMOUNT]: {
+      notion: ['number']
+    },
+    [InvestmentTransactionsTableFields.DATE]: {
+      notion: ['date']
+    },
+    [InvestmentTransactionsTableFields.FEES]: {
+      notion: ['number']
+    },
+    [InvestmentTransactionsTableFields.ID]: {
+      notion: ['rich_text']
+    },
+    [InvestmentTransactionsTableFields.CURRENCY]: {
+      notion: ['select']
+    },
+    [InvestmentTransactionsTableFields.SUMMARY]: {
+      notion: ['title']
+    },
+    [InvestmentTransactionsTableFields.PRICE]: {
+      notion: ['number']
+    },
+    [InvestmentTransactionsTableFields.QUANTITY]: {
+      notion: ['number']
+    },
+    [InvestmentTransactionsTableFields.SECURITY_ID]: {
+      notion: ['relation']
+    },
+    [InvestmentTransactionsTableFields.SUBTYPE]: {
+      notion: ['select']
+    },
+    [InvestmentTransactionsTableFields.TYPE]: {
+      notion: ['select']
+    }
+  },
+  [DestinationTableTypes.SECURITIES]: {
+    [SecurityTableFields.ID]: {
+      notion: ['rich_text']
+    },
+    [SecurityTableFields.NAME]: {
+      notion: ['rich_text']
+    },
+    [SecurityTableFields.SYMBOL]: {
+      notion: ['title']
+    },
+    [SecurityTableFields.CLOSE_PRICE]: {
+      notion: ['number']
+    },
+    [SecurityTableFields.CLOSE_PRICE_AS_OF]: {
+      notion: ['date']
+    },
+    [SecurityTableFields.TYPE]: {
+      notion: ['select']
+    },
+  },
+  [DestinationTableTypes.TRANSACTIONS]: {
+    [TransactionsTableFields.SUMMARY]: {
+      notion: ['title']
+    },
+    [TransactionsTableFields.DATE]: {
+      notion: ['date']
+    },
+    [TransactionsTableFields.ACCOUNT]: {
+      notion: ['relation']
+    },
+    [TransactionsTableFields.CATEGORY]: {
+      notion: ['relation']
+    },
+    [TransactionsTableFields.AMOUNT]: {
+      notion: ['number']
+    },
+    [TransactionsTableFields.CURRENCY]: {
+      notion: ['select']
+    },
+    [TransactionsTableFields.PENDING]: {
+      notion: ['checkbox']
+    },
+    [TransactionsTableFields.ID]: {
+      notion: ['rich_text']
+    },
+    [TransactionsTableFields.SUB_ACCOUNT]: {
+      notion: ['rich_text']
+    }
+  }
+} as Record<DestinationTableTypes, Record<TableConfigFields, { notion: NotionPropertyTypes[] }>>
+
+

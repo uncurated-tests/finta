@@ -11,10 +11,13 @@ from "@chakra-ui/react";
 import { ChevronRightIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 import { Input } from "src/components/Input";
 import { TrashIcon } from "@radix-ui/react-icons";
+import { fieldToTypeMapping, NotionPropertyTypes } from "@finta/types"
 
+import { fieldHelperText } from "../constants";
 import { INSTITUTION_TABLE_FIELDS, ACCOUNTS_TABLE_FIELDS, TRANSACTIONS_TABLE_FIELDS, SECURITIES_TABLE_FIELDS, HOLDINGS_TABLE_FIELDS, INVESTMENT_TRANSACTIONS_TABLE_FIELDS, CATEGORIES_TABLE_FIELDS } from "../constants";
 import { Select } from "src/components/Select";
-import { DestinationTableTypes, TableConfigFields, TableConfig as TableConfigType } from "src/types";
+import { DestinationTableTypes, TableConfigFields, TableConfig as TableConfigType, FieldType } from "src/types";
+import { Integrations_Enum } from "src/graphql";
 
 type FieldMappingProps = {
   showFieldIdAs: 'select' | 'text',
@@ -22,11 +25,12 @@ type FieldMappingProps = {
   tableType: DestinationTableTypes ;
   tableFieldOptions: { value: TableConfigFields, label: string }[];
   tableFieldValue:  { value: TableConfigFields | string, label: string };
-  fieldOptions: { label: string; value: string }[];
+  fieldOptions: { label: string; value: string, type?: FieldType }[];
   isDisabled?: boolean;
   onChangeField: (action: 'insert' | 'update' | 'remove', field: { field: TableConfigType['fields'][0]['field'], field_id: string }, index?: number) => void
   errorMessage?: string;
   index: number;
+  integrationId: Integrations_Enum
 }
 
 const getTableField = (tableType: DestinationTableTypes, field: TableConfigFields) => {
@@ -39,7 +43,19 @@ const getTableField = (tableType: DestinationTableTypes, field: TableConfigField
   return SECURITIES_TABLE_FIELDS.find(tableField => tableField.field === field ) || { is_required: false, field: "" }
 }
 
-export const FieldMapping = ({ index, errorMessage, fieldOptions, onChangeField, isDisabled = false, tableFieldOptions, tableFieldValue, showFieldIdAs, field, tableType }: FieldMappingProps) => {
+const getAllowedFieldOptions = (integrationId: Integrations_Enum, tableType: DestinationTableTypes, field: TableConfigFields, fieldOptions: { label: string; value: string, type?: FieldType }[] ) => {
+  if ( ![Integrations_Enum.Notion, Integrations_Enum.Airtable].includes(integrationId) ) { return fieldOptions }
+  const fieldToTypeMappingforFieldType = fieldToTypeMapping[tableType][field]
+  if ( integrationId === Integrations_Enum.Notion && fieldToTypeMappingforFieldType ) {
+    return fieldToTypeMappingforFieldType.notion.map(type => ({ label: fieldHelperText.notion[type], options: fieldOptions.filter(option => type === option.type)}))
+  }
+
+  if ( !fieldToTypeMappingforFieldType ) {
+    console.log(tableType, field)
+  }
+}
+
+export const FieldMapping = ({ integrationId, index, errorMessage, fieldOptions, onChangeField, isDisabled = false, tableFieldOptions, tableFieldValue, showFieldIdAs, field, tableType }: FieldMappingProps) => {
   const icon = useBreakpointValue({ base: ChevronDownIcon, sm: ChevronRightIcon });
   const tableField = getTableField(tableType, field.field)!;
 
@@ -60,7 +76,7 @@ export const FieldMapping = ({ index, errorMessage, fieldOptions, onChangeField,
             ? <Select 
                 isDisabled = { isDisabled } 
                 placeholder = "Destination Field" 
-                options = { fieldOptions }
+                options = { getAllowedFieldOptions(integrationId, tableType, field.field, fieldOptions) }
                 value = { fieldOptions.find(option => option.value === field.field_id) }
                 onChange = { (item: any) => onChangeField('update', { field: field.field, field_id: item.value }, index)}
               /> 

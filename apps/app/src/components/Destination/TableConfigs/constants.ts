@@ -1,6 +1,10 @@
+import { PropertyItemObjectResponse } from "@notionhq/client/build/src/api-endpoints"
+
 import { Integrations_Enum } from "src/graphql";
 import { InstitutionsTableFields, AccountsTableFields, CategoryTableFields, TransactionsTableFields, HoldingsTableFields, InvestmentTransactionsTableFields, SecurityTableFields, DestinationTableTypes } from "@finta/types";
 import { ToastStatusType } from "../../Toast";
+
+type NotionPropertyTypes = PropertyItemObjectResponse['type']
 
 export const ALWAYS_ENABLED_DATA_TYPES = [DestinationTableTypes.INSTITUTIONS, DestinationTableTypes.ACCOUNTS, DestinationTableTypes.SECURITIES, DestinationTableTypes.CATEGORIES];
 export const SUCCESS_TOAST_CONFIG = { status: 'success' as ToastStatusType, title: 'Table Configuraton Saved' };
@@ -233,3 +237,15 @@ export const CATEGORIES_TABLE_FIELDS = [
     is_required: false
   }
 ]
+
+export const fieldHelperText = {
+  notion: {
+    'rich_text': "Field must have the type: 'Text'",
+    'title': "Must be the title field for the database",
+    'checkbox': "Field must have the type: 'Checkbox'",
+    'date': "Field must have the type: 'Date'",
+    'number': "Field must have the type: 'Number'",
+    'select': "Field must have the type: 'Select'",
+    'relation': "Field must have the type: 'Relation'"
+  }
+} as { notion: Record<NotionPropertyTypes, string>}
