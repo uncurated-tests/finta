@@ -11,7 +11,7 @@ from "@chakra-ui/react";
 import { ChevronRightIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 import { Input } from "src/components/Input";
 import { TrashIcon } from "@radix-ui/react-icons";
-import { fieldToTypeMapping, NotionPropertyTypes } from "@finta/types"
+import { fieldToTypeMapping } from "@finta/types"
 
 import { fieldHelperText } from "../constants";
 import { INSTITUTION_TABLE_FIELDS, ACCOUNTS_TABLE_FIELDS, TRANSACTIONS_TABLE_FIELDS, SECURITIES_TABLE_FIELDS, HOLDINGS_TABLE_FIELDS, INVESTMENT_TRANSACTIONS_TABLE_FIELDS, CATEGORIES_TABLE_FIELDS } from "../constants";
@@ -44,14 +44,10 @@ const getTableField = (tableType: DestinationTableTypes, field: TableConfigField
 }
 
 const getAllowedFieldOptions = (integrationId: Integrations_Enum, tableType: DestinationTableTypes, field: TableConfigFields, fieldOptions: { label: string; value: string, type?: FieldType }[] ) => {
-  if ( ![Integrations_Enum.Notion, Integrations_Enum.Airtable].includes(integrationId) ) { return fieldOptions }
+  if ( ![Integrations_Enum.Notion].includes(integrationId) ) { return fieldOptions }
   const fieldToTypeMappingforFieldType = fieldToTypeMapping[tableType][field]
   if ( integrationId === Integrations_Enum.Notion && fieldToTypeMappingforFieldType ) {
-    return fieldToTypeMappingforFieldType.notion.map(type => ({ label: fieldHelperText.notion[type], options: fieldOptions.filter(option => type === option.type)}))
-  }
-
-  if ( !fieldToTypeMappingforFieldType ) {
-    console.log(tableType, field)
+    return fieldToTypeMappingforFieldType.notion.map(type => ({ label: fieldHelperText.notion[type], options: fieldOptions.filter(option => type === option.type) }))
   }
 }
 

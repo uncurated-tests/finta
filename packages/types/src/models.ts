@@ -133,7 +133,8 @@ export enum DestinationErrorCode {
   NO_HEADER_ROW = 'no_header_row', // No header row in google sheets
   MISSING_TABLE = 'missing_table',
   MISSING_FIELD = 'missing_field',
-  UNKNOWN_ERROR = 'unknown_error'
+  UNKNOWN_ERROR = 'unknown_error',
+  INCORRECT_FIELD_TYPE = 'incorrect_field_type'
 }
 
 export type DestinationError = {

@@ -126,6 +126,7 @@ const parseErrorCode = (errorCode?: TableConfigErrorCode | DestinationErrorCode 
   if ( errorCode === TableConfigErrorCode.FIELD_NOT_SELECTED ) return "Please select a field";
   if ( errorCode === DestinationErrorCode.MISSING_FIELD ) return "This field cannot be found in your destination"
   if ( errorCode === DestinationErrorCode.MISSING_TABLE ) return "This table cannot be found in your destination"
+  if ( errorCode === DestinationErrorCode.INCORRECT_FIELD_TYPE ) return "This field has the wrong type in your destination"
   return ""
 }
 
