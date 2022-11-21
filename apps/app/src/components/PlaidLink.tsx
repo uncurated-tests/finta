@@ -8,7 +8,7 @@ import {
 } from "react-plaid-link";
 
 import * as analytics from "src/lib/analytics";
-import { useInsertPlaidAccountsMutation, Plaid_Institutions_Constraint, Plaid_Institutions_Update_Column, useDeletePlaidAccountsMutation, useUpsertPlaidItemMutation, PlaidAccounts_Constraint } from "src/graphql";
+import { Plaid_Institutions_Constraint, Plaid_Institutions_Update_Column, useDeletePlaidAccountsMutation, useUpsertPlaidItemMutation, PlaidAccounts_Constraint } from "src/graphql";
 import { exchangePlaidPublicToken } from "src/lib/functions";
 import { handleAppError } from "src/lib/handleAppError";
 import { useToast } from "src/lib/useToast";
@@ -25,7 +25,6 @@ export const PlaidLink = ({ onSuccessCallback, onExitCallback, linkToken, receiv
   const renderToast = useToast();
   const [ deletePlaidAccountsMutation ] = useDeletePlaidAccountsMutation({ refetchQueries: 'all' });
   const [ upsertPlaidItemMutation ] = useUpsertPlaidItemMutation({ refetchQueries: 'all' });
-  const [ insertPlaidAccountsMutation ] = useInsertPlaidAccountsMutation({ refetchQueries: 'all' })
 
   const onSuccess = useCallback<PlaidLinkOnSuccess>(async (public_token, metadata) => {
     const { institution, accounts, link_session_id } = metadata;
@@ -81,7 +80,7 @@ export const PlaidLink = ({ onSuccessCallback, onExitCallback, linkToken, receiv
 
     Promise.all([deleteNonSharedAccountsPromise, upsertPlaidItemPromise])
     .then(([ _, upsertPlaidItemResponse ]) => onSuccessCallback(upsertPlaidItemResponse.data?.plaidItem))
-  }, [ onSuccessCallback ]);
+  }, [ onSuccessCallback, deletePlaidAccountsMutation, renderToast, upsertPlaidItemMutation ]);
 
   const onEvent = useCallback<PlaidLinkOnEvent>((eventName, metadata) => {
     localStorage.removeItem('link_token')

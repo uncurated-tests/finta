@@ -4110,6 +4110,10 @@ export type Mutation_Root = {
   deletePlaidAccount?: Maybe<PlaidAccounts>;
   /** delete data from the table: "plaid_accounts" */
   deletePlaidAccounts?: Maybe<PlaidAccounts_Mutation_Response>;
+  /** delete single row from the table: "stripe_webhook_events" */
+  deleteStripeWebhookEvent?: Maybe<StripeWebhookEvents>;
+  /** delete data from the table: "stripe_webhook_events" */
+  deleteStripeWebhookEvents?: Maybe<StripeWebhookEvents_Mutation_Response>;
   /** delete single row from the table: "auth.users" */
   deleteUser?: Maybe<Users>;
   /** delete single row from the table: "user_profiles" */
@@ -4174,14 +4178,6 @@ export type Mutation_Root = {
   delete_removed_plaid_transactions?: Maybe<Removed_Plaid_Transactions_Mutation_Response>;
   /** delete single row from the table: "removed_plaid_transactions" */
   delete_removed_plaid_transactions_by_pk?: Maybe<Removed_Plaid_Transactions>;
-  /** delete data from the table: "stripe.webhook_events" */
-  delete_stripe_webhook_events?: Maybe<Stripe_Webhook_Events_Mutation_Response>;
-  /** delete single row from the table: "stripe.webhook_events" */
-  delete_stripe_webhook_events_by_pk?: Maybe<Stripe_Webhook_Events>;
-  /** delete data from the table: "stripe.webhook_events_states" */
-  delete_stripe_webhook_events_states?: Maybe<Stripe_Webhook_Events_States_Mutation_Response>;
-  /** delete single row from the table: "stripe.webhook_events_states" */
-  delete_stripe_webhook_events_states_by_pk?: Maybe<Stripe_Webhook_Events_States>;
   /** delete data from the table: "sync_logs" */
   delete_sync_logs?: Maybe<Sync_Logs_Mutation_Response>;
   /** delete single row from the table: "sync_logs" */
@@ -4228,6 +4224,10 @@ export type Mutation_Root = {
   insertPlaidAccounts?: Maybe<PlaidAccounts_Mutation_Response>;
   /** insert a single row into the table: "plaid_items" */
   insertPlaidItem?: Maybe<Plaid_Items>;
+  /** insert a single row into the table: "stripe_webhook_events" */
+  insertStripeWebhookEvent?: Maybe<StripeWebhookEvents>;
+  /** insert data into the table: "stripe_webhook_events" */
+  insertStripeWebhookEvents?: Maybe<StripeWebhookEvents_Mutation_Response>;
   /** insert a single row into the table: "auth.users" */
   insertUser?: Maybe<Users>;
   /** insert a single row into the table: "user_profiles" */
@@ -4290,14 +4290,6 @@ export type Mutation_Root = {
   insert_removed_plaid_transactions?: Maybe<Removed_Plaid_Transactions_Mutation_Response>;
   /** insert a single row into the table: "removed_plaid_transactions" */
   insert_removed_plaid_transactions_one?: Maybe<Removed_Plaid_Transactions>;
-  /** insert data into the table: "stripe.webhook_events" */
-  insert_stripe_webhook_events?: Maybe<Stripe_Webhook_Events_Mutation_Response>;
-  /** insert a single row into the table: "stripe.webhook_events" */
-  insert_stripe_webhook_events_one?: Maybe<Stripe_Webhook_Events>;
-  /** insert data into the table: "stripe.webhook_events_states" */
-  insert_stripe_webhook_events_states?: Maybe<Stripe_Webhook_Events_States_Mutation_Response>;
-  /** insert a single row into the table: "stripe.webhook_events_states" */
-  insert_stripe_webhook_events_states_one?: Maybe<Stripe_Webhook_Events_States>;
   /** insert data into the table: "sync_logs" */
   insert_sync_logs?: Maybe<Sync_Logs_Mutation_Response>;
   /** insert a single row into the table: "sync_logs" */
@@ -4344,6 +4336,10 @@ export type Mutation_Root = {
   updatePlaidAccount?: Maybe<PlaidAccounts>;
   /** update data of the table: "plaid_accounts" */
   updatePlaidAccounts?: Maybe<PlaidAccounts_Mutation_Response>;
+  /** update single row of the table: "stripe_webhook_events" */
+  updateStripeWebhookEvent?: Maybe<StripeWebhookEvents>;
+  /** update data of the table: "stripe_webhook_events" */
+  updateStripeWebhookEvents?: Maybe<StripeWebhookEvents_Mutation_Response>;
   /** update single row of the table: "auth.users" */
   updateUser?: Maybe<Users>;
   /** update single row of the table: "user_profiles" */
@@ -4456,18 +4452,8 @@ export type Mutation_Root = {
   update_removed_plaid_transactions_by_pk?: Maybe<Removed_Plaid_Transactions>;
   /** update multiples rows of table: "removed_plaid_transactions" */
   update_removed_plaid_transactions_many?: Maybe<Array<Maybe<Removed_Plaid_Transactions_Mutation_Response>>>;
-  /** update data of the table: "stripe.webhook_events" */
-  update_stripe_webhook_events?: Maybe<Stripe_Webhook_Events_Mutation_Response>;
-  /** update single row of the table: "stripe.webhook_events" */
-  update_stripe_webhook_events_by_pk?: Maybe<Stripe_Webhook_Events>;
-  /** update multiples rows of table: "stripe.webhook_events" */
-  update_stripe_webhook_events_many?: Maybe<Array<Maybe<Stripe_Webhook_Events_Mutation_Response>>>;
-  /** update data of the table: "stripe.webhook_events_states" */
-  update_stripe_webhook_events_states?: Maybe<Stripe_Webhook_Events_States_Mutation_Response>;
-  /** update single row of the table: "stripe.webhook_events_states" */
-  update_stripe_webhook_events_states_by_pk?: Maybe<Stripe_Webhook_Events_States>;
-  /** update multiples rows of table: "stripe.webhook_events_states" */
-  update_stripe_webhook_events_states_many?: Maybe<Array<Maybe<Stripe_Webhook_Events_States_Mutation_Response>>>;
+  /** update multiples rows of table: "stripe_webhook_events" */
+  update_stripeWebhookEvents_many?: Maybe<Array<Maybe<StripeWebhookEvents_Mutation_Response>>>;
   /** update data of the table: "sync_logs" */
   update_sync_logs?: Maybe<Sync_Logs_Mutation_Response>;
   /** update single row of the table: "sync_logs" */
@@ -4598,6 +4584,18 @@ export type Mutation_RootDeletePlaidAccountArgs = {
 /** mutation root */
 export type Mutation_RootDeletePlaidAccountsArgs = {
   where: PlaidAccounts_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDeleteStripeWebhookEventArgs = {
+  id: Scalars['String'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDeleteStripeWebhookEventsArgs = {
+  where: StripeWebhookEvents_Bool_Exp;
 };
 
 
@@ -4798,30 +4796,6 @@ export type Mutation_RootDelete_Removed_Plaid_Transactions_By_PkArgs = {
 
 
 /** mutation root */
-export type Mutation_RootDelete_Stripe_Webhook_EventsArgs = {
-  where: Stripe_Webhook_Events_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Stripe_Webhook_Events_By_PkArgs = {
-  id: Scalars['String'];
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Stripe_Webhook_Events_StatesArgs = {
-  where: Stripe_Webhook_Events_States_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Stripe_Webhook_Events_States_By_PkArgs = {
-  name: Scalars['String'];
-};
-
-
-/** mutation root */
 export type Mutation_RootDelete_Sync_LogsArgs = {
   where: Sync_Logs_Bool_Exp;
 };
@@ -4977,6 +4951,20 @@ export type Mutation_RootInsertPlaidAccountsArgs = {
 export type Mutation_RootInsertPlaidItemArgs = {
   object: Plaid_Items_Insert_Input;
   on_conflict?: InputMaybe<Plaid_Items_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsertStripeWebhookEventArgs = {
+  object: StripeWebhookEvents_Insert_Input;
+  on_conflict?: InputMaybe<StripeWebhookEvents_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsertStripeWebhookEventsArgs = {
+  objects: Array<StripeWebhookEvents_Insert_Input>;
+  on_conflict?: InputMaybe<StripeWebhookEvents_On_Conflict>;
 };
 
 
@@ -5198,34 +5186,6 @@ export type Mutation_RootInsert_Removed_Plaid_Transactions_OneArgs = {
 
 
 /** mutation root */
-export type Mutation_RootInsert_Stripe_Webhook_EventsArgs = {
-  objects: Array<Stripe_Webhook_Events_Insert_Input>;
-  on_conflict?: InputMaybe<Stripe_Webhook_Events_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Stripe_Webhook_Events_OneArgs = {
-  object: Stripe_Webhook_Events_Insert_Input;
-  on_conflict?: InputMaybe<Stripe_Webhook_Events_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Stripe_Webhook_Events_StatesArgs = {
-  objects: Array<Stripe_Webhook_Events_States_Insert_Input>;
-  on_conflict?: InputMaybe<Stripe_Webhook_Events_States_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Stripe_Webhook_Events_States_OneArgs = {
-  object: Stripe_Webhook_Events_States_Insert_Input;
-  on_conflict?: InputMaybe<Stripe_Webhook_Events_States_On_Conflict>;
-};
-
-
-/** mutation root */
 export type Mutation_RootInsert_Sync_LogsArgs = {
   objects: Array<Sync_Logs_Insert_Input>;
   on_conflict?: InputMaybe<Sync_Logs_On_Conflict>;
@@ -5398,6 +5358,20 @@ export type Mutation_RootUpdatePlaidAccountArgs = {
 export type Mutation_RootUpdatePlaidAccountsArgs = {
   _set?: InputMaybe<PlaidAccounts_Set_Input>;
   where: PlaidAccounts_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdateStripeWebhookEventArgs = {
+  _set?: InputMaybe<StripeWebhookEvents_Set_Input>;
+  pk_columns: StripeWebhookEvents_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdateStripeWebhookEventsArgs = {
+  _set?: InputMaybe<StripeWebhookEvents_Set_Input>;
+  where: StripeWebhookEvents_Bool_Exp;
 };
 
 
@@ -5830,42 +5804,8 @@ export type Mutation_RootUpdate_Removed_Plaid_Transactions_ManyArgs = {
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Stripe_Webhook_EventsArgs = {
-  _set?: InputMaybe<Stripe_Webhook_Events_Set_Input>;
-  where: Stripe_Webhook_Events_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Stripe_Webhook_Events_By_PkArgs = {
-  _set?: InputMaybe<Stripe_Webhook_Events_Set_Input>;
-  pk_columns: Stripe_Webhook_Events_Pk_Columns_Input;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Stripe_Webhook_Events_ManyArgs = {
-  updates: Array<Stripe_Webhook_Events_Updates>;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Stripe_Webhook_Events_StatesArgs = {
-  _set?: InputMaybe<Stripe_Webhook_Events_States_Set_Input>;
-  where: Stripe_Webhook_Events_States_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Stripe_Webhook_Events_States_By_PkArgs = {
-  _set?: InputMaybe<Stripe_Webhook_Events_States_Set_Input>;
-  pk_columns: Stripe_Webhook_Events_States_Pk_Columns_Input;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Stripe_Webhook_Events_States_ManyArgs = {
-  updates: Array<Stripe_Webhook_Events_States_Updates>;
+export type Mutation_RootUpdate_StripeWebhookEvents_ManyArgs = {
+  updates: Array<StripeWebhookEvents_Updates>;
 };
 
 
@@ -7896,18 +7836,12 @@ export type Query_Root = {
   removed_plaid_transactions_by_pk?: Maybe<Removed_Plaid_Transactions>;
   stripeData: StripeData;
   stripePrices: Array<StripePrice>;
-  /** fetch data from the table: "stripe.webhook_events" */
-  stripe_webhook_events: Array<Stripe_Webhook_Events>;
-  /** fetch aggregated fields from the table: "stripe.webhook_events" */
-  stripe_webhook_events_aggregate: Stripe_Webhook_Events_Aggregate;
-  /** fetch data from the table: "stripe.webhook_events" using primary key columns */
-  stripe_webhook_events_by_pk?: Maybe<Stripe_Webhook_Events>;
-  /** fetch data from the table: "stripe.webhook_events_states" */
-  stripe_webhook_events_states: Array<Stripe_Webhook_Events_States>;
-  /** fetch aggregated fields from the table: "stripe.webhook_events_states" */
-  stripe_webhook_events_states_aggregate: Stripe_Webhook_Events_States_Aggregate;
-  /** fetch data from the table: "stripe.webhook_events_states" using primary key columns */
-  stripe_webhook_events_states_by_pk?: Maybe<Stripe_Webhook_Events_States>;
+  /** fetch data from the table: "stripe_webhook_events" using primary key columns */
+  stripeWebhookEvent?: Maybe<StripeWebhookEvents>;
+  /** fetch data from the table: "stripe_webhook_events" */
+  stripeWebhookEvents: Array<StripeWebhookEvents>;
+  /** fetch aggregated fields from the table: "stripe_webhook_events" */
+  stripeWebhookEvents_aggregate: StripeWebhookEvents_Aggregate;
   /** fetch data from the table: "sync_logs" */
   sync_logs: Array<Sync_Logs>;
   /** fetch aggregated fields from the table: "sync_logs" */
@@ -8490,49 +8424,26 @@ export type Query_RootStripeDataArgs = {
 };
 
 
-export type Query_RootStripe_Webhook_EventsArgs = {
-  distinct_on?: InputMaybe<Array<Stripe_Webhook_Events_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Stripe_Webhook_Events_Order_By>>;
-  where?: InputMaybe<Stripe_Webhook_Events_Bool_Exp>;
-};
-
-
-export type Query_RootStripe_Webhook_Events_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Stripe_Webhook_Events_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Stripe_Webhook_Events_Order_By>>;
-  where?: InputMaybe<Stripe_Webhook_Events_Bool_Exp>;
-};
-
-
-export type Query_RootStripe_Webhook_Events_By_PkArgs = {
+export type Query_RootStripeWebhookEventArgs = {
   id: Scalars['String'];
 };
 
 
-export type Query_RootStripe_Webhook_Events_StatesArgs = {
-  distinct_on?: InputMaybe<Array<Stripe_Webhook_Events_States_Select_Column>>;
+export type Query_RootStripeWebhookEventsArgs = {
+  distinct_on?: InputMaybe<Array<StripeWebhookEvents_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Stripe_Webhook_Events_States_Order_By>>;
-  where?: InputMaybe<Stripe_Webhook_Events_States_Bool_Exp>;
+  order_by?: InputMaybe<Array<StripeWebhookEvents_Order_By>>;
+  where?: InputMaybe<StripeWebhookEvents_Bool_Exp>;
 };
 
 
-export type Query_RootStripe_Webhook_Events_States_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Stripe_Webhook_Events_States_Select_Column>>;
+export type Query_RootStripeWebhookEvents_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<StripeWebhookEvents_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Stripe_Webhook_Events_States_Order_By>>;
-  where?: InputMaybe<Stripe_Webhook_Events_States_Bool_Exp>;
-};
-
-
-export type Query_RootStripe_Webhook_Events_States_By_PkArgs = {
-  name: Scalars['String'];
+  order_by?: InputMaybe<Array<StripeWebhookEvents_Order_By>>;
+  where?: InputMaybe<StripeWebhookEvents_Bool_Exp>;
 };
 
 
@@ -8782,282 +8693,117 @@ export type Removed_Plaid_Transactions_Updates = {
   where: Removed_Plaid_Transactions_Bool_Exp;
 };
 
-/** columns and relationships of "stripe.webhook_events" */
-export type Stripe_Webhook_Events = {
-  __typename?: 'stripe_webhook_events';
-  created_at: Scalars['timestamptz'];
+/** columns and relationships of "stripe_webhook_events" */
+export type StripeWebhookEvents = {
+  __typename?: 'stripeWebhookEvents';
+  createdAt: Scalars['timestamptz'];
   event: Scalars['String'];
   id: Scalars['String'];
-  state: Stripe_Webhook_Events_States_Enum;
+  /** Either 'processed' or 'failed' */
+  state: Scalars['String'];
 };
 
-/** aggregated selection of "stripe.webhook_events" */
-export type Stripe_Webhook_Events_Aggregate = {
-  __typename?: 'stripe_webhook_events_aggregate';
-  aggregate?: Maybe<Stripe_Webhook_Events_Aggregate_Fields>;
-  nodes: Array<Stripe_Webhook_Events>;
+/** aggregated selection of "stripe_webhook_events" */
+export type StripeWebhookEvents_Aggregate = {
+  __typename?: 'stripeWebhookEvents_aggregate';
+  aggregate?: Maybe<StripeWebhookEvents_Aggregate_Fields>;
+  nodes: Array<StripeWebhookEvents>;
 };
 
-/** aggregate fields of "stripe.webhook_events" */
-export type Stripe_Webhook_Events_Aggregate_Fields = {
-  __typename?: 'stripe_webhook_events_aggregate_fields';
+/** aggregate fields of "stripe_webhook_events" */
+export type StripeWebhookEvents_Aggregate_Fields = {
+  __typename?: 'stripeWebhookEvents_aggregate_fields';
   count: Scalars['Int'];
-  max?: Maybe<Stripe_Webhook_Events_Max_Fields>;
-  min?: Maybe<Stripe_Webhook_Events_Min_Fields>;
+  max?: Maybe<StripeWebhookEvents_Max_Fields>;
+  min?: Maybe<StripeWebhookEvents_Min_Fields>;
 };
 
 
-/** aggregate fields of "stripe.webhook_events" */
-export type Stripe_Webhook_Events_Aggregate_FieldsCountArgs = {
-  columns?: InputMaybe<Array<Stripe_Webhook_Events_Select_Column>>;
+/** aggregate fields of "stripe_webhook_events" */
+export type StripeWebhookEvents_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<StripeWebhookEvents_Select_Column>>;
   distinct?: InputMaybe<Scalars['Boolean']>;
 };
 
-/** Boolean expression to filter rows from the table "stripe.webhook_events". All fields are combined with a logical 'AND'. */
-export type Stripe_Webhook_Events_Bool_Exp = {
-  _and?: InputMaybe<Array<Stripe_Webhook_Events_Bool_Exp>>;
-  _not?: InputMaybe<Stripe_Webhook_Events_Bool_Exp>;
-  _or?: InputMaybe<Array<Stripe_Webhook_Events_Bool_Exp>>;
-  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+/** Boolean expression to filter rows from the table "stripe_webhook_events". All fields are combined with a logical 'AND'. */
+export type StripeWebhookEvents_Bool_Exp = {
+  _and?: InputMaybe<Array<StripeWebhookEvents_Bool_Exp>>;
+  _not?: InputMaybe<StripeWebhookEvents_Bool_Exp>;
+  _or?: InputMaybe<Array<StripeWebhookEvents_Bool_Exp>>;
+  createdAt?: InputMaybe<Timestamptz_Comparison_Exp>;
   event?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<String_Comparison_Exp>;
-  state?: InputMaybe<Stripe_Webhook_Events_States_Enum_Comparison_Exp>;
+  state?: InputMaybe<String_Comparison_Exp>;
 };
 
-/** unique or primary key constraints on table "stripe.webhook_events" */
-export enum Stripe_Webhook_Events_Constraint {
+/** unique or primary key constraints on table "stripe_webhook_events" */
+export enum StripeWebhookEvents_Constraint {
   /** unique or primary key constraint on columns "id" */
-  WebhookEventsPkey = 'webhook_events_pkey'
+  StripeWebhookEventsPkey = 'stripe_webhook_events_pkey'
 }
 
-/** input type for inserting data into table "stripe.webhook_events" */
-export type Stripe_Webhook_Events_Insert_Input = {
-  created_at?: InputMaybe<Scalars['timestamptz']>;
+/** input type for inserting data into table "stripe_webhook_events" */
+export type StripeWebhookEvents_Insert_Input = {
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
   event?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
-  state?: InputMaybe<Stripe_Webhook_Events_States_Enum>;
+  /** Either 'processed' or 'failed' */
+  state?: InputMaybe<Scalars['String']>;
 };
 
 /** aggregate max on columns */
-export type Stripe_Webhook_Events_Max_Fields = {
-  __typename?: 'stripe_webhook_events_max_fields';
-  created_at?: Maybe<Scalars['timestamptz']>;
+export type StripeWebhookEvents_Max_Fields = {
+  __typename?: 'stripeWebhookEvents_max_fields';
+  createdAt?: Maybe<Scalars['timestamptz']>;
   event?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  /** Either 'processed' or 'failed' */
+  state?: Maybe<Scalars['String']>;
 };
 
 /** aggregate min on columns */
-export type Stripe_Webhook_Events_Min_Fields = {
-  __typename?: 'stripe_webhook_events_min_fields';
-  created_at?: Maybe<Scalars['timestamptz']>;
+export type StripeWebhookEvents_Min_Fields = {
+  __typename?: 'stripeWebhookEvents_min_fields';
+  createdAt?: Maybe<Scalars['timestamptz']>;
   event?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  /** Either 'processed' or 'failed' */
+  state?: Maybe<Scalars['String']>;
 };
 
-/** response of any mutation on the table "stripe.webhook_events" */
-export type Stripe_Webhook_Events_Mutation_Response = {
-  __typename?: 'stripe_webhook_events_mutation_response';
+/** response of any mutation on the table "stripe_webhook_events" */
+export type StripeWebhookEvents_Mutation_Response = {
+  __typename?: 'stripeWebhookEvents_mutation_response';
   /** number of rows affected by the mutation */
   affected_rows: Scalars['Int'];
   /** data from the rows affected by the mutation */
-  returning: Array<Stripe_Webhook_Events>;
+  returning: Array<StripeWebhookEvents>;
 };
 
-/** on_conflict condition type for table "stripe.webhook_events" */
-export type Stripe_Webhook_Events_On_Conflict = {
-  constraint: Stripe_Webhook_Events_Constraint;
-  update_columns?: Array<Stripe_Webhook_Events_Update_Column>;
-  where?: InputMaybe<Stripe_Webhook_Events_Bool_Exp>;
+/** on_conflict condition type for table "stripe_webhook_events" */
+export type StripeWebhookEvents_On_Conflict = {
+  constraint: StripeWebhookEvents_Constraint;
+  update_columns?: Array<StripeWebhookEvents_Update_Column>;
+  where?: InputMaybe<StripeWebhookEvents_Bool_Exp>;
 };
 
-/** Ordering options when selecting data from "stripe.webhook_events". */
-export type Stripe_Webhook_Events_Order_By = {
-  created_at?: InputMaybe<Order_By>;
+/** Ordering options when selecting data from "stripe_webhook_events". */
+export type StripeWebhookEvents_Order_By = {
+  createdAt?: InputMaybe<Order_By>;
   event?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   state?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: stripe.webhook_events */
-export type Stripe_Webhook_Events_Pk_Columns_Input = {
+/** primary key columns input for table: stripe_webhook_events */
+export type StripeWebhookEvents_Pk_Columns_Input = {
   id: Scalars['String'];
 };
 
-/** select columns of table "stripe.webhook_events" */
-export enum Stripe_Webhook_Events_Select_Column {
+/** select columns of table "stripe_webhook_events" */
+export enum StripeWebhookEvents_Select_Column {
   /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Event = 'event',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  State = 'state'
-}
-
-/** input type for updating data in table "stripe.webhook_events" */
-export type Stripe_Webhook_Events_Set_Input = {
-  created_at?: InputMaybe<Scalars['timestamptz']>;
-  event?: InputMaybe<Scalars['String']>;
-  id?: InputMaybe<Scalars['String']>;
-  state?: InputMaybe<Stripe_Webhook_Events_States_Enum>;
-};
-
-/** columns and relationships of "stripe.webhook_events_states" */
-export type Stripe_Webhook_Events_States = {
-  __typename?: 'stripe_webhook_events_states';
-  name: Scalars['String'];
-};
-
-/** aggregated selection of "stripe.webhook_events_states" */
-export type Stripe_Webhook_Events_States_Aggregate = {
-  __typename?: 'stripe_webhook_events_states_aggregate';
-  aggregate?: Maybe<Stripe_Webhook_Events_States_Aggregate_Fields>;
-  nodes: Array<Stripe_Webhook_Events_States>;
-};
-
-/** aggregate fields of "stripe.webhook_events_states" */
-export type Stripe_Webhook_Events_States_Aggregate_Fields = {
-  __typename?: 'stripe_webhook_events_states_aggregate_fields';
-  count: Scalars['Int'];
-  max?: Maybe<Stripe_Webhook_Events_States_Max_Fields>;
-  min?: Maybe<Stripe_Webhook_Events_States_Min_Fields>;
-};
-
-
-/** aggregate fields of "stripe.webhook_events_states" */
-export type Stripe_Webhook_Events_States_Aggregate_FieldsCountArgs = {
-  columns?: InputMaybe<Array<Stripe_Webhook_Events_States_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']>;
-};
-
-/** Boolean expression to filter rows from the table "stripe.webhook_events_states". All fields are combined with a logical 'AND'. */
-export type Stripe_Webhook_Events_States_Bool_Exp = {
-  _and?: InputMaybe<Array<Stripe_Webhook_Events_States_Bool_Exp>>;
-  _not?: InputMaybe<Stripe_Webhook_Events_States_Bool_Exp>;
-  _or?: InputMaybe<Array<Stripe_Webhook_Events_States_Bool_Exp>>;
-  name?: InputMaybe<String_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "stripe.webhook_events_states" */
-export enum Stripe_Webhook_Events_States_Constraint {
-  /** unique or primary key constraint on columns "name" */
-  WebhookEventsStatesPkey = 'webhook_events_states_pkey'
-}
-
-export enum Stripe_Webhook_Events_States_Enum {
-  Failed = 'failed',
-  Processed = 'processed'
-}
-
-/** Boolean expression to compare columns of type "stripe_webhook_events_states_enum". All fields are combined with logical 'AND'. */
-export type Stripe_Webhook_Events_States_Enum_Comparison_Exp = {
-  _eq?: InputMaybe<Stripe_Webhook_Events_States_Enum>;
-  _in?: InputMaybe<Array<Stripe_Webhook_Events_States_Enum>>;
-  _is_null?: InputMaybe<Scalars['Boolean']>;
-  _neq?: InputMaybe<Stripe_Webhook_Events_States_Enum>;
-  _nin?: InputMaybe<Array<Stripe_Webhook_Events_States_Enum>>;
-};
-
-/** input type for inserting data into table "stripe.webhook_events_states" */
-export type Stripe_Webhook_Events_States_Insert_Input = {
-  name?: InputMaybe<Scalars['String']>;
-};
-
-/** aggregate max on columns */
-export type Stripe_Webhook_Events_States_Max_Fields = {
-  __typename?: 'stripe_webhook_events_states_max_fields';
-  name?: Maybe<Scalars['String']>;
-};
-
-/** aggregate min on columns */
-export type Stripe_Webhook_Events_States_Min_Fields = {
-  __typename?: 'stripe_webhook_events_states_min_fields';
-  name?: Maybe<Scalars['String']>;
-};
-
-/** response of any mutation on the table "stripe.webhook_events_states" */
-export type Stripe_Webhook_Events_States_Mutation_Response = {
-  __typename?: 'stripe_webhook_events_states_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int'];
-  /** data from the rows affected by the mutation */
-  returning: Array<Stripe_Webhook_Events_States>;
-};
-
-/** on_conflict condition type for table "stripe.webhook_events_states" */
-export type Stripe_Webhook_Events_States_On_Conflict = {
-  constraint: Stripe_Webhook_Events_States_Constraint;
-  update_columns?: Array<Stripe_Webhook_Events_States_Update_Column>;
-  where?: InputMaybe<Stripe_Webhook_Events_States_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "stripe.webhook_events_states". */
-export type Stripe_Webhook_Events_States_Order_By = {
-  name?: InputMaybe<Order_By>;
-};
-
-/** primary key columns input for table: stripe.webhook_events_states */
-export type Stripe_Webhook_Events_States_Pk_Columns_Input = {
-  name: Scalars['String'];
-};
-
-/** select columns of table "stripe.webhook_events_states" */
-export enum Stripe_Webhook_Events_States_Select_Column {
-  /** column name */
-  Name = 'name'
-}
-
-/** input type for updating data in table "stripe.webhook_events_states" */
-export type Stripe_Webhook_Events_States_Set_Input = {
-  name?: InputMaybe<Scalars['String']>;
-};
-
-/** Streaming cursor of the table "stripe_webhook_events_states" */
-export type Stripe_Webhook_Events_States_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Stripe_Webhook_Events_States_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Stripe_Webhook_Events_States_Stream_Cursor_Value_Input = {
-  name?: InputMaybe<Scalars['String']>;
-};
-
-/** update columns of table "stripe.webhook_events_states" */
-export enum Stripe_Webhook_Events_States_Update_Column {
-  /** column name */
-  Name = 'name'
-}
-
-export type Stripe_Webhook_Events_States_Updates = {
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Stripe_Webhook_Events_States_Set_Input>;
-  where: Stripe_Webhook_Events_States_Bool_Exp;
-};
-
-/** Streaming cursor of the table "stripe_webhook_events" */
-export type Stripe_Webhook_Events_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Stripe_Webhook_Events_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Stripe_Webhook_Events_Stream_Cursor_Value_Input = {
-  created_at?: InputMaybe<Scalars['timestamptz']>;
-  event?: InputMaybe<Scalars['String']>;
-  id?: InputMaybe<Scalars['String']>;
-  state?: InputMaybe<Stripe_Webhook_Events_States_Enum>;
-};
-
-/** update columns of table "stripe.webhook_events" */
-export enum Stripe_Webhook_Events_Update_Column {
-  /** column name */
-  CreatedAt = 'created_at',
+  CreatedAt = 'createdAt',
   /** column name */
   Event = 'event',
   /** column name */
@@ -9066,10 +8812,48 @@ export enum Stripe_Webhook_Events_Update_Column {
   State = 'state'
 }
 
-export type Stripe_Webhook_Events_Updates = {
+/** input type for updating data in table "stripe_webhook_events" */
+export type StripeWebhookEvents_Set_Input = {
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  event?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  /** Either 'processed' or 'failed' */
+  state?: InputMaybe<Scalars['String']>;
+};
+
+/** Streaming cursor of the table "stripeWebhookEvents" */
+export type StripeWebhookEvents_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: StripeWebhookEvents_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type StripeWebhookEvents_Stream_Cursor_Value_Input = {
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  event?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  /** Either 'processed' or 'failed' */
+  state?: InputMaybe<Scalars['String']>;
+};
+
+/** update columns of table "stripe_webhook_events" */
+export enum StripeWebhookEvents_Update_Column {
+  /** column name */
+  CreatedAt = 'createdAt',
+  /** column name */
+  Event = 'event',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  State = 'state'
+}
+
+export type StripeWebhookEvents_Updates = {
   /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Stripe_Webhook_Events_Set_Input>;
-  where: Stripe_Webhook_Events_Bool_Exp;
+  _set?: InputMaybe<StripeWebhookEvents_Set_Input>;
+  where: StripeWebhookEvents_Bool_Exp;
 };
 
 export type Subscription_Root = {
@@ -9266,22 +9050,14 @@ export type Subscription_Root = {
   removed_plaid_transactions_by_pk?: Maybe<Removed_Plaid_Transactions>;
   /** fetch data from the table in a streaming manner : "removed_plaid_transactions" */
   removed_plaid_transactions_stream: Array<Removed_Plaid_Transactions>;
-  /** fetch data from the table: "stripe.webhook_events" */
-  stripe_webhook_events: Array<Stripe_Webhook_Events>;
-  /** fetch aggregated fields from the table: "stripe.webhook_events" */
-  stripe_webhook_events_aggregate: Stripe_Webhook_Events_Aggregate;
-  /** fetch data from the table: "stripe.webhook_events" using primary key columns */
-  stripe_webhook_events_by_pk?: Maybe<Stripe_Webhook_Events>;
-  /** fetch data from the table: "stripe.webhook_events_states" */
-  stripe_webhook_events_states: Array<Stripe_Webhook_Events_States>;
-  /** fetch aggregated fields from the table: "stripe.webhook_events_states" */
-  stripe_webhook_events_states_aggregate: Stripe_Webhook_Events_States_Aggregate;
-  /** fetch data from the table: "stripe.webhook_events_states" using primary key columns */
-  stripe_webhook_events_states_by_pk?: Maybe<Stripe_Webhook_Events_States>;
-  /** fetch data from the table in a streaming manner : "stripe.webhook_events_states" */
-  stripe_webhook_events_states_stream: Array<Stripe_Webhook_Events_States>;
-  /** fetch data from the table in a streaming manner : "stripe.webhook_events" */
-  stripe_webhook_events_stream: Array<Stripe_Webhook_Events>;
+  /** fetch data from the table: "stripe_webhook_events" using primary key columns */
+  stripeWebhookEvent?: Maybe<StripeWebhookEvents>;
+  /** fetch data from the table: "stripe_webhook_events" */
+  stripeWebhookEvents: Array<StripeWebhookEvents>;
+  /** fetch aggregated fields from the table: "stripe_webhook_events" */
+  stripeWebhookEvents_aggregate: StripeWebhookEvents_Aggregate;
+  /** fetch data from the table in a streaming manner : "stripe_webhook_events" */
+  stripeWebhookEvents_stream: Array<StripeWebhookEvents>;
   /** fetch data from the table: "sync_logs" */
   sync_logs: Array<Sync_Logs>;
   /** fetch aggregated fields from the table: "sync_logs" */
@@ -10033,63 +9809,33 @@ export type Subscription_RootRemoved_Plaid_Transactions_StreamArgs = {
 };
 
 
-export type Subscription_RootStripe_Webhook_EventsArgs = {
-  distinct_on?: InputMaybe<Array<Stripe_Webhook_Events_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Stripe_Webhook_Events_Order_By>>;
-  where?: InputMaybe<Stripe_Webhook_Events_Bool_Exp>;
-};
-
-
-export type Subscription_RootStripe_Webhook_Events_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Stripe_Webhook_Events_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Stripe_Webhook_Events_Order_By>>;
-  where?: InputMaybe<Stripe_Webhook_Events_Bool_Exp>;
-};
-
-
-export type Subscription_RootStripe_Webhook_Events_By_PkArgs = {
+export type Subscription_RootStripeWebhookEventArgs = {
   id: Scalars['String'];
 };
 
 
-export type Subscription_RootStripe_Webhook_Events_StatesArgs = {
-  distinct_on?: InputMaybe<Array<Stripe_Webhook_Events_States_Select_Column>>;
+export type Subscription_RootStripeWebhookEventsArgs = {
+  distinct_on?: InputMaybe<Array<StripeWebhookEvents_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Stripe_Webhook_Events_States_Order_By>>;
-  where?: InputMaybe<Stripe_Webhook_Events_States_Bool_Exp>;
+  order_by?: InputMaybe<Array<StripeWebhookEvents_Order_By>>;
+  where?: InputMaybe<StripeWebhookEvents_Bool_Exp>;
 };
 
 
-export type Subscription_RootStripe_Webhook_Events_States_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Stripe_Webhook_Events_States_Select_Column>>;
+export type Subscription_RootStripeWebhookEvents_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<StripeWebhookEvents_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<Stripe_Webhook_Events_States_Order_By>>;
-  where?: InputMaybe<Stripe_Webhook_Events_States_Bool_Exp>;
+  order_by?: InputMaybe<Array<StripeWebhookEvents_Order_By>>;
+  where?: InputMaybe<StripeWebhookEvents_Bool_Exp>;
 };
 
 
-export type Subscription_RootStripe_Webhook_Events_States_By_PkArgs = {
-  name: Scalars['String'];
-};
-
-
-export type Subscription_RootStripe_Webhook_Events_States_StreamArgs = {
+export type Subscription_RootStripeWebhookEvents_StreamArgs = {
   batch_size: Scalars['Int'];
-  cursor: Array<InputMaybe<Stripe_Webhook_Events_States_Stream_Cursor_Input>>;
-  where?: InputMaybe<Stripe_Webhook_Events_States_Bool_Exp>;
-};
-
-
-export type Subscription_RootStripe_Webhook_Events_StreamArgs = {
-  batch_size: Scalars['Int'];
-  cursor: Array<InputMaybe<Stripe_Webhook_Events_Stream_Cursor_Input>>;
-  where?: InputMaybe<Stripe_Webhook_Events_Bool_Exp>;
+  cursor: Array<InputMaybe<StripeWebhookEvents_Stream_Cursor_Input>>;
+  where?: InputMaybe<StripeWebhookEvents_Bool_Exp>;
 };
 
 
@@ -11582,29 +11328,29 @@ export type DeleteRemovedPlaidTransactionsMutationVariables = Exact<{
 
 export type DeleteRemovedPlaidTransactionsMutation = { __typename?: 'mutation_root', delete_removed_plaid_transactions?: { __typename?: 'removed_plaid_transactions_mutation_response', affected_rows: number } | null };
 
-export type AllWebhookEventFieldsFragment = { __typename: 'stripe_webhook_events', id: string, event: string, state: Stripe_Webhook_Events_States_Enum };
+export type AllWebhookEventFieldsFragment = { __typename: 'stripeWebhookEvents', id: string, event: string, state: string };
 
 export type InsertStripeWebhookEventMutationVariables = Exact<{
-  webhook_event: Stripe_Webhook_Events_Insert_Input;
+  webhook_event: StripeWebhookEvents_Insert_Input;
 }>;
 
 
-export type InsertStripeWebhookEventMutation = { __typename?: 'mutation_root', webhook_event?: { __typename: 'stripe_webhook_events', id: string, event: string, state: Stripe_Webhook_Events_States_Enum } | null };
+export type InsertStripeWebhookEventMutation = { __typename?: 'mutation_root', webhook_event?: { __typename: 'stripeWebhookEvents', id: string, event: string, state: string } | null };
 
 export type GetStripeWebhookEventQueryVariables = Exact<{
   webhook_event_id: Scalars['String'];
 }>;
 
 
-export type GetStripeWebhookEventQuery = { __typename?: 'query_root', webhook_event?: { __typename: 'stripe_webhook_events', id: string, event: string, state: Stripe_Webhook_Events_States_Enum } | null };
+export type GetStripeWebhookEventQuery = { __typename?: 'query_root', webhook_event?: { __typename: 'stripeWebhookEvents', id: string, event: string, state: string } | null };
 
 export type UpdateStripeWebhookEventMutationVariables = Exact<{
   webhook_event_id: Scalars['String'];
-  _set: Stripe_Webhook_Events_Set_Input;
+  _set: StripeWebhookEvents_Set_Input;
 }>;
 
 
-export type UpdateStripeWebhookEventMutation = { __typename?: 'mutation_root', webhook_event?: { __typename: 'stripe_webhook_events', id: string, event: string, state: Stripe_Webhook_Events_States_Enum } | null };
+export type UpdateStripeWebhookEventMutation = { __typename?: 'mutation_root', webhook_event?: { __typename: 'stripeWebhookEvents', id: string, event: string, state: string } | null };
 
 export type DbSyncLogFieldsFragment = { __typename?: 'sync_logs', id: any, ended_at?: any | null, error?: any | null, trigger: string, is_success: boolean };
 
@@ -11857,7 +11603,7 @@ export const AllRemovedPlaidTransactionsFields = gql`
 }
     `;
 export const AllWebhookEventFields = gql`
-    fragment AllWebhookEventFields on stripe_webhook_events {
+    fragment AllWebhookEventFields on stripeWebhookEvents {
   __typename
   id
   event
@@ -12119,10 +11865,10 @@ export const DeleteRemovedPlaidTransactions = gql`
 }
     `;
 export const InsertStripeWebhookEvent = gql`
-    mutation InsertStripeWebhookEvent($webhook_event: stripe_webhook_events_insert_input!) {
-  webhook_event: insert_stripe_webhook_events_one(
+    mutation InsertStripeWebhookEvent($webhook_event: stripeWebhookEvents_insert_input!) {
+  webhook_event: insertStripeWebhookEvent(
     object: $webhook_event
-    on_conflict: {constraint: webhook_events_pkey, update_columns: [state, created_at]}
+    on_conflict: {constraint: stripe_webhook_events_pkey, update_columns: [state, createdAt]}
   ) {
     ...AllWebhookEventFields
   }
@@ -12130,14 +11876,14 @@ export const InsertStripeWebhookEvent = gql`
     ${AllWebhookEventFields}`;
 export const GetStripeWebhookEvent = gql`
     query GetStripeWebhookEvent($webhook_event_id: String!) {
-  webhook_event: stripe_webhook_events_by_pk(id: $webhook_event_id) {
+  webhook_event: stripeWebhookEvent(id: $webhook_event_id) {
     ...AllWebhookEventFields
   }
 }
     ${AllWebhookEventFields}`;
 export const UpdateStripeWebhookEvent = gql`
-    mutation UpdateStripeWebhookEvent($webhook_event_id: String!, $_set: stripe_webhook_events_set_input!) {
-  webhook_event: update_stripe_webhook_events_by_pk(
+    mutation UpdateStripeWebhookEvent($webhook_event_id: String!, $_set: stripeWebhookEvents_set_input!) {
+  webhook_event: updateStripeWebhookEvent(
     pk_columns: {id: $webhook_event_id}
     _set: $_set
   ) {
@@ -12425,7 +12171,7 @@ export const AllRemovedPlaidTransactionsFieldsFragmentDoc = gql`
 }
     `;
 export const AllWebhookEventFieldsFragmentDoc = gql`
-    fragment AllWebhookEventFields on stripe_webhook_events {
+    fragment AllWebhookEventFields on stripeWebhookEvents {
   __typename
   id
   event
@@ -12687,10 +12433,10 @@ export const DeleteRemovedPlaidTransactionsDocument = gql`
 }
     `;
 export const InsertStripeWebhookEventDocument = gql`
-    mutation InsertStripeWebhookEvent($webhook_event: stripe_webhook_events_insert_input!) {
-  webhook_event: insert_stripe_webhook_events_one(
+    mutation InsertStripeWebhookEvent($webhook_event: stripeWebhookEvents_insert_input!) {
+  webhook_event: insertStripeWebhookEvent(
     object: $webhook_event
-    on_conflict: {constraint: webhook_events_pkey, update_columns: [state, created_at]}
+    on_conflict: {constraint: stripe_webhook_events_pkey, update_columns: [state, createdAt]}
   ) {
     ...AllWebhookEventFields
   }
@@ -12698,14 +12444,14 @@ export const InsertStripeWebhookEventDocument = gql`
     ${AllWebhookEventFieldsFragmentDoc}`;
 export const GetStripeWebhookEventDocument = gql`
     query GetStripeWebhookEvent($webhook_event_id: String!) {
-  webhook_event: stripe_webhook_events_by_pk(id: $webhook_event_id) {
+  webhook_event: stripeWebhookEvent(id: $webhook_event_id) {
     ...AllWebhookEventFields
   }
 }
     ${AllWebhookEventFieldsFragmentDoc}`;
 export const UpdateStripeWebhookEventDocument = gql`
-    mutation UpdateStripeWebhookEvent($webhook_event_id: String!, $_set: stripe_webhook_events_set_input!) {
-  webhook_event: update_stripe_webhook_events_by_pk(
+    mutation UpdateStripeWebhookEvent($webhook_event_id: String!, $_set: stripeWebhookEvents_set_input!) {
+  webhook_event: updateStripeWebhookEvent(
     pk_columns: {id: $webhook_event_id}
     _set: $_set
   ) {

@@ -28499,6 +28499,64 @@
             "deprecationReason": null
           },
           {
+            "name": "deleteStripeWebhookEvent",
+            "description": "delete single row from the table: \"stripe_webhook_events\"",
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "stripeWebhookEvents",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "deleteStripeWebhookEvents",
+            "description": "delete data from the table: \"stripe_webhook_events\"",
+            "args": [
+              {
+                "name": "where",
+                "description": "filter the rows which have to be deleted",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "stripeWebhookEvents_bool_exp",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "stripeWebhookEvents_mutation_response",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "deleteUser",
             "description": "delete single row from the table: \"auth.users\"",
             "args": [
@@ -29485,122 +29543,6 @@
             "type": {
               "kind": "OBJECT",
               "name": "removed_plaid_transactions",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "delete_stripe_webhook_events",
-            "description": "delete data from the table: \"stripe.webhook_events\"",
-            "args": [
-              {
-                "name": "where",
-                "description": "filter the rows which have to be deleted",
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "stripe_webhook_events_bool_exp",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "stripe_webhook_events_mutation_response",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "delete_stripe_webhook_events_by_pk",
-            "description": "delete single row from the table: \"stripe.webhook_events\"",
-            "args": [
-              {
-                "name": "id",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "stripe_webhook_events",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "delete_stripe_webhook_events_states",
-            "description": "delete data from the table: \"stripe.webhook_events_states\"",
-            "args": [
-              {
-                "name": "where",
-                "description": "filter the rows which have to be deleted",
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "stripe_webhook_events_states_bool_exp",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "stripe_webhook_events_states_mutation_response",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "delete_stripe_webhook_events_states_by_pk",
-            "description": "delete single row from the table: \"stripe.webhook_events_states\"",
-            "args": [
-              {
-                "name": "name",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "stripe_webhook_events_states",
               "ofType": null
             },
             "isDeprecated": false,
@@ -30600,6 +30542,96 @@
             "type": {
               "kind": "OBJECT",
               "name": "plaid_items",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "insertStripeWebhookEvent",
+            "description": "insert a single row into the table: \"stripe_webhook_events\"",
+            "args": [
+              {
+                "name": "object",
+                "description": "the row to be inserted",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "stripeWebhookEvents_insert_input",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "on_conflict",
+                "description": "upsert condition",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "stripeWebhookEvents_on_conflict",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "stripeWebhookEvents",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "insertStripeWebhookEvents",
+            "description": "insert data into the table: \"stripe_webhook_events\"",
+            "args": [
+              {
+                "name": "objects",
+                "description": "the rows to be inserted",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "stripeWebhookEvents_insert_input",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "on_conflict",
+                "description": "upsert condition",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "stripeWebhookEvents_on_conflict",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "stripeWebhookEvents_mutation_response",
               "ofType": null
             },
             "isDeprecated": false,
@@ -32005,186 +32037,6 @@
             "deprecationReason": null
           },
           {
-            "name": "insert_stripe_webhook_events",
-            "description": "insert data into the table: \"stripe.webhook_events\"",
-            "args": [
-              {
-                "name": "objects",
-                "description": "the rows to be inserted",
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "name": null,
-                      "ofType": {
-                        "kind": "INPUT_OBJECT",
-                        "name": "stripe_webhook_events_insert_input",
-                        "ofType": null
-                      }
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "on_conflict",
-                "description": "upsert condition",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "stripe_webhook_events_on_conflict",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "stripe_webhook_events_mutation_response",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "insert_stripe_webhook_events_one",
-            "description": "insert a single row into the table: \"stripe.webhook_events\"",
-            "args": [
-              {
-                "name": "object",
-                "description": "the row to be inserted",
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "stripe_webhook_events_insert_input",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "on_conflict",
-                "description": "upsert condition",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "stripe_webhook_events_on_conflict",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "stripe_webhook_events",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "insert_stripe_webhook_events_states",
-            "description": "insert data into the table: \"stripe.webhook_events_states\"",
-            "args": [
-              {
-                "name": "objects",
-                "description": "the rows to be inserted",
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "name": null,
-                      "ofType": {
-                        "kind": "INPUT_OBJECT",
-                        "name": "stripe_webhook_events_states_insert_input",
-                        "ofType": null
-                      }
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "on_conflict",
-                "description": "upsert condition",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "stripe_webhook_events_states_on_conflict",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "stripe_webhook_events_states_mutation_response",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "insert_stripe_webhook_events_states_one",
-            "description": "insert a single row into the table: \"stripe.webhook_events_states\"",
-            "args": [
-              {
-                "name": "object",
-                "description": "the row to be inserted",
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "stripe_webhook_events_states_insert_input",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "on_conflict",
-                "description": "upsert condition",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "stripe_webhook_events_states_on_conflict",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "stripe_webhook_events_states",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "insert_sync_logs",
             "description": "insert data into the table: \"sync_logs\"",
             "args": [
@@ -33310,6 +33162,88 @@
             "type": {
               "kind": "OBJECT",
               "name": "plaidAccounts_mutation_response",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updateStripeWebhookEvent",
+            "description": "update single row of the table: \"stripe_webhook_events\"",
+            "args": [
+              {
+                "name": "_set",
+                "description": "sets the columns of the filtered rows to the given values",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "stripeWebhookEvents_set_input",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "pk_columns",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "stripeWebhookEvents_pk_columns_input",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "stripeWebhookEvents",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updateStripeWebhookEvents",
+            "description": "update data of the table: \"stripe_webhook_events\"",
+            "args": [
+              {
+                "name": "_set",
+                "description": "sets the columns of the filtered rows to the given values",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "stripeWebhookEvents_set_input",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "where",
+                "description": "filter the rows which have to be updated",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "stripeWebhookEvents_bool_exp",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "stripeWebhookEvents_mutation_response",
               "ofType": null
             },
             "isDeprecated": false,
@@ -36332,90 +36266,8 @@
             "deprecationReason": null
           },
           {
-            "name": "update_stripe_webhook_events",
-            "description": "update data of the table: \"stripe.webhook_events\"",
-            "args": [
-              {
-                "name": "_set",
-                "description": "sets the columns of the filtered rows to the given values",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "stripe_webhook_events_set_input",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "where",
-                "description": "filter the rows which have to be updated",
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "stripe_webhook_events_bool_exp",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "stripe_webhook_events_mutation_response",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "update_stripe_webhook_events_by_pk",
-            "description": "update single row of the table: \"stripe.webhook_events\"",
-            "args": [
-              {
-                "name": "_set",
-                "description": "sets the columns of the filtered rows to the given values",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "stripe_webhook_events_set_input",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "pk_columns",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "stripe_webhook_events_pk_columns_input",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "stripe_webhook_events",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "update_stripe_webhook_events_many",
-            "description": "update multiples rows of table: \"stripe.webhook_events\"",
+            "name": "update_stripeWebhookEvents_many",
+            "description": "update multiples rows of table: \"stripe_webhook_events\"",
             "args": [
               {
                 "name": "updates",
@@ -36431,7 +36283,7 @@
                       "name": null,
                       "ofType": {
                         "kind": "INPUT_OBJECT",
-                        "name": "stripe_webhook_events_updates",
+                        "name": "stripeWebhookEvents_updates",
                         "ofType": null
                       }
                     }
@@ -36447,130 +36299,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "stripe_webhook_events_mutation_response",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "update_stripe_webhook_events_states",
-            "description": "update data of the table: \"stripe.webhook_events_states\"",
-            "args": [
-              {
-                "name": "_set",
-                "description": "sets the columns of the filtered rows to the given values",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "stripe_webhook_events_states_set_input",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "where",
-                "description": "filter the rows which have to be updated",
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "stripe_webhook_events_states_bool_exp",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "stripe_webhook_events_states_mutation_response",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "update_stripe_webhook_events_states_by_pk",
-            "description": "update single row of the table: \"stripe.webhook_events_states\"",
-            "args": [
-              {
-                "name": "_set",
-                "description": "sets the columns of the filtered rows to the given values",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "stripe_webhook_events_states_set_input",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "pk_columns",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "stripe_webhook_events_states_pk_columns_input",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "stripe_webhook_events_states",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "update_stripe_webhook_events_states_many",
-            "description": "update multiples rows of table: \"stripe.webhook_events_states\"",
-            "args": [
-              {
-                "name": "updates",
-                "description": "updates to execute, in order",
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "name": null,
-                      "ofType": {
-                        "kind": "INPUT_OBJECT",
-                        "name": "stripe_webhook_events_states_updates",
-                        "ofType": null
-                      }
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "stripe_webhook_events_states_mutation_response",
+                "name": "stripeWebhookEvents_mutation_response",
                 "ofType": null
               }
             },
@@ -54840,202 +54569,8 @@
             "deprecationReason": null
           },
           {
-            "name": "stripe_webhook_events",
-            "description": "fetch data from the table: \"stripe.webhook_events\"",
-            "args": [
-              {
-                "name": "distinct_on",
-                "description": "distinct select on columns",
-                "type": {
-                  "kind": "LIST",
-                  "name": null,
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "ENUM",
-                      "name": "stripe_webhook_events_select_column",
-                      "ofType": null
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "limit",
-                "description": "limit the number of rows returned",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "offset",
-                "description": "skip the first n rows. Use only with order_by",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "order_by",
-                "description": "sort the rows by one or more columns",
-                "type": {
-                  "kind": "LIST",
-                  "name": null,
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "stripe_webhook_events_order_by",
-                      "ofType": null
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "where",
-                "description": "filter the rows returned",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "stripe_webhook_events_bool_exp",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "stripe_webhook_events",
-                    "ofType": null
-                  }
-                }
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "stripe_webhook_events_aggregate",
-            "description": "fetch aggregated fields from the table: \"stripe.webhook_events\"",
-            "args": [
-              {
-                "name": "distinct_on",
-                "description": "distinct select on columns",
-                "type": {
-                  "kind": "LIST",
-                  "name": null,
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "ENUM",
-                      "name": "stripe_webhook_events_select_column",
-                      "ofType": null
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "limit",
-                "description": "limit the number of rows returned",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "offset",
-                "description": "skip the first n rows. Use only with order_by",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "order_by",
-                "description": "sort the rows by one or more columns",
-                "type": {
-                  "kind": "LIST",
-                  "name": null,
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "stripe_webhook_events_order_by",
-                      "ofType": null
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "where",
-                "description": "filter the rows returned",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "stripe_webhook_events_bool_exp",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "stripe_webhook_events_aggregate",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "stripe_webhook_events_by_pk",
-            "description": "fetch data from the table: \"stripe.webhook_events\" using primary key columns",
+            "name": "stripeWebhookEvent",
+            "description": "fetch data from the table: \"stripe_webhook_events\" using primary key columns",
             "args": [
               {
                 "name": "id",
@@ -55056,15 +54591,15 @@
             ],
             "type": {
               "kind": "OBJECT",
-              "name": "stripe_webhook_events",
+              "name": "stripeWebhookEvents",
               "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "stripe_webhook_events_states",
-            "description": "fetch data from the table: \"stripe.webhook_events_states\"",
+            "name": "stripeWebhookEvents",
+            "description": "fetch data from the table: \"stripe_webhook_events\"",
             "args": [
               {
                 "name": "distinct_on",
@@ -55077,7 +54612,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "ENUM",
-                      "name": "stripe_webhook_events_states_select_column",
+                      "name": "stripeWebhookEvents_select_column",
                       "ofType": null
                     }
                   }
@@ -55121,7 +54656,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "stripe_webhook_events_states_order_by",
+                      "name": "stripeWebhookEvents_order_by",
                       "ofType": null
                     }
                   }
@@ -55135,7 +54670,7 @@
                 "description": "filter the rows returned",
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "stripe_webhook_events_states_bool_exp",
+                  "name": "stripeWebhookEvents_bool_exp",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -55154,7 +54689,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "stripe_webhook_events_states",
+                    "name": "stripeWebhookEvents",
                     "ofType": null
                   }
                 }
@@ -55164,8 +54699,8 @@
             "deprecationReason": null
           },
           {
-            "name": "stripe_webhook_events_states_aggregate",
-            "description": "fetch aggregated fields from the table: \"stripe.webhook_events_states\"",
+            "name": "stripeWebhookEvents_aggregate",
+            "description": "fetch aggregated fields from the table: \"stripe_webhook_events\"",
             "args": [
               {
                 "name": "distinct_on",
@@ -55178,7 +54713,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "ENUM",
-                      "name": "stripe_webhook_events_states_select_column",
+                      "name": "stripeWebhookEvents_select_column",
                       "ofType": null
                     }
                   }
@@ -55222,7 +54757,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "stripe_webhook_events_states_order_by",
+                      "name": "stripeWebhookEvents_order_by",
                       "ofType": null
                     }
                   }
@@ -55236,7 +54771,7 @@
                 "description": "filter the rows returned",
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "stripe_webhook_events_states_bool_exp",
+                  "name": "stripeWebhookEvents_bool_exp",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -55249,38 +54784,9 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "stripe_webhook_events_states_aggregate",
+                "name": "stripeWebhookEvents_aggregate",
                 "ofType": null
               }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "stripe_webhook_events_states_by_pk",
-            "description": "fetch data from the table: \"stripe.webhook_events_states\" using primary key columns",
-            "args": [
-              {
-                "name": "name",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "stripe_webhook_events_states",
-              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -57067,11 +56573,11 @@
       },
       {
         "kind": "OBJECT",
-        "name": "stripe_webhook_events",
-        "description": "columns and relationships of \"stripe.webhook_events\"",
+        "name": "stripeWebhookEvents",
+        "description": "columns and relationships of \"stripe_webhook_events\"",
         "fields": [
           {
-            "name": "created_at",
+            "name": "createdAt",
             "description": null,
             "args": [],
             "type": {
@@ -57120,14 +56626,14 @@
           },
           {
             "name": "state",
-            "description": null,
+            "description": "Either 'processed' or 'failed'",
             "args": [],
             "type": {
               "kind": "NON_NULL",
               "name": null,
               "ofType": {
-                "kind": "ENUM",
-                "name": "stripe_webhook_events_states_enum",
+                "kind": "SCALAR",
+                "name": "String",
                 "ofType": null
               }
             },
@@ -57142,8 +56648,8 @@
       },
       {
         "kind": "OBJECT",
-        "name": "stripe_webhook_events_aggregate",
-        "description": "aggregated selection of \"stripe.webhook_events\"",
+        "name": "stripeWebhookEvents_aggregate",
+        "description": "aggregated selection of \"stripe_webhook_events\"",
         "fields": [
           {
             "name": "aggregate",
@@ -57151,7 +56657,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "stripe_webhook_events_aggregate_fields",
+              "name": "stripeWebhookEvents_aggregate_fields",
               "ofType": null
             },
             "isDeprecated": false,
@@ -57172,7 +56678,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "stripe_webhook_events",
+                    "name": "stripeWebhookEvents",
                     "ofType": null
                   }
                 }
@@ -57189,8 +56695,8 @@
       },
       {
         "kind": "OBJECT",
-        "name": "stripe_webhook_events_aggregate_fields",
-        "description": "aggregate fields of \"stripe.webhook_events\"",
+        "name": "stripeWebhookEvents_aggregate_fields",
+        "description": "aggregate fields of \"stripe_webhook_events\"",
         "fields": [
           {
             "name": "count",
@@ -57207,7 +56713,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "ENUM",
-                      "name": "stripe_webhook_events_select_column",
+                      "name": "stripeWebhookEvents_select_column",
                       "ofType": null
                     }
                   }
@@ -57247,7 +56753,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "stripe_webhook_events_max_fields",
+              "name": "stripeWebhookEvents_max_fields",
               "ofType": null
             },
             "isDeprecated": false,
@@ -57259,7 +56765,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "stripe_webhook_events_min_fields",
+              "name": "stripeWebhookEvents_min_fields",
               "ofType": null
             },
             "isDeprecated": false,
@@ -57273,8 +56779,8 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "stripe_webhook_events_bool_exp",
-        "description": "Boolean expression to filter rows from the table \"stripe.webhook_events\". All fields are combined with a logical 'AND'.",
+        "name": "stripeWebhookEvents_bool_exp",
+        "description": "Boolean expression to filter rows from the table \"stripe_webhook_events\". All fields are combined with a logical 'AND'.",
         "fields": null,
         "inputFields": [
           {
@@ -57288,7 +56794,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "INPUT_OBJECT",
-                  "name": "stripe_webhook_events_bool_exp",
+                  "name": "stripeWebhookEvents_bool_exp",
                   "ofType": null
                 }
               }
@@ -57302,7 +56808,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "stripe_webhook_events_bool_exp",
+              "name": "stripeWebhookEvents_bool_exp",
               "ofType": null
             },
             "defaultValue": null,
@@ -57320,7 +56826,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "INPUT_OBJECT",
-                  "name": "stripe_webhook_events_bool_exp",
+                  "name": "stripeWebhookEvents_bool_exp",
                   "ofType": null
                 }
               }
@@ -57330,7 +56836,7 @@
             "deprecationReason": null
           },
           {
-            "name": "created_at",
+            "name": "createdAt",
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
@@ -57370,703 +56876,6 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "stripe_webhook_events_states_enum_comparison_exp",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "ENUM",
-        "name": "stripe_webhook_events_constraint",
-        "description": "unique or primary key constraints on table \"stripe.webhook_events\"",
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": [
-          {
-            "name": "webhook_events_pkey",
-            "description": "unique or primary key constraint on columns \"id\"",
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "stripe_webhook_events_insert_input",
-        "description": "input type for inserting data into table \"stripe.webhook_events\"",
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "created_at",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "timestamptz",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "event",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "id",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "state",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "stripe_webhook_events_states_enum",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "stripe_webhook_events_max_fields",
-        "description": "aggregate max on columns",
-        "fields": [
-          {
-            "name": "created_at",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "timestamptz",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "event",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "id",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "stripe_webhook_events_min_fields",
-        "description": "aggregate min on columns",
-        "fields": [
-          {
-            "name": "created_at",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "timestamptz",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "event",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "id",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "stripe_webhook_events_mutation_response",
-        "description": "response of any mutation on the table \"stripe.webhook_events\"",
-        "fields": [
-          {
-            "name": "affected_rows",
-            "description": "number of rows affected by the mutation",
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "returning",
-            "description": "data from the rows affected by the mutation",
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "stripe_webhook_events",
-                    "ofType": null
-                  }
-                }
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "stripe_webhook_events_on_conflict",
-        "description": "on_conflict condition type for table \"stripe.webhook_events\"",
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "constraint",
-            "description": null,
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "ENUM",
-                "name": "stripe_webhook_events_constraint",
-                "ofType": null
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "update_columns",
-            "description": null,
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "ENUM",
-                    "name": "stripe_webhook_events_update_column",
-                    "ofType": null
-                  }
-                }
-              }
-            },
-            "defaultValue": "[]",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "where",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "stripe_webhook_events_bool_exp",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "stripe_webhook_events_order_by",
-        "description": "Ordering options when selecting data from \"stripe.webhook_events\".",
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "created_at",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "order_by",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "event",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "order_by",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "id",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "order_by",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "state",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "order_by",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "stripe_webhook_events_pk_columns_input",
-        "description": "primary key columns input for table: stripe.webhook_events",
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "id",
-            "description": null,
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "ENUM",
-        "name": "stripe_webhook_events_select_column",
-        "description": "select columns of table \"stripe.webhook_events\"",
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": [
-          {
-            "name": "created_at",
-            "description": "column name",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "event",
-            "description": "column name",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "id",
-            "description": "column name",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "state",
-            "description": "column name",
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "stripe_webhook_events_set_input",
-        "description": "input type for updating data in table \"stripe.webhook_events\"",
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "created_at",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "timestamptz",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "event",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "id",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "state",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "stripe_webhook_events_states_enum",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "stripe_webhook_events_states",
-        "description": "columns and relationships of \"stripe.webhook_events_states\"",
-        "fields": [
-          {
-            "name": "name",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "stripe_webhook_events_states_aggregate",
-        "description": "aggregated selection of \"stripe.webhook_events_states\"",
-        "fields": [
-          {
-            "name": "aggregate",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "stripe_webhook_events_states_aggregate_fields",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "nodes",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "stripe_webhook_events_states",
-                    "ofType": null
-                  }
-                }
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "stripe_webhook_events_states_aggregate_fields",
-        "description": "aggregate fields of \"stripe.webhook_events_states\"",
-        "fields": [
-          {
-            "name": "count",
-            "description": null,
-            "args": [
-              {
-                "name": "columns",
-                "description": null,
-                "type": {
-                  "kind": "LIST",
-                  "name": null,
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "ENUM",
-                      "name": "stripe_webhook_events_states_select_column",
-                      "ofType": null
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "distinct",
-                "description": null,
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Boolean",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "max",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "stripe_webhook_events_states_max_fields",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "min",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "stripe_webhook_events_states_min_fields",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "stripe_webhook_events_states_bool_exp",
-        "description": "Boolean expression to filter rows from the table \"stripe.webhook_events_states\". All fields are combined with a logical 'AND'.",
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "_and",
-            "description": null,
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "stripe_webhook_events_states_bool_exp",
-                  "ofType": null
-                }
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "_not",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "stripe_webhook_events_states_bool_exp",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "_or",
-            "description": null,
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "stripe_webhook_events_states_bool_exp",
-                  "ofType": null
-                }
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "name",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
               "name": "String_comparison_exp",
               "ofType": null
             },
@@ -58081,38 +56890,15 @@
       },
       {
         "kind": "ENUM",
-        "name": "stripe_webhook_events_states_constraint",
-        "description": "unique or primary key constraints on table \"stripe.webhook_events_states\"",
+        "name": "stripeWebhookEvents_constraint",
+        "description": "unique or primary key constraints on table \"stripe_webhook_events\"",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
           {
-            "name": "webhook_events_states_pkey",
-            "description": "unique or primary key constraint on columns \"name\"",
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "possibleTypes": null
-      },
-      {
-        "kind": "ENUM",
-        "name": "stripe_webhook_events_states_enum",
-        "description": null,
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": [
-          {
-            "name": "failed",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "processed",
-            "description": null,
+            "name": "stripe_webhook_events_pkey",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -58121,529 +56907,12 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "stripe_webhook_events_states_enum_comparison_exp",
-        "description": "Boolean expression to compare columns of type \"stripe_webhook_events_states_enum\". All fields are combined with logical 'AND'.",
+        "name": "stripeWebhookEvents_insert_input",
+        "description": "input type for inserting data into table \"stripe_webhook_events\"",
         "fields": null,
         "inputFields": [
           {
-            "name": "_eq",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "stripe_webhook_events_states_enum",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "_in",
-            "description": null,
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "ENUM",
-                  "name": "stripe_webhook_events_states_enum",
-                  "ofType": null
-                }
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "_is_null",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "_neq",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "stripe_webhook_events_states_enum",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "_nin",
-            "description": null,
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "ENUM",
-                  "name": "stripe_webhook_events_states_enum",
-                  "ofType": null
-                }
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "stripe_webhook_events_states_insert_input",
-        "description": "input type for inserting data into table \"stripe.webhook_events_states\"",
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "name",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "stripe_webhook_events_states_max_fields",
-        "description": "aggregate max on columns",
-        "fields": [
-          {
-            "name": "name",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "stripe_webhook_events_states_min_fields",
-        "description": "aggregate min on columns",
-        "fields": [
-          {
-            "name": "name",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "stripe_webhook_events_states_mutation_response",
-        "description": "response of any mutation on the table \"stripe.webhook_events_states\"",
-        "fields": [
-          {
-            "name": "affected_rows",
-            "description": "number of rows affected by the mutation",
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "returning",
-            "description": "data from the rows affected by the mutation",
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "stripe_webhook_events_states",
-                    "ofType": null
-                  }
-                }
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "stripe_webhook_events_states_on_conflict",
-        "description": "on_conflict condition type for table \"stripe.webhook_events_states\"",
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "constraint",
-            "description": null,
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "ENUM",
-                "name": "stripe_webhook_events_states_constraint",
-                "ofType": null
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "update_columns",
-            "description": null,
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "ENUM",
-                    "name": "stripe_webhook_events_states_update_column",
-                    "ofType": null
-                  }
-                }
-              }
-            },
-            "defaultValue": "[]",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "where",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "stripe_webhook_events_states_bool_exp",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "stripe_webhook_events_states_order_by",
-        "description": "Ordering options when selecting data from \"stripe.webhook_events_states\".",
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "name",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "order_by",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "stripe_webhook_events_states_pk_columns_input",
-        "description": "primary key columns input for table: stripe.webhook_events_states",
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "name",
-            "description": null,
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "ENUM",
-        "name": "stripe_webhook_events_states_select_column",
-        "description": "select columns of table \"stripe.webhook_events_states\"",
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": [
-          {
-            "name": "name",
-            "description": "column name",
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "stripe_webhook_events_states_set_input",
-        "description": "input type for updating data in table \"stripe.webhook_events_states\"",
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "name",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "stripe_webhook_events_states_stream_cursor_input",
-        "description": "Streaming cursor of the table \"stripe_webhook_events_states\"",
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "initial_value",
-            "description": "Stream column input with initial value",
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "INPUT_OBJECT",
-                "name": "stripe_webhook_events_states_stream_cursor_value_input",
-                "ofType": null
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "ordering",
-            "description": "cursor ordering",
-            "type": {
-              "kind": "ENUM",
-              "name": "cursor_ordering",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "stripe_webhook_events_states_stream_cursor_value_input",
-        "description": "Initial value of the column from where the streaming should start",
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "name",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "ENUM",
-        "name": "stripe_webhook_events_states_update_column",
-        "description": "update columns of table \"stripe.webhook_events_states\"",
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": [
-          {
-            "name": "name",
-            "description": "column name",
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "stripe_webhook_events_states_updates",
-        "description": null,
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "_set",
-            "description": "sets the columns of the filtered rows to the given values",
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "stripe_webhook_events_states_set_input",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "where",
-            "description": null,
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "INPUT_OBJECT",
-                "name": "stripe_webhook_events_states_bool_exp",
-                "ofType": null
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "stripe_webhook_events_stream_cursor_input",
-        "description": "Streaming cursor of the table \"stripe_webhook_events\"",
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "initial_value",
-            "description": "Stream column input with initial value",
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "INPUT_OBJECT",
-                "name": "stripe_webhook_events_stream_cursor_value_input",
-                "ofType": null
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "ordering",
-            "description": "cursor ordering",
-            "type": {
-              "kind": "ENUM",
-              "name": "cursor_ordering",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "stripe_webhook_events_stream_cursor_value_input",
-        "description": "Initial value of the column from where the streaming should start",
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "created_at",
+            "name": "createdAt",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -58680,10 +56949,10 @@
           },
           {
             "name": "state",
-            "description": null,
+            "description": "Either 'processed' or 'failed'",
             "type": {
-              "kind": "ENUM",
-              "name": "stripe_webhook_events_states_enum",
+              "kind": "SCALAR",
+              "name": "String",
               "ofType": null
             },
             "defaultValue": null,
@@ -58696,15 +56965,333 @@
         "possibleTypes": null
       },
       {
+        "kind": "OBJECT",
+        "name": "stripeWebhookEvents_max_fields",
+        "description": "aggregate max on columns",
+        "fields": [
+          {
+            "name": "createdAt",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "timestamptz",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "event",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "state",
+            "description": "Either 'processed' or 'failed'",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "stripeWebhookEvents_min_fields",
+        "description": "aggregate min on columns",
+        "fields": [
+          {
+            "name": "createdAt",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "timestamptz",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "event",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "state",
+            "description": "Either 'processed' or 'failed'",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "stripeWebhookEvents_mutation_response",
+        "description": "response of any mutation on the table \"stripe_webhook_events\"",
+        "fields": [
+          {
+            "name": "affected_rows",
+            "description": "number of rows affected by the mutation",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "returning",
+            "description": "data from the rows affected by the mutation",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "stripeWebhookEvents",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "stripeWebhookEvents_on_conflict",
+        "description": "on_conflict condition type for table \"stripe_webhook_events\"",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "constraint",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "stripeWebhookEvents_constraint",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "update_columns",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "stripeWebhookEvents_update_column",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "defaultValue": "[]",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "where",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "stripeWebhookEvents_bool_exp",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "stripeWebhookEvents_order_by",
+        "description": "Ordering options when selecting data from \"stripe_webhook_events\".",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "createdAt",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "order_by",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "event",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "order_by",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "order_by",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "state",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "order_by",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "stripeWebhookEvents_pk_columns_input",
+        "description": "primary key columns input for table: stripe_webhook_events",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "id",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "ENUM",
-        "name": "stripe_webhook_events_update_column",
-        "description": "update columns of table \"stripe.webhook_events\"",
+        "name": "stripeWebhookEvents_select_column",
+        "description": "select columns of table \"stripe_webhook_events\"",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
           {
-            "name": "created_at",
+            "name": "createdAt",
             "description": "column name",
             "isDeprecated": false,
             "deprecationReason": null
@@ -58732,7 +57319,199 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "stripe_webhook_events_updates",
+        "name": "stripeWebhookEvents_set_input",
+        "description": "input type for updating data in table \"stripe_webhook_events\"",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "createdAt",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "timestamptz",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "event",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "state",
+            "description": "Either 'processed' or 'failed'",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "stripeWebhookEvents_stream_cursor_input",
+        "description": "Streaming cursor of the table \"stripeWebhookEvents\"",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "initial_value",
+            "description": "Stream column input with initial value",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "INPUT_OBJECT",
+                "name": "stripeWebhookEvents_stream_cursor_value_input",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ordering",
+            "description": "cursor ordering",
+            "type": {
+              "kind": "ENUM",
+              "name": "cursor_ordering",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "stripeWebhookEvents_stream_cursor_value_input",
+        "description": "Initial value of the column from where the streaming should start",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "createdAt",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "timestamptz",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "event",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "state",
+            "description": "Either 'processed' or 'failed'",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "stripeWebhookEvents_update_column",
+        "description": "update columns of table \"stripe_webhook_events\"",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "createdAt",
+            "description": "column name",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "event",
+            "description": "column name",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": "column name",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "state",
+            "description": "column name",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "stripeWebhookEvents_updates",
         "description": null,
         "fields": null,
         "inputFields": [
@@ -58741,7 +57520,7 @@
             "description": "sets the columns of the filtered rows to the given values",
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "stripe_webhook_events_set_input",
+              "name": "stripeWebhookEvents_set_input",
               "ofType": null
             },
             "defaultValue": null,
@@ -58756,7 +57535,7 @@
               "name": null,
               "ofType": {
                 "kind": "INPUT_OBJECT",
-                "name": "stripe_webhook_events_bool_exp",
+                "name": "stripeWebhookEvents_bool_exp",
                 "ofType": null
               }
             },
@@ -65943,202 +64722,8 @@
             "deprecationReason": null
           },
           {
-            "name": "stripe_webhook_events",
-            "description": "fetch data from the table: \"stripe.webhook_events\"",
-            "args": [
-              {
-                "name": "distinct_on",
-                "description": "distinct select on columns",
-                "type": {
-                  "kind": "LIST",
-                  "name": null,
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "ENUM",
-                      "name": "stripe_webhook_events_select_column",
-                      "ofType": null
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "limit",
-                "description": "limit the number of rows returned",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "offset",
-                "description": "skip the first n rows. Use only with order_by",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "order_by",
-                "description": "sort the rows by one or more columns",
-                "type": {
-                  "kind": "LIST",
-                  "name": null,
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "stripe_webhook_events_order_by",
-                      "ofType": null
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "where",
-                "description": "filter the rows returned",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "stripe_webhook_events_bool_exp",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "stripe_webhook_events",
-                    "ofType": null
-                  }
-                }
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "stripe_webhook_events_aggregate",
-            "description": "fetch aggregated fields from the table: \"stripe.webhook_events\"",
-            "args": [
-              {
-                "name": "distinct_on",
-                "description": "distinct select on columns",
-                "type": {
-                  "kind": "LIST",
-                  "name": null,
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "ENUM",
-                      "name": "stripe_webhook_events_select_column",
-                      "ofType": null
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "limit",
-                "description": "limit the number of rows returned",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "offset",
-                "description": "skip the first n rows. Use only with order_by",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "order_by",
-                "description": "sort the rows by one or more columns",
-                "type": {
-                  "kind": "LIST",
-                  "name": null,
-                  "ofType": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "stripe_webhook_events_order_by",
-                      "ofType": null
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "where",
-                "description": "filter the rows returned",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "stripe_webhook_events_bool_exp",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "stripe_webhook_events_aggregate",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "stripe_webhook_events_by_pk",
-            "description": "fetch data from the table: \"stripe.webhook_events\" using primary key columns",
+            "name": "stripeWebhookEvent",
+            "description": "fetch data from the table: \"stripe_webhook_events\" using primary key columns",
             "args": [
               {
                 "name": "id",
@@ -66159,15 +64744,15 @@
             ],
             "type": {
               "kind": "OBJECT",
-              "name": "stripe_webhook_events",
+              "name": "stripeWebhookEvents",
               "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "stripe_webhook_events_states",
-            "description": "fetch data from the table: \"stripe.webhook_events_states\"",
+            "name": "stripeWebhookEvents",
+            "description": "fetch data from the table: \"stripe_webhook_events\"",
             "args": [
               {
                 "name": "distinct_on",
@@ -66180,7 +64765,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "ENUM",
-                      "name": "stripe_webhook_events_states_select_column",
+                      "name": "stripeWebhookEvents_select_column",
                       "ofType": null
                     }
                   }
@@ -66224,7 +64809,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "stripe_webhook_events_states_order_by",
+                      "name": "stripeWebhookEvents_order_by",
                       "ofType": null
                     }
                   }
@@ -66238,7 +64823,7 @@
                 "description": "filter the rows returned",
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "stripe_webhook_events_states_bool_exp",
+                  "name": "stripeWebhookEvents_bool_exp",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -66257,7 +64842,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "stripe_webhook_events_states",
+                    "name": "stripeWebhookEvents",
                     "ofType": null
                   }
                 }
@@ -66267,8 +64852,8 @@
             "deprecationReason": null
           },
           {
-            "name": "stripe_webhook_events_states_aggregate",
-            "description": "fetch aggregated fields from the table: \"stripe.webhook_events_states\"",
+            "name": "stripeWebhookEvents_aggregate",
+            "description": "fetch aggregated fields from the table: \"stripe_webhook_events\"",
             "args": [
               {
                 "name": "distinct_on",
@@ -66281,7 +64866,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "ENUM",
-                      "name": "stripe_webhook_events_states_select_column",
+                      "name": "stripeWebhookEvents_select_column",
                       "ofType": null
                     }
                   }
@@ -66325,7 +64910,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "stripe_webhook_events_states_order_by",
+                      "name": "stripeWebhookEvents_order_by",
                       "ofType": null
                     }
                   }
@@ -66339,7 +64924,7 @@
                 "description": "filter the rows returned",
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "stripe_webhook_events_states_bool_exp",
+                  "name": "stripeWebhookEvents_bool_exp",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -66352,7 +64937,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "stripe_webhook_events_states_aggregate",
+                "name": "stripeWebhookEvents_aggregate",
                 "ofType": null
               }
             },
@@ -66360,37 +64945,8 @@
             "deprecationReason": null
           },
           {
-            "name": "stripe_webhook_events_states_by_pk",
-            "description": "fetch data from the table: \"stripe.webhook_events_states\" using primary key columns",
-            "args": [
-              {
-                "name": "name",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "stripe_webhook_events_states",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "stripe_webhook_events_states_stream",
-            "description": "fetch data from the table in a streaming manner : \"stripe.webhook_events_states\"",
+            "name": "stripeWebhookEvents_stream",
+            "description": "fetch data from the table in a streaming manner : \"stripe_webhook_events\"",
             "args": [
               {
                 "name": "batch_size",
@@ -66419,7 +64975,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "stripe_webhook_events_states_stream_cursor_input",
+                      "name": "stripeWebhookEvents_stream_cursor_input",
                       "ofType": null
                     }
                   }
@@ -66433,7 +64989,7 @@
                 "description": "filter the rows returned",
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "stripe_webhook_events_states_bool_exp",
+                  "name": "stripeWebhookEvents_bool_exp",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -66452,80 +65008,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "stripe_webhook_events_states",
-                    "ofType": null
-                  }
-                }
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "stripe_webhook_events_stream",
-            "description": "fetch data from the table in a streaming manner : \"stripe.webhook_events\"",
-            "args": [
-              {
-                "name": "batch_size",
-                "description": "maximum number of rows returned in a single batch",
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "cursor",
-                "description": "cursor to stream the results returned by the query",
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "stripe_webhook_events_stream_cursor_input",
-                      "ofType": null
-                    }
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "where",
-                "description": "filter the rows returned",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "stripe_webhook_events_bool_exp",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "stripe_webhook_events",
+                    "name": "stripeWebhookEvents",
                     "ofType": null
                   }
                 }
