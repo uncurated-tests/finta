@@ -67,7 +67,7 @@ interface PublishOptions extends LogSnagPublishOptions {
   tags?: Partial<Record<LogSnagTags, any>>
 }
 
-const shouldMock = process.env.ENV !== 'production'
+const shouldMock = process.env.VERCEL_ENV === 'development'
 
 const logsnag = new LogSnag({ 
   token: process.env.LOGSNAG_TOKEN!,
@@ -85,7 +85,7 @@ export const insight = async (options: InsightOptions): Promise<boolean> => {
 }
 
 export const logError = async ({ operation, error, scope, tags = {} }: { operation: string; error: Error | any | unknown, scope: Sentry.Scope ;tags?: Partial<Record<LogSnagTags, any>> }) => {
-  if ( shouldMock ) { console.error(error); return true }
+  if ( shouldMock ) { console.error("Mocking logsnag", error); return true }
   const eventId = Sentry.captureException(error, scope);
 
   return logsnag.publish({

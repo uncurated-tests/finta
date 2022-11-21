@@ -14,7 +14,7 @@ const trackClient = new TrackClient(CIO_SITE_ID!, CIO_TRACKING_API_KEY!);
 export const deleteUserProfle = ({ userId }: { userId: string }) => trackClient.destroy(userId);
 
 export const sendTransactionalEmail = async ({ messageKey, user, data }: { messageKey: TRANSACTIONAL_EMAILS, user: { id: string; email?: string }, data: any}) => {
-  if ( process.env.ENV !== 'production' || !user.email ) { return; }
+  if ( process.env.VERCEL_ENV !== 'production' || !user.email ) { return; }
 
   const request = new SendEmailRequest({
     to: user.email,
