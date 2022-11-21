@@ -1,7 +1,6 @@
 import { useCallback, useState } from "react";
 import { MenuItem } from "@chakra-ui/react";
 import { CardStackPlusIcon } from "@radix-ui/react-icons";
-import _ from "lodash";
 import * as Sentry from "@sentry/react";
 
 import { PlaidLink } from "src/components/PlaidLink";
@@ -25,7 +24,7 @@ export const FetchNewAccounts = ({ plaidItem }: { plaidItem: PlaidItemModel }) =
       title: "Accounts Fetched",
       message: "Any new accounts are now accessible in Finta"
     })
-  }, [])
+  }, [ renderToast ])
 
   const onLoadLinkToken = () => {
     renderToast({

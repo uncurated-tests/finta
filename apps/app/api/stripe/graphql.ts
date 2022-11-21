@@ -109,7 +109,9 @@ export default createServer<{ req: Request; res: Response; }>({
           console.log("Last subscription", subscription.id)
           console.log("Subscription trial ends at", subscription?.trialEndedAt)
           console.log("Customer trial ends at", customer.metadata.trial_ends_at)
-          console.log("115", moment.unix(parseInt(customer!.metadata.trial_ends_at)).toDate())
+          customer.metadata.trial_ends_at && console.log("115", moment.unix(parseInt(customer!.metadata.trial_ends_at)).toDate())
+          console.log("Customer created", customer?.created)
+          console.log("MOMENT", moment)
           console.log("116", moment.unix(customer!.created).add(14, 'days').toDate())
           const trialEndsAt = subscription?.trialEndedAt || (customer.metadata.trial_ends_at 
             ? moment.unix(parseInt(customer!.metadata.trial_ends_at)).toDate() 

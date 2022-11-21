@@ -5,7 +5,7 @@ import { AccountBase, Holding, InvestmentTransaction, Security, Transaction } fr
 
 import { IntegrationBase } from "./base";
 import * as types from "../types";
-import { NotionCredentials, DestinationErrorCode, TableConfigs } from "@finta/types";
+import { NotionCredentials, DestinationErrorCode, TableConfigs, fieldToTypeMapping } from "@finta/types";
 import * as formatter from "../formatter";
 import { parsePageProperties } from "../formatter/notion/helper";
 import { storage } from "../nhost";
@@ -89,8 +89,26 @@ export class Notion extends IntegrationBase {
         errorCode: DestinationErrorCode.MISSING_FIELD,
         table: db.title[0].plain_text,
         tableType,
+        tableId,
         fieldId: missingField.field_id,
         fieldType: missingField.field
+      }}
+    }
+
+    const fieldWithIncorrectType = fields.find(field => {
+      const dbField = Object.values(db.properties).find(prop => prop.id === field.field_id);
+      return !fieldToTypeMapping[tableType][field.field].notion.includes(dbField!.type) 
+    })
+
+    if ( fieldWithIncorrectType ) {
+      return { isValid: false, error: {
+        errorCode: DestinationErrorCode.INCORRECT_FIELD_TYPE,
+        table: db.title[0].plain_text,
+        tableType,
+        tableId,
+        fieldId: fieldWithIncorrectType.field_id,
+        fieldType: fieldWithIncorrectType.field,
+        field: Object.values(db.properties).find(prop => prop.id === fieldWithIncorrectType.field_id)?.name
       }}
     }
 

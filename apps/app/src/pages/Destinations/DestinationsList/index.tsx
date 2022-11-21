@@ -17,7 +17,7 @@ export const DestinationsList = () => {
 
   if ( loading ) { return <></> };
   return destinations.length > 0 ? (
-    <Accordion defaultIndex={ destinations.map((_, idx) => idx) } allowMultiple width = "full">
+    <Accordion mb = "10" defaultIndex={ destinations.map((_, idx) => idx) } allowMultiple width = "full">
       <VStack spacing = "4">
         { [...destinations]
           .filter(destination => !destination.disabled_at)

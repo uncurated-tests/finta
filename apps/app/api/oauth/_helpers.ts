@@ -8,7 +8,7 @@ export const getOauthPlaidItems = async (destinationId: string, syncLogId?: stri
   const accountsFilter = { destination_connections: { destination_id: { _eq: destinationId }}};
   return graphql.GetPlaidItems({ where: { accounts: accountsFilter }, accounts_where: accountsFilter })
   .then(async response => {
-    const plaid_items = response.plaid_items.filter(item => returnIfNoAccounts || item.error !== 'NO_ACCOUNTS');
+    const plaid_items = response.plaidItems.filter(item => returnIfNoAccounts || item.error !== 'NO_ACCOUNTS');
     const errorCount = plaid_items.filter(item => item.error && authErrors.includes(item.error)).length;
 
     if ( errorCount > 0 && syncLogId ) {
