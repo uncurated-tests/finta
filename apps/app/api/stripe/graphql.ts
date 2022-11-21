@@ -81,17 +81,21 @@ export default createServer<{ req: Request; res: Response; }>({
         },
         stripeData: async (_, { user_id }: StripeDataProps) => {
           let customer: Stripe.Customer;
+
           const user = await graphql.GetBaseUser({ user_id }).then(response => response.user)
           if ( !user ) { throw new Error("Not Found") }
-          console.log("User ID", user.id)
+          
           const customerId = user.metadata?.stripe_customer_id
-          if ( !customerId ) {
-            customer = await stripe.upsertCustomer({ userId: user.id, email: user.email, name: user.display_name });
-            console.log("Create customer");
-          } else {
+          if ( customerId ) {
             customer = await stripe.getCustomer({ customerId }).then(response => response as Stripe.Customer)
-            console.log("Get customer")
+          } else {
+            customer = await stripe.upsertCustomer({ userId: user.id, email: user.email, name: user.display_name });
           }
+
+          if ( customer.deleted ) {
+            customer = await stripe.upsertCustomer({ userId: user.id, email: user.email, name: user.display_name });
+          }
+
           console.log("Customer Id", customer.id);
           const subscription = await stripe.getSubscriptions({ status: 'all', customer: customer.id, limit: 1})
           .then(response => response.data.map(subscription => ({
@@ -109,14 +113,6 @@ export default createServer<{ req: Request; res: Response; }>({
           console.log("Last subscription", subscription.id)
           console.log("Subscription trial ends at", subscription?.trialEndedAt)
           console.log("Customer", customer)
-          console.log("Metadata", customer.metadata)
-          console.log("Customer trial ends at", customer.metadata.trial_ends_at)
-          console.log(112, parseInt(customer.metadata.trial_ends_at))
-          console.log("Customer created", customer?.created)
-          console.log('hey', moment.unix(customer!.created))
-          console.log('wow', moment.unix(customer!.created).add(14, 'days').toDate())
-          console.log(113, moment.unix(parseInt(customer.metadata.trial_ends_at)))
-          console.log(114, moment.unix(parseInt(customer.metadata.trial_ends_at)).toDate())
           
           const trialEndsAt = subscription?.trialEndedAt || (customer.metadata.trial_ends_at 
             ? moment.unix(parseInt(customer!.metadata.trial_ends_at)).toDate() 
