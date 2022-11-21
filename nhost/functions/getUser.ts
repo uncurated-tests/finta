@@ -6,7 +6,7 @@ export default (req: Request, res: Response) => {
   const jwtSecret = JSON.parse(process.env.NHOST_JWT_SECRET);
   var decoded = jwt.verify(token, jwtSecret.key)[
     'https://hasura.io/jwt/claims'
-  ];
+  ]; 
 
   try {
     res.status(200).send({ id: decoded['x-hasura-user-id']})
