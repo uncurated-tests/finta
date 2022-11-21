@@ -19,12 +19,13 @@ export default functionWrapper.client(async (req: types.ManualDestinationSyncReq
   const newSyncStartDate = moment.min(moment(startDate), moment(destination.sync_start_date)).format("YYYY-MM-DD");
 
   const accountsQuery = { is_closed: { _eq: false }, destination_connections: { destination_id: { _eq: destinationId }}};
-  const { plaidItems } = await graphql.GetPlaidItems({ 
+  const plaidItems = await graphql.GetPlaidItems({ 
     where: { accounts: accountsQuery },
     accounts_where: accountsQuery,
     include_removed_transactions: true,
     date: newSyncStartDate
-  })
+  }).then(response => response.plaidItems.filter(item => item.error !== 'ITEM_LOGIN_REQUIRED'))
+  // Can't use _neq in filter because field is nullable
 
   if ( destination.integration.id === Integrations_Enum.Coda || plaidItems.length === 0 ) {
     await graphql.UpdateDestination({ destination_id: destination.id, _set: { sync_start_date: newSyncStartDate }});
