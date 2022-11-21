@@ -49,7 +49,7 @@ export const AddConnection = ({ oauthClient, state }: AddDestinationProps) => {
             integration_id: oauthClient.integration.id,
             name: destinationName,
             sync_start_date: moment(syncStartDate).format("YYYY-MM-DD"),
-            authentication: { accessTokenHash },
+            authentication: { access_token_hash: accessTokenHash },
             coda_config: {
               data: {
                 access_token_hash: accessTokenHash
