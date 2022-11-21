@@ -59,7 +59,9 @@ export class Notion extends IntegrationBase {
       this.config = Object.fromEntries(await Promise.all(Object.entries(this.config).map(async ([ tableType, { isEnabled, tableId, fields }]) => {
         if ( !isEnabled || !tableId ) return [ tableType, { tableId, fields, isEnabled } ]
         const pages = await this.queryDatabase({ databaseId: tableId });
-        const records = pages.map(page => ({ id: page.id, properties: parsePageProperties({ page, tableConfigFields: fields })}));
+        const records = pages
+          .filter(page => !page.archived)
+          .map(page => ({ id: page.id, properties: parsePageProperties({ page, tableConfigFields: fields })}));
         return [ tableType, { tableId, fields, records, isEnabled } ]
       }))) as types.IntegrationConfig;
     }
@@ -136,7 +138,9 @@ export class Notion extends IntegrationBase {
       startCursor = next_cursor
     }
   
-    return databases.map(database => {
+    return databases
+      .filter(database => !database.archived)
+      .map(database => {
       const { id, title, properties } = database;
       return {
         tableId: id,
