@@ -10,7 +10,7 @@ const pulse = keyframes({
 
 
 export const LoadingIndicator = () => (
-  <Center aria-label = "Loading" height = "100vh" bg = { mode("gray.light.2", "gray.dark.2") } >
+  <Center aria-label = "Loading" height = "100vh" bg = { mode("gray.light.1", "gray.dark.2") } >
     <Logo 
       variant = 'symbol'
       transitionProperty = "-webkit-transform"
@@ -20,6 +20,5 @@ export const LoadingIndicator = () => (
       boxSize = "150px"
       filter = "drop-shadow(0px 4px 8px rgb(0 0 0 / 0.4))"
       />
-      
   </Center>
 )

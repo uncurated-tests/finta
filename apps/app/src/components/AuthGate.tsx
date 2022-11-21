@@ -2,6 +2,7 @@ import { ReactElement } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 
 import { useAuth } from "src/lib/useAuth";
+import { LoadingIndicator } from "./LoadingIndicator";
 
 export interface AuthGateParams {
   children: ReactElement;
@@ -22,7 +23,7 @@ export const AuthGate = (params: AuthGateParams) => {
   const { user, isLoading } = useAuth();
 
   if ( shouldBeSignedIn && isLoading ) {
-    return <></>
+    return <LoadingIndicator />
   }
 
   if ( shouldBeSignedIn && !user ) {
