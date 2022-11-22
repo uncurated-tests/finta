@@ -23,15 +23,15 @@ export const getItemActiveAccounts = async (item: PlaidItemModel, plaidEnv?: str
     .filter(account => !validAccountIds.includes(account.id))
     .map(account => account.id);
 
-  if ( newlyClosedAccounts.length > 0 ) {
-    Promise.all([
-      graphql.UpdatePlaidAccounts({
-        where: { id: { _in: newlyClosedAccounts }},
-        _set: { is_closed: true }
-      }),
-      graphql.DeleteDestinationAccounts({ where: { account_id: { _in: newlyClosedAccounts }}})
-    ])
-  }
+  // if ( newlyClosedAccounts.length > 0 ) {
+  //   Promise.all([
+  //     graphql.UpdatePlaidAccounts({
+  //       where: { id: { _in: newlyClosedAccounts }},
+  //       _set: { is_closed: true }
+  //     }),
+  //     graphql.DeleteDestinationAccounts({ where: { account_id: { _in: newlyClosedAccounts }}})
+  //   ])
+  // }
 
   return { 
     accountIds: item.accounts

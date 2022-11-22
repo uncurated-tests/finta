@@ -3,7 +3,11 @@ import { CronBuilder } from 'cron-builder-ts';
 
 import { Frequencies_Enum } from "./graphql/sdk";
 
-const SYNC_UPDATES_EMAIL_URL = process.env.NHOST_BACKEND_URL + '/v1/functions/sendSyncUpdateEmail';
+const syncUpdatesEmailUrl = {
+  'development': 'http://localhost:3000/api/sendSyncUpdateEmail',
+  'preview': 'https://staging.app.finta.io/api/sendSyncUpdateEmail',
+  'production': 'https://app.finta.io/api/sendSyncUpdateEmail' 
+}
 
 type Job = {
   frequency: Frequencies_Enum,
@@ -38,7 +42,7 @@ export const upsertJob = async ({ jobId, job }: { jobId?: string | null; job: Jo
   return client.get(jobId ? '/edit' : '/add', { params: {
     id: jobId,
     cron_job_name: job.userId,
-    url: SYNC_UPDATES_EMAIL_URL,
+    url: syncUpdatesEmailUrl[(process.env.VERCEL_ENV || 'development') as keyof typeof syncUpdatesEmailUrl],
     cron_expression: getCronExpression(job.frequency),
     timezone_from: 2,
     timezone: job.timezone || 'America/New_York',
