@@ -23,6 +23,7 @@ const credentials = {
 }
 
 const getClient = (env: PlaidEnv) => {
+  console.log("Env", env)
   const config = new Configuration({
     basePath: PlaidEnvironments[env],
     baseOptions: {
@@ -37,6 +38,7 @@ const getClient = (env: PlaidEnv) => {
 }
 
 const getEnvFromAccessToken = (accessToken: string): PlaidEnv => {
+  console.log(accessToken, accessToken.includes('production'))
   if ( accessToken.includes('production') ) { return 'production' }
   return 'sandbox'
 }

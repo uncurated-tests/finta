@@ -8,7 +8,7 @@ export default functionWrapper.client(async (req: types. GetPlaidLinkTokenReques
   scope.setUser({ id: user.id });
 
   const { accessToken, products, originUrl, plaidEnv, isAccountSelectionEnabled } = req.body;
-
+  console.log(11, plaidEnv)
   const webhookURL = `${originUrl}/api/plaid/webhook`;
   const redirectUri = `${originUrl}/plaid-oauth`
 
