@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 const allowedErrorCodes = ['NO_INVESTMENT_ACCOUNTS', 'NO_ACCOUNTS', "PRODUCT_NOT_READY"];
 export type PlaidEnv = 'sandbox' | 'production';
 
-export const plaidEnvFromVercelEnv = process.env.VERCEL_ENV === 'production' ? 'production' : 'sandbox'
+export const plaidEnvFromVercelEnv = ['development', 'preview'].includes(process.env.VERCEL_ENV || "") ? 'sandbox' : 'production'
 
 const constructPlaidError = (err: any) => {
   const { error_message, error_code } = err.response.data;
