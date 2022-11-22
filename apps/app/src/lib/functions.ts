@@ -11,7 +11,7 @@ const isDemoUser = () => {
 }
 
 const getPlaidEnv = () => 
-  process.env.VERCEL_ENV === "production" ? "production" : "sandbox"
+  ['development', 'preview'].includes(process.env.VERCEL_ENV || "") ? "sandbox" : "production"
 
 const client = axios.create({
   baseURL: `${window.location.origin}/api`
