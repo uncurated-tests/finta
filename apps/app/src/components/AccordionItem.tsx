@@ -21,7 +21,7 @@ interface AccordionItemProps extends Omit<ChakraAccordionItemProps, 'children'> 
 }
 
 export const AccordionItem = ({ buttonIcon, buttonLabel, buttonChildren, children, buttonLabelProps = {},  ...props }: AccordionItemProps) => (
-  <ChakraAccordionItem bg = { mode('white', 'gray.dark.3') } width = "full" { ...props }>
+  <ChakraAccordionItem bg = { mode('white', 'gray.dark.4') } width = "full" { ...props }>
     {({ isExpanded }) => (
       <>
         <h2>
