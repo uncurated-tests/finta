@@ -4,7 +4,7 @@ import * as format from "./format";
 import * as schemas from "./schemas";
 import { OauthGetDestinationResponse, OauthGetInstitutionsResponse, OauthGetAccountsResponse, OauthGetHoldingsResponse, OauthGetInvestmentTransactionsResponse, OauthGetTransactionsResponse } from "@finta/types";
 
-const baseUrl = "https://staging.app.finta.io";
+const baseUrl = "https://app.finta.io";
 const apiUrlPart = "/api/oauth"
 
 export const pack = coda.newPack();
