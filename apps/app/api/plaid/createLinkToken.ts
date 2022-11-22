@@ -1,13 +1,16 @@
 import { functionWrapper, plaid, Sentry, logsnag, types } from "../_lib";
 
+
 export default functionWrapper.client(async (req: types. GetPlaidLinkTokenRequest, user): Promise<types.GetPlaidLinkTokenResponse> => {
   const transaction = Sentry.startTransaction({ op: "app function", name: "Create Link Token" });
   const scope = new Sentry.Scope();
   scope.setContext("Request Body", req.body);
   scope.setUser({ id: user.id });
 
-  const { accessToken, products, redirectUri, plaidEnv, isAccountSelectionEnabled } = req.body;
-  const webhookURL = `${process.env.VERCEL_URL}/api/plaid/webhook`;
+  const { accessToken, products, originUrl, plaidEnv, isAccountSelectionEnabled } = req.body;
+
+  const webhookURL = `${originUrl}/api/plaid/webhook`;
+  const redirectUri = `${originUrl}/plaid-oauth`
 
   return plaid.createLinkToken({
     userId: user.id,

@@ -35,9 +35,8 @@ export const createPlaidLinkToken = async ({ products, accessToken, isAccountSel
   accessToken?: string;
   isAccountSelectionEnabled?: boolean;
 }): Promise<types.CreatePlaidLinkTokenResponse> => {
-  const redirectUri = window.location.origin + '/plaid-oauth';
   const plaidEnv = isDemoUser() ? "sandbox" : getPlaidEnv();
-  return client.post('/plaid/createLinkToken', { products, redirectUri, plaidEnv, accessToken, isAccountSelectionEnabled } as types.CreatePlaidLinkTokenPayload)
+  return client.post('/plaid/createLinkToken', { products, originUrl: window.location.origin, plaidEnv, accessToken, isAccountSelectionEnabled } as types.CreatePlaidLinkTokenPayload)
   .then(response => response.data)
 }
 

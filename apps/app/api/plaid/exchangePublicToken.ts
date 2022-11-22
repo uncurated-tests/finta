@@ -7,7 +7,7 @@ export default functionWrapper.client(async (req: types.ExchangePlaidPublicToken
   scope.setContext("Request Body", req.body);
 
   const { publicToken, plaidEnv } = req.body;
-  console.log("HEY")
+
   return plaid.exchangePublicToken({ publicToken, env: plaidEnv as plaid.PlaidEnv })
   .then(response => ({ status: types.StatusCodes.OK, message: response.data }))
   .catch(async error => {

@@ -16,7 +16,7 @@ export type GetPlaidAccountsResponse = {
 export type CreatePlaidLinkTokenPayload = {
   accessToken?: string;
   products: Products[];
-  redirectUri: string;
+  originUrl: string;
   plaidEnv: string;
   isAccountSelectionEnabled?: boolean
 }
