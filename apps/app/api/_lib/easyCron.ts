@@ -42,7 +42,7 @@ export const upsertJob = async ({ jobId, job }: { jobId?: string | null; job: Jo
   return client.get(jobId ? '/edit' : '/add', { params: {
     id: jobId,
     cron_job_name: job.userId,
-    url: syncUpdatesEmailUrl[process.env.VERCEL_ENV || 'development'],
+    url: syncUpdatesEmailUrl[(process.env.VERCEL_ENV || 'development') as keyof typeof syncUpdatesEmailUrl],
     cron_expression: getCronExpression(job.frequency),
     timezone_from: 2,
     timezone: job.timezone || 'America/New_York',

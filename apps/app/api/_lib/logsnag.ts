@@ -67,7 +67,7 @@ interface PublishOptions extends LogSnagPublishOptions {
   tags?: Partial<Record<LogSnagTags, any>>
 }
 
-const shouldMock = ['development', 'preview'].includes(process.env.VERCEL_ENV)
+const shouldMock = ['development', 'preview'].includes(process.env.VERCEL_ENV || "")
 
 const logsnag = new LogSnag({ 
   token: process.env.LOGSNAG_TOKEN!,
