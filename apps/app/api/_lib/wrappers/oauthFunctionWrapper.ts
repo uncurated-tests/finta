@@ -37,5 +37,6 @@ export const oauthFunctionWrapper = (fn: WrappedOauthFunction) => async (req: Ve
 
   transaction.finish();
   await Sentry.flush(1000);
+  res.setHeader('content-type', 'application/json')
   return res.status(status).send(message)
 };

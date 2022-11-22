@@ -95,7 +95,7 @@ export default createServer<{ req: Request; res: Response; }>({
               customer = await stripe.upsertCustomer({ userId: user.id, email: user.email, name: user.display_name });
             }
 
-            if ( customer.deleted ) {
+            if ( customer.deleted as unknown as boolean === true ) { // TODO: Fix this
               customer = await stripe.upsertCustomer({ userId: user.id, email: user.email, name: user.display_name });
             }
             scope.setContext("Customer", { id: customer.id, deleted: customer.deleted });

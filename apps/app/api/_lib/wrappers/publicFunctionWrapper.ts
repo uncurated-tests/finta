@@ -15,5 +15,6 @@ export const publicFunctionWrapper = (fn: WrappedPublicFunction) => async (req: 
   
   transaction.finish();
   await Sentry.flush(1000);
+  res.setHeader('content-type', 'application/json')
   return res.status(status).send(message);
 }
