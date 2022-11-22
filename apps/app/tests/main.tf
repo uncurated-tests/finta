@@ -30,6 +30,16 @@ resource "checkly_check_group" "frontend" {
   use_global_alert_settings = false // Whether to use global alert settings or group-specific ones
 }
 
+resource "checkly_snippet" "get-base-url" {
+  name   = "Login"
+  script = file("${path.module}/browser/snippets/get-base-url.js")
+}
+
+resource "checkly_snippet" "graphql" {
+  name   = "Login"
+  script = file("${path.module}/browser/snippets/graphql.js")
+}
+
 resource "checkly_check" "destinations-page-unauth-redirect" {
   name          = "Destinations Page Unauth redirect"
   type          = "BROWSER"
@@ -43,4 +53,19 @@ resource "checkly_check" "destinations-page-unauth-redirect" {
   group_id = checkly_check_group.frontend.id
 
   script = file("${path.module}/browser/destinations-page-unauth-redirect.js")
+}
+
+resource "checkly_check" "new-user-sign-up" {
+  name          = "New User Sign Up"
+  type          = "BROWSER"
+  activated     = false
+  frequency     = 1440
+  double_check  = true
+  locations = [
+    "us-west-1"
+  ]
+
+  group_id = checkly_check_group.frontend.id
+
+  script = file("${path.module}/browser/new-user-sign-up.js")
 }

@@ -1,0 +1,12 @@
+fragment AllSubscriptionPricesFields on StripePrice {
+  id
+  interval
+  unitAmount
+  productId
+}
+
+query GetSubscriptionPrices {
+  stripePrices {
+    ...AllSubscriptionPricesFields
+  }
+}

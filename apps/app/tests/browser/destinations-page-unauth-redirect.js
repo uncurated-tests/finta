@@ -7,7 +7,7 @@ async function run() {
 
   const url = process.env.ENVIRONMENT_URL || 'https://app.finta.io';
   const targetUrl = url.includes('http') ? url : `https://${url}`
-  console.log(targetUrl)
+  
   await page.goto(targetUrl, { waitUntil: 'networkidle' });
   await page.waitForSelector('.page'); 
   
