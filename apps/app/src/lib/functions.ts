@@ -36,7 +36,6 @@ export const createPlaidLinkToken = async ({ products, accessToken, isAccountSel
   isAccountSelectionEnabled?: boolean;
 }): Promise<types.CreatePlaidLinkTokenResponse> => {
   const plaidEnv = isDemoUser() ? "sandbox" : getPlaidEnv();
-  console.log(plaidEnv, process.env.VERCEL_ENV)
   return client.post('/plaid/createLinkToken', { products, originUrl: window.location.origin, plaidEnv, accessToken, isAccountSelectionEnabled } as types.CreatePlaidLinkTokenPayload)
   .then(response => response.data)
 }
