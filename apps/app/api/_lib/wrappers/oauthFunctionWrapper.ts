@@ -26,7 +26,7 @@ export const oauthFunctionWrapper = (fn: WrappedOauthFunction) => async (req: Ve
   if ( !destination ) { return res.status(500).send("Invalid token")}
   if ( !destination.user.stripeData.hasAppAccess ) { return res.status(402)}
 
-  const asAdmin = req.body.asAdmin;
+  const asAdmin = false;
   const authentication = destination.authentication || {};
   const plaidEnv = authentication.is_demo ? "sandbox" : plaidEnvFromVercelEnv as string;
   const { status, message } = await fn(req, destination, plaidEnv, asAdmin)
