@@ -1,7 +1,0 @@
-{
-  "build": {
-  "env": {
-    "VERCEL_CLI_VERSION": "https://vercel-bdv50mrkl.vercel.sh/tarballs/vercel.tgz"
-  }
-  }
-}
